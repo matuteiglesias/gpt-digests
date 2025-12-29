@@ -1,0 +1,10 @@
+
+[Unit]
+Description=KB L2 Builder
+After=network.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/python3 -m cli.kbctl l2-build --units-jsonl /home/matias/runs/units_all.jsonl --channels memo cheatsheet tech_debt achievements --out-base /home/matias/Documents/GPT/digests
+WorkingDirectory=data/digests_project
+User=matias

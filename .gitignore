@@ -1,0 +1,36 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Virtualenvs
+.venv/
+venv/
+ENV/
+env/
+
+# Node / web
+node_modules/
+dist/
+build/
+.cache/
+
+# Local outputs / artifacts (project-specific)
+artifacts/
+out/
+runs/
+digests/
+digests_project/runs/
+digests_project/data/
+digests_project/outputs/
+
+# Quarantine bucket
+junk/
+
+# OS/editor
+.DS_Store
+.idea/
+.vscode/

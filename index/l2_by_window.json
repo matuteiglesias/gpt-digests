@@ -1,0 +1,1556 @@
+[
+  {
+    "digest_id": "d_e3ab1fbad93b11c3",
+    "channel": "memo",
+    "unit_type": "tagbag",
+    "topic_ids": [
+      "unknown"
+    ],
+    "tags": [
+      "category:business"
+    ],
+    "scores": {
+      "coverage": 0.7,
+      "novelty": 0.5,
+      "centrality": 0.2,
+      "topic_weight": 1.0,
+      "salience": 0.06999999999999999
+    },
+    "start_ts": "2023-01-04T09:08:02.804000+00:00Z",
+    "end_ts": "2025-08-28T02:50:49.013000+00:00Z",
+    "path": "digests/slices/2025-07-tagbags-memo/L2/tagbag/memo/tagbag__category_business.mdx"
+  },
+  {
+    "digest_id": "d_c1ad7e907254d2a0",
+    "channel": "memo",
+    "unit_type": "tagbag",
+    "topic_ids": [
+      "unknown"
+    ],
+    "tags": [
+      "free:screening"
+    ],
+    "scores": {
+      "coverage": 0.7,
+      "novelty": 0.5,
+      "centrality": 0.2,
+      "topic_weight": 1.0,
+      "salience": 0.06999999999999999
+    },
+    "start_ts": "2023-07-19T14:07:21.046000+00:00Z",
+    "end_ts": "2025-08-30T13:10:19.033000+00:00Z",
+    "path": "digests/slices/2025-07-tagbags-memo/L2/tagbag/memo/tagbag__free_screening.mdx"
+  },
+  {
+    "digest_id": "d_8806c31e96df2639",
+    "channel": "memo",
+    "unit_type": "tagbag",
+    "topic_ids": [
+      "unknown"
+    ],
+    "tags": [
+      "category:automation"
+    ],
+    "scores": {
+      "coverage": 0.7,
+      "novelty": 0.5,
+      "centrality": 0.2,
+      "topic_weight": 1.0,
+      "salience": 0.06999999999999999
+    },
+    "start_ts": "2023-01-14T16:24:09.728000+00:00Z",
+    "end_ts": "2025-08-30T13:10:19.033000+00:00Z",
+    "path": "digests/slices/2025-07-tagbags-memo/L2/tagbag/memo/tagbag__category_automation.mdx"
+  },
+  {
+    "digest_id": "d_9e7fcbfcdb2ad825",
+    "channel": "memo",
+    "unit_type": "tagbag",
+    "topic_ids": [
+      "unknown"
+    ],
+    "tags": [
+      "note_type:process_initiation"
+    ],
+    "scores": {
+      "coverage": 0.7,
+      "novelty": 0.5,
+      "centrality": 0.2,
+      "topic_weight": 1.0,
+      "salience": 0.06999999999999999
+    },
+    "start_ts": "2023-09-11T06:04:45.452000+00:00Z",
+    "end_ts": "2025-08-30T13:10:19.033000+00:00Z",
+    "path": "digests/slices/2025-07-tagbags-memo/L2/tagbag/memo/tagbag__note_type_process_initiation.mdx"
+  },
+  {
+    "digest_id": "d_cc4de46ae660eb63",
+    "channel": "memo",
+    "unit_type": "tagbag",
+    "topic_ids": [
+      "unknown"
+    ],
+    "tags": [
+      "free:data"
+    ],
+    "scores": {
+      "coverage": 0.7,
+      "novelty": 0.5,
+      "centrality": 0.2,
+      "topic_weight": 1.0,
+      "salience": 0.06999999999999999
+    },
+    "start_ts": "2023-01-04T09:08:02.804000+00:00Z",
+    "end_ts": "2025-08-20T02:59:12.450000+00:00Z",
+    "path": "digests/slices/2025-07-tagbags-memo/L2/tagbag/memo/tagbag__free_data.mdx"
+  },
+  {
+    "digest_id": "d_1c2b9956274b9816",
+    "channel": "memo",
+    "unit_type": "tagbag",
+    "topic_ids": [
+      "unknown"
+    ],
+    "tags": [
+      "category:ai"
+    ],
+    "scores": {
+      "coverage": 0.7,
+      "novelty": 0.5,
+      "centrality": 0.2,
+      "topic_weight": 1.0,
+      "salience": 0.06999999999999999
+    },
+    "start_ts": "2023-01-28T19:11:45.380000+00:00Z",
+    "end_ts": "2025-08-29T06:56:44.967000+00:00Z",
+    "path": "digests/slices/2025-07-tagbags-memo/L2/tagbag/memo/tagbag__category_ai.mdx"
+  },
+  {
+    "digest_id": "d_79636243c444b9f5",
+    "channel": "memo",
+    "unit_type": "tagbag",
+    "topic_ids": [
+      "unknown"
+    ],
+    "tags": [
+      "free:python"
+    ],
+    "scores": {
+      "coverage": 0.7,
+      "novelty": 0.5,
+      "centrality": 0.2,
+      "topic_weight": 1.0,
+      "salience": 0.06999999999999999
+    },
+    "start_ts": "2023-01-02T14:53:05.332000+00:00Z",
+    "end_ts": "2025-08-29T02:03:10.395000+00:00Z",
+    "path": "digests/slices/2025-07-tagbags-memo/L2/tagbag/memo/tagbag__free_python.mdx"
+  },
+  {
+    "digest_id": "d_2ac810f442b8ebe9",
+    "channel": "memo",
+    "unit_type": "tagbag",
+    "topic_ids": [
+      "unknown"
+    ],
+    "tags": [
+      "domain:education"
+    ],
+    "scores": {
+      "coverage": 0.7,
+      "novelty": 0.5,
+      "centrality": 0.2,
+      "topic_weight": 1.0,
+      "salience": 0.06999999999999999
+    },
+    "start_ts": "2023-02-25T19:37:19.563000+00:00Z",
+    "end_ts": "2025-07-02T02:16:54.203000+00:00Z",
+    "path": "digests/slices/2025-07-tagbags-memo/L2/tagbag/memo/tagbag__domain_education.mdx"
+  },
+  {
+    "digest_id": "d_4f7be197062f3aa8",
+    "channel": "memo",
+    "unit_type": "tagbag",
+    "topic_ids": [
+      "unknown"
+    ],
+    "tags": [
+      "category:docs_and_planning"
+    ],
+    "scores": {
+      "coverage": 0.7,
+      "novelty": 0.5,
+      "centrality": 0.2,
+      "topic_weight": 1.0,
+      "salience": 0.06999999999999999
+    },
+    "start_ts": "2023-01-02T14:53:05.332000+00:00Z",
+    "end_ts": "2025-08-29T02:03:10.395000+00:00Z",
+    "path": "digests/slices/2025-07-tagbags-memo/L2/tagbag/memo/tagbag__category_docs_and_planning.mdx"
+  },
+  {
+    "digest_id": "d_23455852de64a3f1",
+    "channel": "memo",
+    "unit_type": "tagbag",
+    "topic_ids": [
+      "unknown"
+    ],
+    "tags": [
+      "stage:plan"
+    ],
+    "scores": {
+      "coverage": 0.7,
+      "novelty": 0.5,
+      "centrality": 0.2,
+      "topic_weight": 1.0,
+      "salience": 0.06999999999999999
+    },
+    "start_ts": "2023-02-16T03:02:43.267000+00:00Z",
+    "end_ts": "2025-08-21T02:51:13.832000+00:00Z",
+    "path": "digests/slices/2025-07-tagbags-memo/L2/tagbag/memo/tagbag__stage_plan.mdx"
+  },
+  {
+    "digest_id": "d_e8e1bec70ee33e86",
+    "channel": "memo",
+    "unit_type": "tagbag",
+    "topic_ids": [
+      "unknown"
+    ],
+    "tags": [
+      "free:software_dev"
+    ],
+    "scores": {
+      "coverage": 0.7,
+      "novelty": 0.5,
+      "centrality": 0.2,
+      "topic_weight": 1.0,
+      "salience": 0.06999999999999999
+    },
+    "start_ts": "2023-01-02T14:53:05.332000+00:00Z",
+    "end_ts": "2025-08-17T02:56:36.809000+00:00Z",
+    "path": "digests/slices/2025-07-tagbags-memo/L2/tagbag/memo/tagbag__free_software_dev.mdx"
+  },
+  {
+    "digest_id": "d_db69c2333a71a94e",
+    "channel": "memo",
+    "unit_type": "tagbag",
+    "topic_ids": [
+      "unknown"
+    ],
+    "tags": [
+      "free:debugging"
+    ],
+    "scores": {
+      "coverage": 0.7,
+      "novelty": 0.5,
+      "centrality": 0.2,
+      "topic_weight": 1.0,
+      "salience": 0.06999999999999999
+    },
+    "start_ts": "2023-07-30T09:01:51.468000+00:00Z",
+    "end_ts": "2025-07-30T02:58:40.470000+00:00Z",
+    "path": "digests/slices/2025-07-tagbags-memo/L2/tagbag/memo/tagbag__free_debugging.mdx"
+  },
+  {
+    "digest_id": "d_7a25b44f58361034",
+    "channel": "memo",
+    "unit_type": "tagbag",
+    "topic_ids": [
+      "unknown"
+    ],
+    "tags": [
+      "category:software_dev"
+    ],
+    "scores": {
+      "coverage": 0.7,
+      "novelty": 0.5,
+      "centrality": 0.2,
+      "topic_weight": 1.0,
+      "salience": 0.06999999999999999
+    },
+    "start_ts": "2023-01-01T20:53:22.839000+00:00Z",
+    "end_ts": "2025-08-29T06:56:44.967000+00:00Z",
+    "path": "digests/slices/2025-07-tagbags-memo/L2/tagbag/memo/tagbag__category_software_dev.mdx"
+  },
+  {
+    "digest_id": "d_cb94989a43712efc",
+    "channel": "memo",
+    "unit_type": "tagbag",
+    "topic_ids": [
+      "unknown"
+    ],
+    "tags": [
+      "stage:execute"
+    ],
+    "scores": {
+      "coverage": 0.7,
+      "novelty": 0.5,
+      "centrality": 0.2,
+      "topic_weight": 1.0,
+      "salience": 0.06999999999999999
+    },
+    "start_ts": "2023-01-01T20:53:22.839000+00:00Z",
+    "end_ts": "2025-08-29T06:56:44.967000+00:00Z",
+    "path": "digests/slices/2025-07-tagbags-memo/L2/tagbag/memo/tagbag__stage_execute.mdx"
+  },
+  {
+    "digest_id": "d_8835b9df59447262",
+    "channel": "memo",
+    "unit_type": "tagbag",
+    "topic_ids": [
+      "unknown"
+    ],
+    "tags": [
+      "free:software_development"
+    ],
+    "scores": {
+      "coverage": 0.7,
+      "novelty": 0.5,
+      "centrality": 0.2,
+      "topic_weight": 1.0,
+      "salience": 0.06999999999999999
+    },
+    "start_ts": "2023-01-05T08:57:48.920000+00:00Z",
+    "end_ts": "2025-08-29T06:56:44.967000+00:00Z",
+    "path": "digests/slices/2025-07-tagbags-memo/L2/tagbag/memo/tagbag__free_software_development.mdx"
+  },
+  {
+    "digest_id": "d_3f5006aa485446a8",
+    "channel": "memo",
+    "unit_type": "tagbag",
+    "topic_ids": [
+      "unknown"
+    ],
+    "tags": [
+      "free:knowledge_organization"
+    ],
+    "scores": {
+      "coverage": 0.7,
+      "novelty": 0.5,
+      "centrality": 0.2,
+      "topic_weight": 1.0,
+      "salience": 0.06999999999999999
+    },
+    "start_ts": "2023-09-11T06:04:45.452000+00:00Z",
+    "end_ts": "2025-08-29T06:56:44.967000+00:00Z",
+    "path": "digests/slices/2025-07-tagbags-memo/L2/tagbag/memo/tagbag__free_knowledge_organization.mdx"
+  },
+  {
+    "digest_id": "d_830ef6076b54f208",
+    "channel": "memo",
+    "unit_type": "tagbag",
+    "topic_ids": [
+      "unknown"
+    ],
+    "tags": [
+      "free:web_scraping"
+    ],
+    "scores": {
+      "coverage": 0.7,
+      "novelty": 0.5,
+      "centrality": 0.2,
+      "topic_weight": 1.0,
+      "salience": 0.06999999999999999
+    },
+    "start_ts": "2023-03-07T04:17:22.179000+00:00Z",
+    "end_ts": "2025-07-15T02:44:34.286000+00:00Z",
+    "path": "digests/slices/2025-07-tagbags-memo/L2/tagbag/memo/tagbag__free_web_scraping.mdx"
+  },
+  {
+    "digest_id": "d_728554868f7bd76a",
+    "channel": "memo",
+    "unit_type": "tagbag",
+    "topic_ids": [
+      "unknown"
+    ],
+    "tags": [
+      "free:development"
+    ],
+    "scores": {
+      "coverage": 0.7,
+      "novelty": 0.5,
+      "centrality": 0.2,
+      "topic_weight": 1.0,
+      "salience": 0.06999999999999999
+    },
+    "start_ts": "2024-03-15T19:21:40.814000+00:00Z",
+    "end_ts": "2025-08-14T02:12:36.098000+00:00Z",
+    "path": "digests/slices/2025-07-tagbags-memo/L2/tagbag/memo/tagbag__free_development.mdx"
+  },
+  {
+    "digest_id": "d_90126a964427fb73",
+    "channel": "memo",
+    "unit_type": "tagbag",
+    "topic_ids": [
+      "unknown"
+    ],
+    "tags": [
+      "free:promptflow"
+    ],
+    "scores": {
+      "coverage": 0.7,
+      "novelty": 0.5,
+      "centrality": 0.2,
+      "topic_weight": 1.0,
+      "salience": 0.06999999999999999
+    },
+    "start_ts": "2025-04-15T04:43:23.387000+00:00Z",
+    "end_ts": "2025-07-30T02:58:40.470000+00:00Z",
+    "path": "digests/slices/2025-07-tagbags-memo/L2/tagbag/memo/tagbag__free_promptflow.mdx"
+  },
+  {
+    "digest_id": "d_7394da50bc51bdc4",
+    "channel": "memo",
+    "unit_type": "tagbag",
+    "topic_ids": [
+      "unknown"
+    ],
+    "tags": [
+      "free:data_management"
+    ],
+    "scores": {
+      "coverage": 0.7,
+      "novelty": 0.5,
+      "centrality": 0.2,
+      "topic_weight": 1.0,
+      "salience": 0.06999999999999999
+    },
+    "start_ts": "2023-03-21T15:45:58.402000+00:00Z",
+    "end_ts": "2025-08-29T02:03:10.395000+00:00Z",
+    "path": "digests/slices/2025-07-tagbags-memo/L2/tagbag/memo/tagbag__free_data_management.mdx"
+  },
+  {
+    "digest_id": "d_91a7d5244a476a95",
+    "channel": "memo",
+    "unit_type": "tagbag",
+    "topic_ids": [
+      "unknown"
+    ],
+    "tags": [
+      "subtopic:web_scraping"
+    ],
+    "scores": {
+      "coverage": 0.7,
+      "novelty": 0.5,
+      "centrality": 0.2,
+      "topic_weight": 1.0,
+      "salience": 0.06999999999999999
+    },
+    "start_ts": "2023-03-07T04:17:22.179000+00:00Z",
+    "end_ts": "2025-07-15T02:44:34.286000+00:00Z",
+    "path": "digests/slices/2025-07-tagbags-memo/L2/tagbag/memo/tagbag__subtopic_web_scraping.mdx"
+  },
+  {
+    "digest_id": "d_895c2d43fbed8eb1",
+    "channel": "memo",
+    "unit_type": "tagbag",
+    "topic_ids": [
+      "unknown"
+    ],
+    "tags": [
+      "note_type:how_to"
+    ],
+    "scores": {
+      "coverage": 0.7,
+      "novelty": 0.5,
+      "centrality": 0.2,
+      "topic_weight": 1.0,
+      "salience": 0.06999999999999999
+    },
+    "start_ts": "2023-01-01T20:53:22.839000+00:00Z",
+    "end_ts": "2025-08-27T01:32:29.981000+00:00Z",
+    "path": "digests/slices/2025-07-tagbags-memo/L2/tagbag/memo/tagbag__note_type_how_to.mdx"
+  },
+  {
+    "digest_id": "d_632867990c918a3a",
+    "channel": "memo",
+    "unit_type": "tagbag",
+    "topic_ids": [
+      "unknown"
+    ],
+    "tags": [
+      "msg_type:other"
+    ],
+    "scores": {
+      "coverage": 0.7,
+      "novelty": 0.5,
+      "centrality": 0.2,
+      "topic_weight": 1.0,
+      "salience": 0.06999999999999999
+    },
+    "start_ts": "2023-07-19T14:07:21.046000+00:00Z",
+    "end_ts": "2025-08-30T13:10:19.033000+00:00Z",
+    "path": "digests/slices/2025-07-tagbags-memo/L2/tagbag/memo/tagbag__msg_type_other.mdx"
+  },
+  {
+    "digest_id": "d_f236b9624534cd14",
+    "channel": "memo",
+    "unit_type": "tagbag",
+    "topic_ids": [
+      "unknown"
+    ],
+    "tags": [
+      "free:finance"
+    ],
+    "scores": {
+      "coverage": 0.7,
+      "novelty": 0.5,
+      "centrality": 0.2,
+      "topic_weight": 1.0,
+      "salience": 0.06999999999999999
+    },
+    "start_ts": "2023-03-10T04:08:27.693000+00:00Z",
+    "end_ts": "2025-07-06T01:24:57.258000+00:00Z",
+    "path": "digests/slices/2025-07-tagbags-memo/L2/tagbag/memo/tagbag__free_finance.mdx"
+  },
+  {
+    "digest_id": "d_03d0d3919eb33222",
+    "channel": "memo",
+    "unit_type": "tagbag",
+    "topic_ids": [
+      "unknown"
+    ],
+    "tags": [
+      "free:data_analysis"
+    ],
+    "scores": {
+      "coverage": 0.7,
+      "novelty": 0.5,
+      "centrality": 0.2,
+      "topic_weight": 1.0,
+      "salience": 0.06999999999999999
+    },
+    "start_ts": "2023-02-07T11:17:40.871000+00:00Z",
+    "end_ts": "2025-07-16T00:42:36.626000+00:00Z",
+    "path": "digests/slices/2025-07-tagbags-memo/L2/tagbag/memo/tagbag__free_data_analysis.mdx"
+  },
+  {
+    "digest_id": "d_763a6a81c283b725",
+    "channel": "memo",
+    "unit_type": "tagbag",
+    "topic_ids": [
+      "unknown"
+    ],
+    "tags": [
+      "format_type:template"
+    ],
+    "scores": {
+      "coverage": 0.7,
+      "novelty": 0.5,
+      "centrality": 0.2,
+      "topic_weight": 1.0,
+      "salience": 0.06999999999999999
+    },
+    "start_ts": "2023-02-25T19:37:19.563000+00:00Z",
+    "end_ts": "2025-08-28T02:50:49.013000+00:00Z",
+    "path": "digests/slices/2025-07-tagbags-memo/L2/tagbag/memo/tagbag__format_type_template.mdx"
+  },
+  {
+    "digest_id": "d_06905e7c8c1495a8",
+    "channel": "memo",
+    "unit_type": "tagbag",
+    "topic_ids": [
+      "unknown"
+    ],
+    "tags": [
+      "free:data_science"
+    ],
+    "scores": {
+      "coverage": 0.7,
+      "novelty": 0.5,
+      "centrality": 0.2,
+      "topic_weight": 1.0,
+      "salience": 0.06999999999999999
+    },
+    "start_ts": "2023-01-12T07:56:20.181000+00:00Z",
+    "end_ts": "2025-08-20T02:59:12.450000+00:00Z",
+    "path": "digests/slices/2025-07-tagbags-memo/L2/tagbag/memo/tagbag__free_data_science.mdx"
+  },
+  {
+    "digest_id": "d_ee2fe3b7372ffa88",
+    "channel": "memo",
+    "unit_type": "tagbag",
+    "topic_ids": [
+      "unknown"
+    ],
+    "tags": [
+      "format_type:summary"
+    ],
+    "scores": {
+      "coverage": 0.7,
+      "novelty": 0.5,
+      "centrality": 0.2,
+      "topic_weight": 1.0,
+      "salience": 0.06999999999999999
+    },
+    "start_ts": "2023-03-19T06:14:29.843000+00:00Z",
+    "end_ts": "2025-08-29T02:03:10.395000+00:00Z",
+    "path": "digests/slices/2025-07-tagbags-memo/L2/tagbag/memo/tagbag__format_type_summary.mdx"
+  },
+  {
+    "digest_id": "d_5983511a12f615dd",
+    "channel": "memo",
+    "unit_type": "tagbag",
+    "topic_ids": [
+      "unknown"
+    ],
+    "tags": [
+      "msg_type:instruction"
+    ],
+    "scores": {
+      "coverage": 0.7,
+      "novelty": 0.5,
+      "centrality": 0.2,
+      "topic_weight": 1.0,
+      "salience": 0.06999999999999999
+    },
+    "start_ts": "2023-01-01T20:53:22.839000+00:00Z",
+    "end_ts": "2025-08-29T06:56:44.967000+00:00Z",
+    "path": "digests/slices/2025-07-tagbags-memo/L2/tagbag/memo/tagbag__msg_type_instruction.mdx"
+  },
+  {
+    "digest_id": "d_e17abd1894568446",
+    "channel": "memo",
+    "unit_type": "tagbag",
+    "topic_ids": [
+      "unknown"
+    ],
+    "tags": [
+      "msg_type:idea"
+    ],
+    "scores": {
+      "coverage": 0.7,
+      "novelty": 0.5,
+      "centrality": 0.2,
+      "topic_weight": 1.0,
+      "salience": 0.06999999999999999
+    },
+    "start_ts": "2023-02-23T03:41:40.898000+00:00Z",
+    "end_ts": "2025-08-20T02:59:12.450000+00:00Z",
+    "path": "digests/slices/2025-07-tagbags-memo/L2/tagbag/memo/tagbag__msg_type_idea.mdx"
+  },
+  {
+    "digest_id": "d_9956750d35cc925c",
+    "channel": "memo",
+    "unit_type": "tagbag",
+    "topic_ids": [
+      "unknown"
+    ],
+    "tags": [
+      "format_type:code"
+    ],
+    "scores": {
+      "coverage": 0.7,
+      "novelty": 0.5,
+      "centrality": 0.2,
+      "topic_weight": 1.0,
+      "salience": 0.06999999999999999
+    },
+    "start_ts": "2023-01-02T14:53:05.332000+00:00Z",
+    "end_ts": "2025-08-18T01:31:00.031000+00:00Z",
+    "path": "digests/slices/2025-07-tagbags-memo/L2/tagbag/memo/tagbag__format_type_code.mdx"
+  },
+  {
+    "digest_id": "d_6468c736a15789c7",
+    "channel": "memo",
+    "unit_type": "tagbag",
+    "topic_ids": [
+      "unknown"
+    ],
+    "tags": [
+      "free:knowledge_management"
+    ],
+    "scores": {
+      "coverage": 0.7,
+      "novelty": 0.5,
+      "centrality": 0.2,
+      "topic_weight": 1.0,
+      "salience": 0.06999999999999999
+    },
+    "start_ts": "2023-07-19T14:07:21.046000+00:00Z",
+    "end_ts": "2025-08-30T13:10:19.033000+00:00Z",
+    "path": "digests/slices/2025-07-tagbags-memo/L2/tagbag/memo/tagbag__free_knowledge_management.mdx"
+  },
+  {
+    "digest_id": "d_95fc92f29b4fd08d",
+    "channel": "memo",
+    "unit_type": "tagbag",
+    "topic_ids": [
+      "unknown"
+    ],
+    "tags": [
+      "stage:reflect"
+    ],
+    "scores": {
+      "coverage": 0.7,
+      "novelty": 0.5,
+      "centrality": 0.2,
+      "topic_weight": 1.0,
+      "salience": 0.06999999999999999
+    },
+    "start_ts": "2023-01-02T14:53:05.332000+00:00Z",
+    "end_ts": "2025-08-30T13:10:19.033000+00:00Z",
+    "path": "digests/slices/2025-07-tagbags-memo/L2/tagbag/memo/tagbag__stage_reflect.mdx"
+  },
+  {
+    "digest_id": "d_927caa31be962e85",
+    "channel": "memo",
+    "unit_type": "tagbag",
+    "topic_ids": [
+      "unknown"
+    ],
+    "tags": [
+      "free:api"
+    ],
+    "scores": {
+      "coverage": 0.7,
+      "novelty": 0.5,
+      "centrality": 0.2,
+      "topic_weight": 1.0,
+      "salience": 0.06999999999999999
+    },
+    "start_ts": "2023-01-14T16:24:09.728000+00:00Z",
+    "end_ts": "2025-08-27T01:32:29.981000+00:00Z",
+    "path": "digests/slices/2025-07-tagbags-memo/L2/tagbag/memo/tagbag__free_api.mdx"
+  },
+  {
+    "digest_id": "d_a2b656f96930bb0b",
+    "channel": "memo",
+    "unit_type": "tagbag",
+    "topic_ids": [
+      "unknown"
+    ],
+    "tags": [
+      "format_type:guide"
+    ],
+    "scores": {
+      "coverage": 0.7,
+      "novelty": 0.5,
+      "centrality": 0.2,
+      "topic_weight": 1.0,
+      "salience": 0.06999999999999999
+    },
+    "start_ts": "2023-01-01T20:53:22.839000+00:00Z",
+    "end_ts": "2025-08-29T06:56:44.967000+00:00Z",
+    "path": "digests/slices/2025-07-tagbags-memo/L2/tagbag/memo/tagbag__format_type_guide.mdx"
+  },
+  {
+    "digest_id": "d_70d0b1341ec05220",
+    "channel": "memo",
+    "unit_type": "tagbag",
+    "topic_ids": [
+      "unknown"
+    ],
+    "tags": [
+      "category:programming"
+    ],
+    "scores": {
+      "coverage": 0.7,
+      "novelty": 0.5,
+      "centrality": 0.2,
+      "topic_weight": 1.0,
+      "salience": 0.06999999999999999
+    },
+    "start_ts": "2023-01-02T14:53:05.332000+00:00Z",
+    "end_ts": "2025-08-26T02:57:20.033000+00:00Z",
+    "path": "digests/slices/2025-07-tagbags-memo/L2/tagbag/memo/tagbag__category_programming.mdx"
+  },
+  {
+    "digest_id": "d_2dbb23f19871e100",
+    "channel": "memo",
+    "unit_type": "tagbag",
+    "topic_ids": [
+      "unknown"
+    ],
+    "tags": [
+      "category:other"
+    ],
+    "scores": {
+      "coverage": 0.7,
+      "novelty": 0.5,
+      "centrality": 0.2,
+      "topic_weight": 1.0,
+      "salience": 0.06999999999999999
+    },
+    "start_ts": "2023-01-03T04:18:10.923000+00:00Z",
+    "end_ts": "2025-08-12T01:10:56.375000+00:00Z",
+    "path": "digests/slices/2025-07-tagbags-memo/L2/tagbag/memo/tagbag__category_other.mdx"
+  },
+  {
+    "digest_id": "d_ec68094d595f016e",
+    "channel": "memo",
+    "unit_type": "tagbag",
+    "topic_ids": [
+      "unknown"
+    ],
+    "tags": [
+      "domain:data_analysis"
+    ],
+    "scores": {
+      "coverage": 0.7,
+      "novelty": 0.5,
+      "centrality": 0.2,
+      "topic_weight": 1.0,
+      "salience": 0.06999999999999999
+    },
+    "start_ts": "2023-02-28T05:42:37.392000+00:00Z",
+    "end_ts": "2025-07-02T20:05:58.767000+00:00Z",
+    "path": "digests/slices/2025-07-tagbags-memo/L2/tagbag/memo/tagbag__domain_data_analysis.mdx"
+  },
+  {
+    "digest_id": "d_43c8019dc90e9db3",
+    "channel": "memo",
+    "unit_type": "tagbag",
+    "topic_ids": [
+      "unknown"
+    ],
+    "tags": [
+      "free:programacion"
+    ],
+    "scores": {
+      "coverage": 0.7,
+      "novelty": 0.5,
+      "centrality": 0.2,
+      "topic_weight": 1.0,
+      "salience": 0.06999999999999999
+    },
+    "start_ts": "2023-02-25T19:37:19.563000+00:00Z",
+    "end_ts": "2025-07-02T20:05:58.767000+00:00Z",
+    "path": "digests/slices/2025-07-tagbags-memo/L2/tagbag/memo/tagbag__free_programacion.mdx"
+  },
+  {
+    "digest_id": "d_bb7e09fc88c1c280",
+    "channel": "memo",
+    "unit_type": "tagbag",
+    "topic_ids": [
+      "unknown"
+    ],
+    "tags": [
+      "category:health"
+    ],
+    "scores": {
+      "coverage": 0.7,
+      "novelty": 0.5,
+      "centrality": 0.2,
+      "topic_weight": 1.0,
+      "salience": 0.06999999999999999
+    },
+    "start_ts": "2023-01-20T09:31:20.443000+00:00Z",
+    "end_ts": "2025-08-06T02:49:02.190000+00:00Z",
+    "path": "digests/slices/2025-07-tagbags-memo/L2/tagbag/memo/tagbag__category_health.mdx"
+  },
+  {
+    "digest_id": "d_aee77a5884d010cb",
+    "channel": "memo",
+    "unit_type": "tagbag",
+    "topic_ids": [
+      "unknown"
+    ],
+    "tags": [
+      "subtopic:knowledge_management"
+    ],
+    "scores": {
+      "coverage": 0.7,
+      "novelty": 0.5,
+      "centrality": 0.2,
+      "topic_weight": 1.0,
+      "salience": 0.06999999999999999
+    },
+    "start_ts": "2023-11-12T16:52:58.858000+00:00Z",
+    "end_ts": "2025-08-29T02:03:10.395000+00:00Z",
+    "path": "digests/slices/2025-07-tagbags-memo/L2/tagbag/memo/tagbag__subtopic_knowledge_management.mdx"
+  },
+  {
+    "digest_id": "d_2226011ec0162c21",
+    "channel": "memo",
+    "unit_type": "tagbag",
+    "topic_ids": [
+      "unknown"
+    ],
+    "tags": [
+      "category:data"
+    ],
+    "scores": {
+      "coverage": 0.7,
+      "novelty": 0.5,
+      "centrality": 0.2,
+      "topic_weight": 1.0,
+      "salience": 0.06999999999999999
+    },
+    "start_ts": "2023-01-04T09:08:02.804000+00:00Z",
+    "end_ts": "2025-08-22T02:21:40.060000+00:00Z",
+    "path": "digests/slices/2025-07-tagbags-memo/L2/tagbag/memo/tagbag__category_data.mdx"
+  },
+  {
+    "digest_id": "d_460981cb42aaae57",
+    "channel": "memo",
+    "unit_type": "tagbag",
+    "topic_ids": [
+      "unknown"
+    ],
+    "tags": [
+      "note_type:process"
+    ],
+    "scores": {
+      "coverage": 0.7,
+      "novelty": 0.5,
+      "centrality": 0.2,
+      "topic_weight": 1.0,
+      "salience": 0.06999999999999999
+    },
+    "start_ts": "2023-11-10T17:13:39.442000+00:00Z",
+    "end_ts": "2025-08-29T06:56:44.967000+00:00Z",
+    "path": "digests/slices/2025-07-tagbags-memo/L2/tagbag/memo/tagbag__note_type_process.mdx"
+  },
+  {
+    "digest_id": "d_02ca5ba37bc655b8",
+    "channel": "memo",
+    "unit_type": "tagbag",
+    "topic_ids": [
+      "unknown"
+    ],
+    "tags": [
+      "free:organization"
+    ],
+    "scores": {
+      "coverage": 0.7,
+      "novelty": 0.5,
+      "centrality": 0.2,
+      "topic_weight": 1.0,
+      "salience": 0.06999999999999999
+    },
+    "start_ts": "2023-11-12T16:52:58.858000+00:00Z",
+    "end_ts": "2025-08-29T02:03:10.395000+00:00Z",
+    "path": "digests/slices/2025-07-tagbags-memo/L2/tagbag/memo/tagbag__free_organization.mdx"
+  },
+  {
+    "digest_id": "d_e50612b75c864e7f",
+    "channel": "memo",
+    "unit_type": "tagbag",
+    "topic_ids": [
+      "unknown"
+    ],
+    "tags": [
+      "msg_type:comment"
+    ],
+    "scores": {
+      "coverage": 0.7,
+      "novelty": 0.5,
+      "centrality": 0.2,
+      "topic_weight": 1.0,
+      "salience": 0.06999999999999999
+    },
+    "start_ts": "2023-01-02T14:53:05.332000+00:00Z",
+    "end_ts": "2025-08-29T02:03:10.395000+00:00Z",
+    "path": "digests/slices/2025-07-tagbags-memo/L2/tagbag/memo/tagbag__msg_type_comment.mdx"
+  },
+  {
+    "digest_id": "d_92a45084783f9f25",
+    "channel": "memo",
+    "unit_type": "tagbag",
+    "topic_ids": [
+      "unknown"
+    ],
+    "tags": [
+      "free:automation"
+    ],
+    "scores": {
+      "coverage": 0.7,
+      "novelty": 0.5,
+      "centrality": 0.2,
+      "topic_weight": 1.0,
+      "salience": 0.06999999999999999
+    },
+    "start_ts": "2023-01-02T14:53:05.332000+00:00Z",
+    "end_ts": "2025-08-30T13:10:19.033000+00:00Z",
+    "path": "digests/slices/2025-07-tagbags-memo/L2/tagbag/memo/tagbag__free_automation.mdx"
+  },
+  {
+    "digest_id": "d_327e4639d17f221b",
+    "channel": "memo",
+    "unit_type": "tagbag",
+    "topic_ids": [
+      "unknown"
+    ],
+    "tags": [
+      "format_type:checklist"
+    ],
+    "scores": {
+      "coverage": 0.7,
+      "novelty": 0.5,
+      "centrality": 0.2,
+      "topic_weight": 1.0,
+      "salience": 0.06999999999999999
+    },
+    "start_ts": "2023-03-21T15:45:58.402000+00:00Z",
+    "end_ts": "2025-07-29T02:55:54.005000+00:00Z",
+    "path": "digests/slices/2025-07-tagbags-memo/L2/tagbag/memo/tagbag__format_type_checklist.mdx"
+  },
+  {
+    "digest_id": "d_042f2c916a69c247",
+    "channel": "memo",
+    "unit_type": "tagbag",
+    "topic_ids": [
+      "unknown"
+    ],
+    "tags": [
+      "msg_type:question"
+    ],
+    "scores": {
+      "coverage": 0.7,
+      "novelty": 0.5,
+      "centrality": 0.2,
+      "topic_weight": 1.0,
+      "salience": 0.06999999999999999
+    },
+    "start_ts": "2023-01-13T13:58:55.039000+00:00Z",
+    "end_ts": "2025-08-21T02:51:13.832000+00:00Z",
+    "path": "digests/slices/2025-07-tagbags-memo/L2/tagbag/memo/tagbag__msg_type_question.mdx"
+  },
+  {
+    "digest_id": "d_985d6678086ff6bb",
+    "channel": "memo",
+    "unit_type": "tagbag",
+    "topic_ids": [
+      "unknown"
+    ],
+    "tags": [
+      "free:web_development"
+    ],
+    "scores": {
+      "coverage": 0.7,
+      "novelty": 0.5,
+      "centrality": 0.2,
+      "topic_weight": 1.0,
+      "salience": 0.06999999999999999
+    },
+    "start_ts": "2023-01-14T16:24:09.728000+00:00Z",
+    "end_ts": "2025-08-29T02:03:10.395000+00:00Z",
+    "path": "digests/slices/2025-07-tagbags-memo/L2/tagbag/memo/tagbag__free_web_development.mdx"
+  },
+  {
+    "digest_id": "d_49e20f139a071b7b",
+    "channel": "memo",
+    "unit_type": "tagbag",
+    "topic_ids": [
+      "unknown"
+    ],
+    "tags": [
+      "subtopic:screening"
+    ],
+    "scores": {
+      "coverage": 0.7,
+      "novelty": 0.5,
+      "centrality": 0.2,
+      "topic_weight": 1.0,
+      "salience": 0.06999999999999999
+    },
+    "start_ts": "2023-09-22T06:25:28.405000+00:00Z",
+    "end_ts": "2025-08-29T02:03:10.395000+00:00Z",
+    "path": "digests/slices/2025-07-tagbags-memo/L2/tagbag/memo/tagbag__subtopic_screening.mdx"
+  },
+  {
+    "digest_id": "d_38583deecb7eacb8",
+    "channel": "memo",
+    "unit_type": "tagbag",
+    "topic_ids": [
+      "unknown"
+    ],
+    "tags": [
+      "category:cooking"
+    ],
+    "scores": {
+      "coverage": 0.7,
+      "novelty": 0.5,
+      "centrality": 0.2,
+      "topic_weight": 1.0,
+      "salience": 0.06999999999999999
+    },
+    "start_ts": "2024-03-13T06:52:55.484000+00:00Z",
+    "end_ts": "2025-07-19T23:40:49.954000+00:00Z",
+    "path": "digests/slices/2025-07-tagbags-memo/L2/tagbag/memo/tagbag__category_cooking.mdx"
+  },
+  {
+    "digest_id": "d_292e00ba9ebbd996",
+    "channel": "memo",
+    "unit_type": "tagbag",
+    "topic_ids": [
+      "unknown"
+    ],
+    "tags": [
+      "free:ai"
+    ],
+    "scores": {
+      "coverage": 0.7,
+      "novelty": 0.5,
+      "centrality": 0.2,
+      "topic_weight": 1.0,
+      "salience": 0.06999999999999999
+    },
+    "start_ts": "2023-01-28T19:11:45.380000+00:00Z",
+    "end_ts": "2025-08-29T06:56:44.967000+00:00Z",
+    "path": "digests/slices/2025-07-tagbags-memo/L2/tagbag/memo/tagbag__free_ai.mdx"
+  },
+  {
+    "digest_id": "d_24d98f002920ca8a",
+    "channel": "memo",
+    "unit_type": "tagbag",
+    "topic_ids": [
+      "unknown"
+    ],
+    "tags": [
+      "subtopic:data_processing"
+    ],
+    "scores": {
+      "coverage": 0.7,
+      "novelty": 0.5,
+      "centrality": 0.2,
+      "topic_weight": 1.0,
+      "salience": 0.06999999999999999
+    },
+    "start_ts": "2023-01-05T08:57:48.920000+00:00Z",
+    "end_ts": "2025-07-07T18:30:14.745000+00:00Z",
+    "path": "digests/slices/2025-07-tagbags-memo/L2/tagbag/memo/tagbag__subtopic_data_processing.mdx"
+  },
+  {
+    "digest_id": "d_fcbb3588eaf0e738",
+    "channel": "memo",
+    "unit_type": "tagbag",
+    "topic_ids": [
+      "unknown"
+    ],
+    "tags": [
+      "format_type:report"
+    ],
+    "scores": {
+      "coverage": 0.7,
+      "novelty": 0.5,
+      "centrality": 0.2,
+      "topic_weight": 1.0,
+      "salience": 0.06999999999999999
+    },
+    "start_ts": "2023-01-03T04:18:10.923000+00:00Z",
+    "end_ts": "2025-08-29T02:03:10.395000+00:00Z",
+    "path": "digests/slices/2025-07-tagbags-memo/L2/tagbag/memo/tagbag__format_type_report.mdx"
+  },
+  {
+    "digest_id": "d_5094ba06b9f7a842",
+    "channel": "memo",
+    "unit_type": "tagbag",
+    "topic_ids": [
+      "unknown"
+    ],
+    "tags": [
+      "msg_type:reflection"
+    ],
+    "scores": {
+      "coverage": 0.7,
+      "novelty": 0.5,
+      "centrality": 0.2,
+      "topic_weight": 1.0,
+      "salience": 0.06999999999999999
+    },
+    "start_ts": "2023-01-03T04:18:10.923000+00:00Z",
+    "end_ts": "2025-08-26T02:57:20.033000+00:00Z",
+    "path": "digests/slices/2025-07-tagbags-memo/L2/tagbag/memo/tagbag__msg_type_reflection.mdx"
+  },
+  {
+    "digest_id": "d_8dd9d502ba2fa872",
+    "channel": "memo",
+    "unit_type": "tagbag",
+    "topic_ids": [
+      "unknown"
+    ],
+    "tags": [
+      "note_type:guide"
+    ],
+    "scores": {
+      "coverage": 0.7,
+      "novelty": 0.5,
+      "centrality": 0.2,
+      "topic_weight": 1.0,
+      "salience": 0.06999999999999999
+    },
+    "start_ts": "2023-10-07T20:29:30.914000+00:00Z",
+    "end_ts": "2025-07-31T02:05:11.502000+00:00Z",
+    "path": "digests/slices/2025-07-tagbags-memo/L2/tagbag/memo/tagbag__note_type_guide.mdx"
+  },
+  {
+    "digest_id": "d_cbb4f6c89e43cd7e",
+    "channel": "memo",
+    "unit_type": "tagbag",
+    "topic_ids": [
+      "unknown"
+    ],
+    "tags": [
+      "free:git"
+    ],
+    "scores": {
+      "coverage": 0.7,
+      "novelty": 0.5,
+      "centrality": 0.2,
+      "topic_weight": 1.0,
+      "salience": 0.06999999999999999
+    },
+    "start_ts": "2023-01-02T14:53:05.332000+00:00Z",
+    "end_ts": "2025-08-29T02:03:10.395000+00:00Z",
+    "path": "digests/slices/2025-07-tagbags-memo/L2/tagbag/memo/tagbag__free_git.mdx"
+  },
+  {
+    "digest_id": "d_6f3744ba0450fb66",
+    "channel": "memo",
+    "unit_type": "tagbag",
+    "topic_ids": [
+      "unknown"
+    ],
+    "tags": [
+      "free:pandas"
+    ],
+    "scores": {
+      "coverage": 0.7,
+      "novelty": 0.5,
+      "centrality": 0.2,
+      "topic_weight": 1.0,
+      "salience": 0.06999999999999999
+    },
+    "start_ts": "2023-01-04T09:08:02.804000+00:00Z",
+    "end_ts": "2025-08-12T01:10:56.375000+00:00Z",
+    "path": "digests/slices/2025-07-tagbags-memo/L2/tagbag/memo/tagbag__free_pandas.mdx"
+  },
+  {
+    "digest_id": "d_018df590227f21c8",
+    "channel": "memo",
+    "unit_type": "tagbag",
+    "topic_ids": [
+      "unknown"
+    ],
+    "tags": [
+      "note_type:insight"
+    ],
+    "scores": {
+      "coverage": 0.7,
+      "novelty": 0.5,
+      "centrality": 0.2,
+      "topic_weight": 1.0,
+      "salience": 0.06999999999999999
+    },
+    "start_ts": "2023-01-03T04:18:10.923000+00:00Z",
+    "end_ts": "2025-08-21T02:51:13.832000+00:00Z",
+    "path": "digests/slices/2025-07-tagbags-memo/L2/tagbag/memo/tagbag__note_type_insight.mdx"
+  },
+  {
+    "digest_id": "d_2c8fc80b9da15beb",
+    "channel": "memo",
+    "unit_type": "tagbag",
+    "topic_ids": [
+      "unknown"
+    ],
+    "tags": [
+      "domain:python"
+    ],
+    "scores": {
+      "coverage": 0.7,
+      "novelty": 0.5,
+      "centrality": 0.2,
+      "topic_weight": 1.0,
+      "salience": 0.06999999999999999
+    },
+    "start_ts": "2023-01-02T14:53:05.332000+00:00Z",
+    "end_ts": "2025-08-18T01:31:00.031000+00:00Z",
+    "path": "digests/slices/2025-07-tagbags-memo/L2/tagbag/memo/tagbag__domain_python.mdx"
+  },
+  {
+    "digest_id": "d_e51ab93391c8dba1",
+    "channel": "memo",
+    "unit_type": "tagbag",
+    "topic_ids": [
+      "unknown"
+    ],
+    "tags": [
+      "domain:git"
+    ],
+    "scores": {
+      "coverage": 0.7,
+      "novelty": 0.5,
+      "centrality": 0.2,
+      "topic_weight": 1.0,
+      "salience": 0.06999999999999999
+    },
+    "start_ts": "2023-04-13T17:13:36.855000+00:00Z",
+    "end_ts": "2025-08-29T02:03:10.395000+00:00Z",
+    "path": "digests/slices/2025-07-tagbags-memo/L2/tagbag/memo/tagbag__domain_git.mdx"
+  },
+  {
+    "digest_id": "d_5d44b9427120945f",
+    "channel": "memo",
+    "unit_type": "tagbag",
+    "topic_ids": [
+      "unknown"
+    ],
+    "tags": [
+      "free:career_development"
+    ],
+    "scores": {
+      "coverage": 0.7,
+      "novelty": 0.5,
+      "centrality": 0.2,
+      "topic_weight": 1.0,
+      "salience": 0.06999999999999999
+    },
+    "start_ts": "2023-07-01T20:49:00.202000+00:00Z",
+    "end_ts": "2025-08-08T19:19:09.427000+00:00Z",
+    "path": "digests/slices/2025-07-tagbags-memo/L2/tagbag/memo/tagbag__free_career_development.mdx"
+  },
+  {
+    "digest_id": "d_deb911e69ecb8771",
+    "channel": "memo",
+    "unit_type": "tagbag",
+    "topic_ids": [
+      "unknown"
+    ],
+    "tags": [
+      "free:communication"
+    ],
+    "scores": {
+      "coverage": 0.7,
+      "novelty": 0.5,
+      "centrality": 0.2,
+      "topic_weight": 1.0,
+      "salience": 0.06999999999999999
+    },
+    "start_ts": "2023-01-12T07:56:20.181000+00:00Z",
+    "end_ts": "2025-08-01T00:10:40.704000+00:00Z",
+    "path": "digests/slices/2025-07-tagbags-memo/L2/tagbag/memo/tagbag__free_communication.mdx"
+  },
+  {
+    "digest_id": "d_d655fb54dad9013c",
+    "channel": "memo",
+    "unit_type": "tagbag",
+    "topic_ids": [
+      "unknown"
+    ],
+    "tags": [
+      "note_type:analysis"
+    ],
+    "scores": {
+      "coverage": 0.7,
+      "novelty": 0.5,
+      "centrality": 0.2,
+      "topic_weight": 1.0,
+      "salience": 0.06999999999999999
+    },
+    "start_ts": "2023-05-30T04:21:28.832000+00:00Z",
+    "end_ts": "2025-07-16T00:42:36.626000+00:00Z",
+    "path": "digests/slices/2025-07-tagbags-memo/L2/tagbag/memo/tagbag__note_type_analysis.mdx"
+  },
+  {
+    "digest_id": "d_5e2a131e80f0708c",
+    "channel": "memo",
+    "unit_type": "tagbag",
+    "topic_ids": [
+      "unknown"
+    ],
+    "tags": [
+      "free:version_control"
+    ],
+    "scores": {
+      "coverage": 0.7,
+      "novelty": 0.5,
+      "centrality": 0.2,
+      "topic_weight": 1.0,
+      "salience": 0.06999999999999999
+    },
+    "start_ts": "2023-04-13T17:13:36.855000+00:00Z",
+    "end_ts": "2025-08-29T02:03:10.395000+00:00Z",
+    "path": "digests/slices/2025-07-tagbags-memo/L2/tagbag/memo/tagbag__free_version_control.mdx"
+  },
+  {
+    "digest_id": "d_a71f32fc18806595",
+    "channel": "memo",
+    "unit_type": "tagbag",
+    "topic_ids": [
+      "unknown"
+    ],
+    "tags": [
+      "free:programming"
+    ],
+    "scores": {
+      "coverage": 0.7,
+      "novelty": 0.5,
+      "centrality": 0.2,
+      "topic_weight": 1.0,
+      "salience": 0.06999999999999999
+    },
+    "start_ts": "2023-01-02T14:53:05.332000+00:00Z",
+    "end_ts": "2025-08-18T01:31:00.031000+00:00Z",
+    "path": "digests/slices/2025-07-tagbags-memo/L2/tagbag/memo/tagbag__free_programming.mdx"
+  },
+  {
+    "digest_id": "d_4e7eaf7f793a65bb",
+    "channel": "memo",
+    "unit_type": "tagbag",
+    "topic_ids": [
+      "unknown"
+    ],
+    "tags": [
+      "free:project_management"
+    ],
+    "scores": {
+      "coverage": 0.7,
+      "novelty": 0.5,
+      "centrality": 0.2,
+      "topic_weight": 1.0,
+      "salience": 0.06999999999999999
+    },
+    "start_ts": "2023-03-29T06:04:54.148000+00:00Z",
+    "end_ts": "2025-08-25T02:59:03.187000+00:00Z",
+    "path": "digests/slices/2025-07-tagbags-memo/L2/tagbag/memo/tagbag__free_project_management.mdx"
+  },
+  {
+    "digest_id": "d_aa7be67f2a654327",
+    "channel": "memo",
+    "unit_type": "tagbag",
+    "topic_ids": [
+      "unknown"
+    ],
+    "tags": [
+      "format_type:script"
+    ],
+    "scores": {
+      "coverage": 0.7,
+      "novelty": 0.5,
+      "centrality": 0.2,
+      "topic_weight": 1.0,
+      "salience": 0.06999999999999999
+    },
+    "start_ts": "2023-02-14T03:00:14.244000+00:00Z",
+    "end_ts": "2025-08-11T02:58:41.953000+00:00Z",
+    "path": "digests/slices/2025-07-tagbags-memo/L2/tagbag/memo/tagbag__format_type_script.mdx"
+  },
+  {
+    "digest_id": "d_79047d107c197bfc",
+    "channel": "memo",
+    "unit_type": "tagbag",
+    "topic_ids": [
+      "unknown"
+    ],
+    "tags": [
+      "free:csv"
+    ],
+    "scores": {
+      "coverage": 0.7,
+      "novelty": 0.5,
+      "centrality": 0.2,
+      "topic_weight": 1.0,
+      "salience": 0.06999999999999999
+    },
+    "start_ts": "2023-01-05T08:57:48.920000+00:00Z",
+    "end_ts": "2025-07-20T23:19:31.266000+00:00Z",
+    "path": "digests/slices/2025-07-tagbags-memo/L2/tagbag/memo/tagbag__free_csv.mdx"
+  },
+  {
+    "digest_id": "d_92b322f4132c2b97",
+    "channel": "memo",
+    "unit_type": "tagbag",
+    "topic_ids": [
+      "unknown"
+    ],
+    "tags": [
+      "free:data_processing"
+    ],
+    "scores": {
+      "coverage": 0.7,
+      "novelty": 0.5,
+      "centrality": 0.2,
+      "topic_weight": 1.0,
+      "salience": 0.06999999999999999
+    },
+    "start_ts": "2023-01-04T09:08:02.804000+00:00Z",
+    "end_ts": "2025-08-18T01:31:00.031000+00:00Z",
+    "path": "digests/slices/2025-07-tagbags-memo/L2/tagbag/memo/tagbag__free_data_processing.mdx"
+  },
+  {
+    "digest_id": "d_4f65790cb66d807a",
+    "channel": "memo",
+    "unit_type": "tagbag",
+    "topic_ids": [
+      "unknown"
+    ],
+    "tags": [
+      "free:troubleshooting"
+    ],
+    "scores": {
+      "coverage": 0.7,
+      "novelty": 0.5,
+      "centrality": 0.2,
+      "topic_weight": 1.0,
+      "salience": 0.06999999999999999
+    },
+    "start_ts": "2023-01-28T19:11:45.380000+00:00Z",
+    "end_ts": "2025-08-03T00:41:51.498000+00:00Z",
+    "path": "digests/slices/2025-07-tagbags-memo/L2/tagbag/memo/tagbag__free_troubleshooting.mdx"
+  },
+  {
+    "digest_id": "d_f52db194a941f89c",
+    "channel": "memo",
+    "unit_type": "tagbag",
+    "topic_ids": [
+      "unknown"
+    ],
+    "tags": [
+      "free:error_handling"
+    ],
+    "scores": {
+      "coverage": 0.7,
+      "novelty": 0.5,
+      "centrality": 0.2,
+      "topic_weight": 1.0,
+      "salience": 0.06999999999999999
+    },
+    "start_ts": "2023-01-05T08:57:48.920000+00:00Z",
+    "end_ts": "2025-07-24T02:38:32.593000+00:00Z",
+    "path": "digests/slices/2025-07-tagbags-memo/L2/tagbag/memo/tagbag__free_error_handling.mdx"
+  },
+  {
+    "digest_id": "d_14067c21cb7d1e9e",
+    "channel": "memo",
+    "unit_type": "tagbag",
+    "topic_ids": [
+      "unknown"
+    ],
+    "tags": [
+      "subtopic:screening_process"
+    ],
+    "scores": {
+      "coverage": 0.7,
+      "novelty": 0.5,
+      "centrality": 0.2,
+      "topic_weight": 1.0,
+      "salience": 0.06999999999999999
+    },
+    "start_ts": "2023-08-21T21:18:05.824000+00:00Z",
+    "end_ts": "2025-08-30T13:10:19.033000+00:00Z",
+    "path": "digests/slices/2025-07-tagbags-memo/L2/tagbag/memo/tagbag__subtopic_screening_process.mdx"
+  },
+  {
+    "digest_id": "d_680217297271a7ee",
+    "channel": "memo",
+    "unit_type": "tagbag",
+    "topic_ids": [
+      "unknown"
+    ],
+    "tags": [
+      "free:machine_learning"
+    ],
+    "scores": {
+      "coverage": 0.7,
+      "novelty": 0.5,
+      "centrality": 0.2,
+      "topic_weight": 1.0,
+      "salience": 0.06999999999999999
+    },
+    "start_ts": "2023-01-12T07:56:20.181000+00:00Z",
+    "end_ts": "2025-08-20T02:59:12.450000+00:00Z",
+    "path": "digests/slices/2025-07-tagbags-memo/L2/tagbag/memo/tagbag__free_machine_learning.mdx"
+  }
+]

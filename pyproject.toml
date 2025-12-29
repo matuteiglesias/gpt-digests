@@ -1,0 +1,44 @@
+[build-system]
+requires = ["hatchling>=1.18"]
+build-backend = "hatchling.build"
+
+[project]
+name = "bags-pipeline"
+version = "0.1.0"
+description = "Modular pipelines to bag logs/sessions into digestible MD/MDX outputs."
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+authors = [{name = "Matias", email = "you@example.com"}]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "License :: OSI Approved :: MIT License",
+  "Intended Audience :: Developers",
+  "Topic :: Text Processing",
+]
+
+dependencies = [
+  "typer>=0.12",
+  "click>=8.1",
+  "pydantic>=2.6",          # if you use it elsewhere; otherwise drop
+  "pyyaml>=6.0",
+  "pandas>=2.0",
+  "networkx>=3.2",
+]
+
+[project.optional-dependencies]
+docs = [
+  "mkdocs>=1.6",
+  "mkdocs-material>=9.5",
+  "mkdocstrings[python]>=0.25",
+  "mkdocs-gen-files>=0.5",
+  "mkdocs-literate-nav>=0.6",
+  "mkdocs-section-index>=0.3",
+  "pymdown-extensions>=10.7",
+]
+
+[project.scripts]
+kbctl = "digests_project.cli.kbctl:app"   # <-- NOTE the full path
+
+[tool.hatch.build.targets.wheel]
+packages = ["digests_project"]            # <-- package root is this folder

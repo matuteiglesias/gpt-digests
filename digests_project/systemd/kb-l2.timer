@@ -1,0 +1,10 @@
+
+[Unit]
+Description=KB L2 Builder Timer (hourly)
+
+[Timer]
+OnCalendar=hourly
+Persistent=true
+
+[Install]
+WantedBy=timers.target

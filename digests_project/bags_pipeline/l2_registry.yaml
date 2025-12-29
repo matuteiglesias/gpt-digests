@@ -1,0 +1,19 @@
+
+version: 1
+channels:
+  - name: cheatsheet
+    template: l2_cheatsheet_v1
+    include_if: ["tokens_total >= 600", "topic_id != 'unknown'"]
+    out_dir: "digests/L2/{unit_type}/{day}/cheatsheet/"
+  - name: memo
+    template: l2_memo_v2
+    include_if: []
+    out_dir: "digests/L2/{unit_type}/{day}/memo/"
+  - name: tech_debt
+    template: l2_debt_v1
+    include_if: ["tags ~ 'debt|fix|bug'"]
+    out_dir: "digests/L2/{unit_type}/{day}/tech_debt/"
+  - name: achievements
+    template: l2_achievements_v1
+    include_if: ["tags ~ 'done|landed|shipped'"]
+    out_dir: "digests/L2/{unit_type}/{day}/achievements/"

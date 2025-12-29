@@ -1,0 +1,65 @@
+site_name: GPT Digests
+site_url: https://your-user.github.io/GPT_digests/
+repo_url: https://github.com/your-user/GPT_digests
+repo_name: your-user/GPT_digests
+edit_uri: ""
+
+theme:
+  name: material
+  features:
+    - navigation.sections
+    - navigation.indexes
+    - content.code.copy
+    - content.tabs.link
+  palette:
+    - scheme: default
+
+plugins:
+  - search
+  - mkdocstrings:
+      default_handler: python
+      handlers:
+        python:
+          options:
+            show_source: false
+            docstring_style: google
+            docstring_options:
+              ignore_init_summary: true
+            show_if_no_docstring: true
+            inherited_members: false
+  - section-index
+  - mermaid2            # ← add this
+
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - footnotes
+  - md_in_html
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.snippets
+  - pymdownx.tabbed
+  - pymdownx.tasklist
+  - pymdownx.highlight
+  - pymdownx.inlinehilite
+  - tables
+  - toc:
+      permalink: true
+
+nav:
+  - Home: index.md
+  - User Guide:
+      - Quickstart: guide/quickstart.md
+      - Pipelines: guide/pipelines.md
+      - Hydration: guide/hydration.md
+      - Publishing: guide/publish.md
+      - Troubleshooting: guide/troubleshooting.md
+  - CLI Reference: cli.md
+  - API:
+      - Overview: api/index.md
+      - Units & Normalization: api/unitize.md
+      - L2 Digests: api/l2.md
+      - Hydration: api/hydrate.md
+      - Selection: api/select.md
+      - Pairs & Tags: api/pairs.md

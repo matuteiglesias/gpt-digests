@@ -1,0 +1,104 @@
+%%{init: {
+  "flowchart": { "curve": "basis", "nodeSpacing": 26, "rankSpacing": 56, "htmlLabels": true, "useMaxWidth": false, "padding": 6 }
+}}%%
+flowchart LR
+
+%% ===== Hubs =====
+H_PLAN([plan•hub])
+H_EXEC([execute•hub])
+H_REFL([reflect•hub])
+
+%% ===== Minimal styles (kept neutral) =====
+classDef stagePlan stroke:#7aa7e6,fill:#eef7ff,stroke-width:1px;
+classDef stageExec stroke:#6abf7b,fill:#eefaf1,stroke-width:1px;
+classDef stageRefl stroke:#b07ad9,fill:#fbf0ff,stroke-width:1px;
+classDef msg stroke-dasharray:3 2;
+classDef fmt stroke-width:2px;
+classDef topic stroke:#97a1ab,fill:#f8f9fa,stroke-width:1px;
+
+%% ===== LANES =====
+
+subgraph PLAN["Stage: plan"]
+direction TB
+  P_IDEA["msg_type:idea → stage:plan"]:::stagePlan,msg
+  P_TPL["format_type:template → stage:plan"]:::stagePlan,fmt
+  P_AI_IDEA["category:ai_agents → msg_type:idea"]:::topic
+  P_BIZ_PLAN["category:docs_and_planning → stage:plan"]:::stagePlan
+end
+
+subgraph EXECUTE["Stage: execute"]
+direction TB
+  X_CODE["category:programming ↔ format_type:code"]:::stageExec,fmt
+  X_PY["domain:python ↔ format_type:code"]:::stageExec,fmt
+  X_SCRIPT["domain:python ↔ format_type:script"]:::stageExec,fmt
+  X_DATA["free:data ↔ free:data_processing"]:::stageExec
+  X_DP_PY["domain:python ↔ free:data_processing"]:::stageExec
+  X_DEBUG["free:debugging / free:error_handling"]:::stageExec
+  X_CHK["format_type:checklist ↔ stage:execute"]:::stageExec,fmt
+  X_SD_WEB["category:software_dev ↔ free:web_development"]:::stageExec
+end
+
+subgraph REFLECT["Stage: reflect"]
+direction TB
+  R_REFLECT["msg_type:reflection → stage:reflect"]:::stageRefl,msg
+  R_REP["format_type:report ↔ note_type:analysis"]:::stageRefl,fmt
+  R_REP_REF["format_type:report → stage:reflect"]:::stageRefl,fmt
+  R_AN_REF["note_type:analysis → stage:reflect"]:::stageRefl
+end
+
+subgraph CAREER["Career / Jobs"]
+direction TB
+  C_DEV_JOBS1["free:career_development ↔ free:job_applications"]:::topic
+  C_DEV_JOBS2["free:career_development ↔ free:job_application"]:::topic
+  C_BIZ_JOBS["category:business ↔ (job_applications|job_search|job_application)"]:::topic
+  C_TPL_JOBS["format_type:template ↔ (job_applications|job_application)"]:::topic,fmt
+end
+
+subgraph HEALTH["Health (island)"]
+direction TB
+  H_HC["category:health ↔ domain:healthcare"]:::topic
+end
+
+%% ===== Cross-lane connectors via hubs =====
+
+%% Intake → plan
+P_AI_IDEA --> P_IDEA
+P_TPL --> H_PLAN
+P_IDEA --> H_PLAN
+P_BIZ_PLAN --> H_PLAN
+
+%% plan → execute
+H_PLAN --> X_CODE
+H_PLAN --> X_PY
+H_PLAN --> X_CHK
+
+%% execution spine & satellites
+X_CODE --- X_PY
+X_PY --- X_SCRIPT
+X_DATA --- X_DP_PY
+X_PY --- X_DP_PY
+X_DEBUG -. troubleshooting .- X_PY
+X_SD_WEB -. delivery surface .- X_CODE
+
+%% execute → reflect (close-the-loop)
+X_CODE --> H_REFL
+X_PY --> H_REFL
+X_DATA --> H_REFL
+X_DP_PY --> H_REFL
+X_CHK --> H_REFL
+
+%% reflection cluster
+H_REFL --> R_REFLECT
+R_REP <--> R_REP_REF
+R_REFLECT --> R_REP
+R_REP --> R_AN_REF
+R_AN_REF --> R_REFLECT
+
+%% career touches plan/templates and reflection (light ties)
+C_DEV_JOBS1 -. planning assets .- P_TPL
+C_TPL_JOBS -. uses templates .- P_TPL
+C_BIZ_JOBS -. prioritize .- P_IDEA
+C_DEV_JOBS1 -. outcomes .- R_REP_REF
+
+%% health stays mostly isolated (weak/no cross)
+H_HC -. isolated theme .- H_REFL

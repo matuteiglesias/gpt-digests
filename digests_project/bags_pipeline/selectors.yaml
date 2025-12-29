@@ -1,0 +1,31 @@
+
+views:
+  daily_overview:
+    level: L3
+    window: day
+    channels: ["memo","achievements","cheatsheet"]
+    per_topic_cap: 3
+    total_cap: 12
+    sort: "-salience"
+    include_bridges: true
+
+  weekly_overview:
+    level: L3W
+    window: iso_week
+    channels: ["memo","achievements","tech_debt"]
+    per_topic_cap: 5
+    total_cap: 30
+    sort: "-salience"
+
+  topic_weekly:
+    level: L4
+    window: iso_week
+    channels: ["memo","achievements","tech_debt","cheatsheet"]
+    min_salience: 0.25
+    group_by: "topic_id"
+
+  monthly_portfolio:
+    level: L5
+    window: month
+    inputs_from: ["L2"]
+    metrics: ["n_L2","coverage_mean","novelty_drift","topics_active"]

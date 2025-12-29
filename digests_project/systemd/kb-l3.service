@@ -1,0 +1,10 @@
+
+[Unit]
+Description=KB L3 Daily Builder
+After=network.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/python3 -m cli.kbctl index-l2 --digests-root /home/matias/Documents/GPT/digests/L2 --out-json /home/matias/Documents/GPT/index/l2_by_window.json
+WorkingDirectory=data/digests_project
+User=matias
