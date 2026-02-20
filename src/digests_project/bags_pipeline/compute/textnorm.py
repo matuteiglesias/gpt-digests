@@ -3,13 +3,13 @@ from __future__ import annotations
 
 
 # tag normalization:
-# from digests_project.bags_pipeline.normalize import parse_tags, canonical_tag
+# from digests_project.bags_pipeline.compute.normalize import parse_tags, canonical_tag
 # raw = {"tags":["Guide","topic:Automation"],"stage":"Execute"}
 # sorted({canonical_tag(t) for t in parse_tags(raw)})
 # # ['free:guide', 'stage:execute', 'topic:automation']   (if you also project 'stage' elsewhere)
 
 # time parsing:
-# from digests_project.bags_pipeline.textnorm import to_utc_dt
+# from digests_project.bags_pipeline.compute.textnorm import to_utc_dt
 # [str(to_utc_dt(x)) for x in ["2025-08-29T06:34:06Z", "2025-08-29T06:34:06+00:00", 1756559246]]
 
 

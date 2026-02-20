@@ -2,7 +2,7 @@
 
 # Pair & Tag Bags
 
-::: digests_project.bags_pipeline.pairs
+::: digests_project.bags_pipeline.compute.pairs
     options:
       show_root_heading: true
       members_order: source

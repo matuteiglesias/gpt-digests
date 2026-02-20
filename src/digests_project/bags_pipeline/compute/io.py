@@ -1,5 +1,24 @@
 from __future__ import annotations
 
+import os
+import glob
+from pathlib import Path
+from typing import Iterable, List
+
+def _expand_glob(pat: str) -> str:
+    # Expand $VARS first, then ~
+    return os.path.expanduser(os.path.expandvars(pat))
+
+def _glob_all(globs: Iterable[str]) -> List[str]:
+    files: List[str] = []
+    for g in globs:
+        gg = _expand_glob(g)
+        files.extend(glob.glob(gg, recursive=True))
+    return sorted(set(files))
+
+
+
+
 # bags_pipeline/io.py
 import json, csv, re
 from pathlib import Path
@@ -13,11 +32,37 @@ PathLike = Union[str, Path]
 
 # from .index import build_event_index, build_session_index
 
-def read_jsonl(path: Path) -> list[dict]:
-    """Read a JSONL (one JSON doc per non-blank line)."""
-    text = path.read_text(encoding="utf-8")
-    return [json.loads(line) for line in text.splitlines() if line.strip()]
+def read_jsonl(path: Path, *, permissive: bool = True) -> list[dict]:
+    """
+    Read a JSONL (one JSON doc per non-blank line).
+    If permissive=True, skip invalid JSON lines instead of crashing.
+    """
+    out: list[dict] = []
+    bad = 0
 
+    # Stream line-by-line so a huge file doesn't blow memory
+    with path.open("r", encoding="utf-8", errors="replace") as f:
+        for line_no, line in enumerate(f, start=1):
+            s = line.strip()
+            if not s:
+                continue
+            try:
+                obj = json.loads(s)
+            except json.JSONDecodeError:
+                bad += 1
+                if not permissive:
+                    raise
+                continue
+            if isinstance(obj, dict):
+                out.append(obj)
+            else:
+                # If you ever have non-dict rows, just skip them in permissive mode
+                if not permissive:
+                    raise ValueError(f"Non-dict JSON at {path}:{line_no}")
+    # Optional: tiny breadcrumb for debugging without killing runs
+    if permissive and bad:
+        print(f"⚠️  read_jsonl skipped {bad} bad line(s) in {path}")
+    return out
 
 def write_jsonl(path: Path, docs: Iterable[Any], *,
                 ensure_ascii: bool = False,
@@ -132,7 +177,7 @@ def expand_globs(
     for pat in patterns:
         p = str(pat)
         # Use Python’s glob; recursive if asked for
-        matches = glob.glob(p, recursive=recursive)
+        matches = _glob_all(p)
         for m in matches:
             path = Path(m)
             if path.is_file():

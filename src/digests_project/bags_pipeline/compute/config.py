@@ -61,7 +61,10 @@ def to_utc_dt(x: Any) -> datetime:
     Accepts epoch (s or ms), ISO strings with or without 'Z', or datetimes.
     """
     if x is None:
-        raise ValueError("timestamp is None")
+        # raise ValueError("timestamp is None")
+        x = 0
+
+
     # 1) epoch
     if isinstance(x, (int, float)):
         v = float(x)

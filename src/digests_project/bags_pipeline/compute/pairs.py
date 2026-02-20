@@ -13,7 +13,7 @@ from .core import Unit
 import pandas as pd
 
 # NEW: use the shared normalizer
-from digests_project.bags_pipeline.normalize import (
+from digests_project.bags_pipeline.compute.normalize import (
     canonical_tag as _canon,
     lexeme as _lexeme,
 )

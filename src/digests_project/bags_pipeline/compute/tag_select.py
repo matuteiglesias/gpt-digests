@@ -419,7 +419,7 @@ def group_by_tagpair(units: Iterable[Unit]) -> Dict[Tuple[str,str], List[Unit]]:
 # unit_ts: Optional[str]
 # content: Dict
 try:
-    from digests_project.bags_pipeline.unitize import Unit
+    from digests_project.bags_pipeline.compute.unitize import Unit
 except Exception:
     Unit = object  # type: ignore
 

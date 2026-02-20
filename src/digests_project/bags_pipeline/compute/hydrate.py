@@ -17,7 +17,7 @@ from .quick import quick_unit_list_markdown
 
 # from dataclasses import is_dataclass, replace as _dc_replace
 # from types import SimpleNamespace
-# from digests_project.bags_pipeline.ingest_logs import normalize_log_line
+# from digests_project.bags_pipeline.compute.ingest_logs import normalize_log_line
 
 # convenience alias
 PathLike = Union[str, Path]

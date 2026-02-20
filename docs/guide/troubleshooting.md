@@ -11,7 +11,7 @@
 - If Units were built from different raw sets, rebuild Units from the same sources you index.
 
 ### `ModuleNotFoundError: bags_pipeline`
-- Your package is `digests_project`. Use `from digests_project.bags_pipeline import ...`
+- Your package is `digests_project`. Use `from digests_project.bags_pipeline.compute import ...`
 - A safety alias in `digests_project/__init__.py` can map `bags_pipeline` to the package path.
 
 ### `TypeError: Unit.__init__(...)`

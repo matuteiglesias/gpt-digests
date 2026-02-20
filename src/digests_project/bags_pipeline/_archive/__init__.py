@@ -2,7 +2,7 @@
 Stable facade for the bags_pipeline package.
 
 Import only from here in apps/CLI:
-    from digests_project.bags_pipeline import (...)
+    from digests_project.bags_pipeline.compute import (...)
 
 This module re-exports the stable surface and provides thin wrappers where
 we want back-compat (e.g., ignoring a legacy `tz=` argument).
