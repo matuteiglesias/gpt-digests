@@ -50,12 +50,11 @@ def test_sop_build_writes_auditable_minimal_run(tmp_path: Path) -> None:
     assert manifest["counts"]["invalid_or_unusable"] == 1
     assert manifest["counts"]["deduplicated"] == 1
     assert manifest["counts"]["evaluated_unique"] == 7
-    assert manifest["counts"]["selected"] == 4
+    assert manifest["counts"]["selected"] == 1
     assert (output / "errors.jsonl").exists()
     decisions = [json.loads(line) for line in (output / "decisions.jsonl").read_text(encoding="utf-8").splitlines()]
     assert {item["record_id"] for item in decisions if item["disposition"] == "selected"} == {
-        "chatgpt:conversation-1:sop-1", "chatgpt:conversation-1:runbook-1",
-        "chatgpt:conversation-1:spanish-1", "chatgpt:conversation-1:no-summary-1",
+        "chatgpt:conversation-1:sop-1",
     }
     duplicate = next(item for item in decisions if item["disposition"] == "deduplicated")
     assert duplicate["canonical_record_id"] == "chatgpt:conversation-1:sop-1"
@@ -63,8 +62,8 @@ def test_sop_build_writes_auditable_minimal_run(tmp_path: Path) -> None:
     assert manifest["reconciliation"]["scanned_value"] == manifest["counts"]["scanned"]
     assert manifest["reconciliation"]["evaluated_unique_value"] == manifest["counts"]["evaluated_unique"]
     artifact = (output / "artifact.md").read_text(encoding="utf-8")
-    assert "Reusable SOPs and Procedures" in artifact
-    assert "chatgpt:conversation-1:spanish-1" in artifact
+    assert "Operations: SOPs and Runbooks" in artifact
+    assert "chatgpt:conversation-1:sop-1" in artifact
 
 
 def test_audit_all_decisions_restores_ordinary_nonmatches(tmp_path: Path) -> None:
@@ -93,8 +92,8 @@ def test_review_packet_is_bounded_private_and_has_reviewer_columns(tmp_path: Pat
     assert result.exit_code == 0, result.output
     rows = list(__import__("csv").DictReader(packet.open(encoding="utf-8", newline="")))
     assert rows
-    assert {"review_label", "review_comment", "expected_group", "score_components", "text_excerpt"} <= set(rows[0])
-    assert all(row["review_label"] == row["review_comment"] == row["expected_group"] == "" for row in rows)
+    assert {"review_family", "review_maturity", "review_action", "review_comment", "expected_group", "score_components", "text_excerpt"} <= set(rows[0])
+    assert all(row["review_family"] == row["review_maturity"] == row["review_action"] == row["review_comment"] == row["expected_group"] == "" for row in rows)
     assert all(len(row["text_excerpt"]) <= 320 for row in rows)
     assert "Procedure: 1. Back up the database. 2. Verify the restore." not in packet.read_text(encoding="utf-8")
 

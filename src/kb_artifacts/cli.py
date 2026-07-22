@@ -25,16 +25,16 @@ def version() -> None:
 
 @app.command("build")
 def build(
-    recipe: Annotated[str, typer.Argument(help="Supported recipe ID: sop")],
+    recipe: Annotated[str, typer.Argument(help="Supported recipe ID: sop (operations)")],
     chunk_glob: Annotated[list[str], typer.Option("--chunk-glob")],
     summary_glob: Annotated[list[str], typer.Option("--summary-glob")] = [],
     output: Annotated[Path, typer.Option("--output")] = Path("artifacts/runs/sop"),
     allow_empty: Annotated[bool, typer.Option("--allow-empty")] = False,
     audit_all_decisions: Annotated[bool, typer.Option("--audit-all-decisions", help="Write ordinary nonmatches to decisions.jsonl for an explicit audit.")] = False,
-    review_packet: Annotated[Path | None, typer.Option("--review-packet", help="Write a bounded SOP calibration CSV (for example review/sop-review.csv). ")] = None,
+    review_packet: Annotated[Path | None, typer.Option("--review-packet", help="Write a bounded classification calibration CSV.")] = None,
 ) -> None:
     if recipe != "sop":
-        raise typer.BadParameter("Only the 'sop' recipe is available in this first slice")
+        raise typer.BadParameter("Only the 'sop' (operations) recipe is currently available")
     try:
         manifest = build_run(RECIPE, chunk_globs=chunk_glob, summary_globs=summary_glob, output=output, allow_empty=allow_empty, audit_all_decisions=audit_all_decisions, review_packet=review_packet)
     except SourceInputError as error:
