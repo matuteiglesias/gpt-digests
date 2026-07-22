@@ -60,3 +60,7 @@ class ArtifactRecipe:
     title: str
     evaluate: Evaluate
     group: Group
+    # Rejected records at or above this score are useful review candidates.
+    # Lower-scoring rejected records are accounted for only in the manifest.
+    candidate_threshold: float = 3
+    near_threshold_score: float = 4

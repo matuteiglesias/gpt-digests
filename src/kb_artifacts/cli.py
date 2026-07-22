@@ -30,11 +30,13 @@ def build(
     summary_glob: Annotated[list[str], typer.Option("--summary-glob")] = [],
     output: Annotated[Path, typer.Option("--output")] = Path("artifacts/runs/sop"),
     allow_empty: Annotated[bool, typer.Option("--allow-empty")] = False,
+    audit_all_decisions: Annotated[bool, typer.Option("--audit-all-decisions", help="Write ordinary nonmatches to decisions.jsonl for an explicit audit.")] = False,
+    review_packet: Annotated[Path | None, typer.Option("--review-packet", help="Write a bounded SOP calibration CSV (for example review/sop-review.csv). ")] = None,
 ) -> None:
     if recipe != "sop":
         raise typer.BadParameter("Only the 'sop' recipe is available in this first slice")
     try:
-        manifest = build_run(RECIPE, chunk_globs=chunk_glob, summary_globs=summary_glob, output=output, allow_empty=allow_empty)
+        manifest = build_run(RECIPE, chunk_globs=chunk_glob, summary_globs=summary_glob, output=output, allow_empty=allow_empty, audit_all_decisions=audit_all_decisions, review_packet=review_packet)
     except SourceInputError as error:
         typer.echo(f"Error: {error}", err=True)
         raise typer.Exit(code=2)
@@ -45,14 +47,14 @@ def build(
 def inspect_source_command(
     chunk_glob: Annotated[list[str], typer.Option("--chunk-glob")] = [],
     summary_glob: Annotated[list[str], typer.Option("--summary-glob")] = [],
-    max_files: Annotated[int | None, typer.Option("--max-files", min=1)] = None,
+    max_files_per_kind: Annotated[int | None, typer.Option("--max-files-per-kind", min=1, help="Maximum files sampled independently from each source kind.")] = None,
     max_records: Annotated[int | None, typer.Option("--max-records", min=1)] = None,
     output: Annotated[Path, typer.Option("--output")] = Path("source-report.json"),
     include_excerpts: Annotated[bool, typer.Option("--include-excerpts")] = False,
     allow_empty: Annotated[bool, typer.Option("--allow-empty")] = False,
 ) -> None:
     try:
-        report = inspect_source(chunk_globs=chunk_glob, summary_globs=summary_glob, max_files=max_files, max_records=max_records, include_excerpts=include_excerpts, allow_empty=allow_empty)
+        report = inspect_source(chunk_globs=chunk_glob, summary_globs=summary_glob, max_files_per_kind=max_files_per_kind, max_records=max_records, include_excerpts=include_excerpts, allow_empty=allow_empty)
     except SourceInputError as error:
         typer.echo(f"Error: {error}", err=True)
         raise typer.Exit(code=2)

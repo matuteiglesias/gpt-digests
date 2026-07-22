@@ -31,7 +31,7 @@ def test_inspect_source_is_bounded_private_and_distinguishes_kinds(tmp_path: Pat
     (summaries / "a.jsonl").write_text(json.dumps(_record("summary", "SUMMARY TEXT", summary="not copied by default", format_type="guide")) + "\n", encoding="utf-8")
     output = tmp_path / "report.json"
 
-    result = CliRunner().invoke(app, ["inspect", "source", "--chunk-glob", str(chunks / "*.jsonl"), "--summary-glob", str(summaries / "*.jsonl"), "--max-files", "2", "--max-records", "4", "--output", str(output)])
+    result = CliRunner().invoke(app, ["inspect", "source", "--chunk-glob", str(chunks / "*.jsonl"), "--summary-glob", str(summaries / "*.jsonl"), "--max-files-per-kind", "2", "--max-records", "4", "--output", str(output)])
 
     assert result.exit_code == 0, result.output
     report = json.loads(output.read_text(encoding="utf-8"))
@@ -60,11 +60,30 @@ def test_inspect_applies_file_and_record_bounds_deterministically(tmp_path: Path
     (source / "a.jsonl").write_text(json.dumps(_record("a", "first")) + "\n", encoding="utf-8")
     (source / "b.jsonl").write_text(json.dumps(_record("b", "second")) + "\n", encoding="utf-8")
     output = tmp_path / "report.json"
-    result = CliRunner().invoke(app, ["inspect", "source", "--chunk-glob", str(source / "*.jsonl"), "--max-files", "1", "--max-records", "1", "--output", str(output)])
+    result = CliRunner().invoke(app, ["inspect", "source", "--chunk-glob", str(source / "*.jsonl"), "--max-files-per-kind", "1", "--max-records", "1", "--output", str(output)])
     assert result.exit_code == 0, result.output
     report = json.loads(output.read_text(encoding="utf-8"))
     assert [Path(item["path"]).name for item in report["source_inventory"]] == ["a.jsonl"]
     assert report["bounded_samples"][0]["record_id"] == "bus:a"
+
+
+def test_inspect_file_bound_is_applied_to_each_requested_source_kind(tmp_path: Path) -> None:
+    chunks = tmp_path / "chunks"; chunks.mkdir()
+    summaries = tmp_path / "summaries"; summaries.mkdir()
+    for name in ("a", "b"):
+        (chunks / f"{name}.jsonl").write_text(json.dumps(_record(f"chunk-{name}", "chunk")) + "\n", encoding="utf-8")
+        (summaries / f"{name}.jsonl").write_text(json.dumps(_record(f"summary-{name}", "summary")) + "\n", encoding="utf-8")
+    output = tmp_path / "report.json"
+
+    result = CliRunner().invoke(app, ["inspect", "source", "--chunk-glob", str(chunks / "*.jsonl"), "--summary-glob", str(summaries / "*.jsonl"), "--max-files-per-kind", "1", "--output", str(output)])
+
+    assert result.exit_code == 0, result.output
+    report = json.loads(output.read_text(encoding="utf-8"))
+    assert report["counts"]["by_source_kind"] == {"chunk": 1, "summary": 1}
+    assert report["counts"]["files_by_source_kind"] == {
+        "chunk": {"matched_before_limit": 2, "sampled_after_limit": 1},
+        "summary": {"matched_before_limit": 2, "sampled_after_limit": 1},
+    }
 
 
 def test_packaging_exposes_one_canonical_console_entrypoint() -> None:

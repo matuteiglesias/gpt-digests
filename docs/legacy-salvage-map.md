@@ -37,10 +37,39 @@ relative to `src/digests_project/bags_pipeline/`.
 ## Canonical accounting convention
 
 For a build, **scanned** means every nonblank input row attempted. It equals
-`selected + rejected + deduplicated + invalid_or_unusable`; ordinary nonmatches
-are represented as `rejected` decisions rather than copied source records.
-`decisions.jsonl` includes every selected, rejected, and deduplicated record;
+`invalid_or_unusable + deduplicated + evaluated_unique`; and
+`evaluated_unique` equals `selected + candidate_rejected + ordinary_nonmatch`.
+The normal `decisions.jsonl` is deliberately compact: it contains selected
+records, rejected records that reached the recipe's declared candidate
+threshold (including near-threshold records), and deduplicated records linked
+to their canonical winner. Ordinary nonmatches are counted by reason in the
+manifest but have no ledger row and no copied source text. Use
+`--audit-all-decisions` only for an intentional exhaustive diagnostic ledger.
 `errors.jsonl` includes invalid/unusable rows only when any exist.
+
+## Bus roles and bounded inspection
+
+Chunk and summary buses are separate evidence roles. Chunk records preserve
+the detailed source text used to assess procedural evidence; summary records
+provide compact, often richer metadata and summary context. Both are scanned
+through the same read-only projection, are labelled with their source kind in
+inspection output, and neither role is assumed to replace the other.
+
+For mixed-source inspection, use `--max-files-per-kind N`. The bound is
+applied independently after deterministic lexical path ordering within each
+kind, so each requested, matched role receives up to `N` files. The report
+records both `matched_before_limit` and `sampled_after_limit` per source kind.
+For an SOP review packet, first create a bounded real-bus report, review its
+metadata and source-role coverage, then run the SOP build over the approved
+bounded partitions. `sop.v0` remains the review policy; no `sop.v1` is
+finalized until that packet has been reviewed.
+
+Use `kb-artifact build sop ... --review-packet review/sop-review.csv` to write
+the bounded calibration CSV. It deterministically includes up to 40 selected
+candidates, 20 near-threshold candidates, and 20 policy exclusions with their
+score components, normalized relevant annotations, concise summary, and a
+320-character text excerpt. Reviewer columns are intentionally blank; this is
+calibration evidence, not a second decision system.
 
 ## Installation
 

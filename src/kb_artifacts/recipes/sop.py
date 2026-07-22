@@ -6,10 +6,11 @@ import re
 from kb_artifacts.contracts import ArtifactRecipe, EvidenceRecord, SelectionDecision
 from kb_artifacts.normalization import normalize_value, tag_lexeme
 
-STRONG = {"sop", "runbook", "procedure", "procedimiento", "checklist", "lista de verificacion", "workflow", "playbook"}
-GUIDE = {"guide", "guia", "instructions", "instruction", "instrucciones", "template", "plantilla"}
+STRONG = {"sop", "runbook", "procedure", "procedimiento", "checklist", "lista de verificacion", "workflow", "playbook", "how to", "workflow note", "workflow rule", "migration plan", "refactor plan", "execution plan"}
+GUIDE = {"guide", "guia", "instructions", "instruction", "instrucciones", "template", "plantilla", "framework"}
 RECIPE_VALUES = {"recipe", "receta"}
 PHRASE = re.compile(r"\b(sop|runbook|procedure|procedimiento|checklist|lista de verificaci[oó]n|step[- ]by[- ]step|paso a paso|workflow)\b", re.I)
+CATEGORICAL_FIELDS = ("note_type", "format_type", "msg_type", "stage", "snippet_type", "medium", "category", "domain")
 
 
 def _norm(value: object) -> str:
@@ -35,7 +36,10 @@ def _number(record: EvidenceRecord, key: str) -> float | None:
 
 
 def evaluate(record: EvidenceRecord) -> SelectionDecision:
-    values = _values(record, "note_type", "format_type", "snippet_type", "medium", "category")
+    # Every categorical field is accent/case/spacing normalized before policy
+    # matching. Open domain and medium vocabularies are retained as context, not
+    # treated as gates.
+    values = _values(record, *CATEGORICAL_FIELDS)
     reasons: list[str] = []
     score = 0.0
     recipe_only = bool(values & RECIPE_VALUES) and not bool(values & STRONG)
@@ -52,9 +56,15 @@ def evaluate(record: EvidenceRecord) -> SelectionDecision:
     if record.annotations.get("actionable") is True:
         score += 2
         reasons.append("actionable")
+    if values & {"instruction"}:
+        score += 1
+        reasons.append("instructional_message_type")
+    if values & {"execute", "plan"}:
+        score += 1
+        reasons.append("execution_or_plan_stage")
     reuse = _number(record, "reusability_score")
     if reuse is not None and reuse >= 4:
-        score += 2
+        score += 1
         reasons.append("reusability_score>=4")
     text_fields = " ".join(part for part in (record.title, record.summary, record.text) if part)
     if PHRASE.search(text_fields):
@@ -63,6 +73,8 @@ def evaluate(record: EvidenceRecord) -> SelectionDecision:
     if reuse is not None and reuse < 3:
         score -= 3
         reasons.append("reusability_score<3")
+    if reuse == 1:
+        reasons.append("reusability_score=1")
     disposition = "selected" if score >= 5 and reuse != 1 else "rejected"
     if disposition == "rejected" and not reasons:
         reasons.append("insufficient_procedural_evidence")
