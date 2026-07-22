@@ -31,17 +31,25 @@ def inspect_source(
     *,
     chunk_globs: Iterable[str],
     summary_globs: Iterable[str],
-    max_files: int | None = None,
+    max_files_per_kind: int | None = None,
     max_records: int | None = None,
     include_excerpts: bool = False,
     allow_empty: bool = False,
 ) -> dict:
     """Inspect only bounded metadata; source text is excluded unless requested."""
     chunk_globs, summary_globs = list(chunk_globs), list(summary_globs)
-    planned = [("chunk", path) for path in expand_globs(chunk_globs)] + [("summary", path) for path in expand_globs(summary_globs)]
-    planned.sort(key=lambda item: (item[0], str(item[1])))
-    if max_files is not None:
-        planned = planned[:max_files]
+    matched = {
+        "chunk": expand_globs(chunk_globs),
+        "summary": expand_globs(summary_globs),
+    }
+    # Apply the file bound independently to each requested bus role.  This
+    # guarantees that a mixed-source inspection cannot silently omit summaries
+    # merely because chunk paths sort first.
+    selected = {
+        kind: paths[:max_files_per_kind] if max_files_per_kind is not None else paths
+        for kind, paths in matched.items()
+    }
+    planned = [(kind, path) for kind in ("chunk", "summary") for path in selected[kind]]
     if not planned and not allow_empty:
         raise SourceInputError("No input files matched the requested globs")
 
@@ -97,9 +105,16 @@ def inspect_source(
         samples.append(sample)
 
     inventory = [{"source_kind": kind, "path": str(path), "sha256": _fingerprint(path)} for kind, path in planned]
+    file_counts = {
+        kind: {
+            "matched_before_limit": len(matched[kind]),
+            "sampled_after_limit": len(selected[kind]),
+        }
+        for kind in ("chunk", "summary")
+    }
     return {
         "source_inventory": inventory,
-        "counts": {"records_observed": len(records), "invalid_or_unsupported": len(errors), "by_source_kind": dict(sorted(source_kind_counts.items())), "bounded_by_max_files": max_files, "bounded_by_max_records": max_records},
+        "counts": {"records_observed": len(records), "invalid_or_unsupported": len(errors), "by_source_kind": dict(sorted(source_kind_counts.items())), "files_by_source_kind": file_counts, "bounded_by_max_files_per_kind": max_files_per_kind, "bounded_by_max_records": max_records},
         "schema_keys": {key: _top(counter) for key, counter in schema_keys.items()},
         "field_missingness": {field: {"missing": missingness[field], "present": len(records) - missingness[field]} for field in (*FIELDS, "summary", "text", "upstream_provenance")},
         "field_value_frequencies": {field: _top(counter) for field, counter in value_frequencies.items()},

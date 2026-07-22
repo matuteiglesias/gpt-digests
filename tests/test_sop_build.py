@@ -46,7 +46,11 @@ def test_sop_build_writes_auditable_minimal_run(tmp_path: Path) -> None:
 
     assert result.exit_code == 0, result.output
     manifest = json.loads((output / "manifest.json").read_text(encoding="utf-8"))
-    assert manifest["counts"] == {"deduplicated": 1, "invalid": 1, "rejected": 3, "scanned": 9, "selected": 4, "usable": 8}
+    assert manifest["counts"]["scanned"] == 9
+    assert manifest["counts"]["invalid_or_unusable"] == 1
+    assert manifest["counts"]["deduplicated"] == 1
+    assert manifest["counts"]["evaluated_unique"] == 7
+    assert manifest["counts"]["selected"] == 4
     assert (output / "errors.jsonl").exists()
     decisions = [json.loads(line) for line in (output / "decisions.jsonl").read_text(encoding="utf-8").splitlines()]
     assert {item["record_id"] for item in decisions if item["disposition"] == "selected"} == {
@@ -55,11 +59,44 @@ def test_sop_build_writes_auditable_minimal_run(tmp_path: Path) -> None:
     }
     duplicate = next(item for item in decisions if item["disposition"] == "deduplicated")
     assert duplicate["canonical_record_id"] == "chatgpt:conversation-1:sop-1"
-    ledger_counts = {name: sum(item["disposition"] == name for item in decisions) for name in ("selected", "rejected", "deduplicated")}
-    assert manifest["counts"]["scanned"] == ledger_counts["selected"] + ledger_counts["rejected"] + ledger_counts["deduplicated"] + manifest["counts"]["invalid"]
+    assert not any(item["record_id"] == "chatgpt:conversation-1:explain-1" for item in decisions)
+    assert manifest["reconciliation"]["scanned_value"] == manifest["counts"]["scanned"]
+    assert manifest["reconciliation"]["evaluated_unique_value"] == manifest["counts"]["evaluated_unique"]
     artifact = (output / "artifact.md").read_text(encoding="utf-8")
     assert "Reusable SOPs and Procedures" in artifact
     assert "chatgpt:conversation-1:spanish-1" in artifact
+
+
+def test_audit_all_decisions_restores_ordinary_nonmatches(tmp_path: Path) -> None:
+    fixture = tmp_path / "chunks.jsonl"
+    _write_fixture(fixture)
+    output = tmp_path / "run"
+
+    result = CliRunner().invoke(app, ["build", "sop", "--chunk-glob", str(fixture), "--output", str(output), "--audit-all-decisions"])
+
+    assert result.exit_code == 0, result.output
+    decisions = [json.loads(line) for line in (output / "decisions.jsonl").read_text(encoding="utf-8").splitlines()]
+    assert any(item["record_id"] == "chatgpt:conversation-1:explain-1" for item in decisions)
+    manifest = json.loads((output / "manifest.json").read_text(encoding="utf-8"))
+    assert manifest["decision_ledger"]["audit_all_decisions"] is True
+    assert manifest["decision_ledger"]["ordinary_nonmatches_omitted"] == 0
+
+
+def test_review_packet_is_bounded_private_and_has_reviewer_columns(tmp_path: Path) -> None:
+    fixture = tmp_path / "chunks.jsonl"
+    _write_fixture(fixture)
+    output = tmp_path / "run"
+    packet = tmp_path / "review" / "sop-review.csv"
+
+    result = CliRunner().invoke(app, ["build", "sop", "--chunk-glob", str(fixture), "--output", str(output), "--review-packet", str(packet)])
+
+    assert result.exit_code == 0, result.output
+    rows = list(__import__("csv").DictReader(packet.open(encoding="utf-8", newline="")))
+    assert rows
+    assert {"review_label", "review_comment", "expected_group", "score_components", "text_excerpt"} <= set(rows[0])
+    assert all(row["review_label"] == row["review_comment"] == row["expected_group"] == "" for row in rows)
+    assert all(len(row["text_excerpt"]) <= 320 for row in rows)
+    assert "Procedure: 1. Back up the database. 2. Verify the restore." not in packet.read_text(encoding="utf-8")
 
 
 def test_no_matching_input_fails(tmp_path: Path) -> None:
