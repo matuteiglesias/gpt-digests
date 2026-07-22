@@ -2,14 +2,14 @@
 
 from __future__ import annotations
 
+from datetime import date
 from pathlib import Path
 from typing import Annotated
 
 import typer
 
-from kb_artifacts.engine import build as build_run
 from kb_artifacts.inspection import inspect_source
-from kb_artifacts.recipes.sop import RECIPE
+from kb_artifacts.selection import SelectionRequest, select
 from kb_artifacts.sources.jsonl_bus import SourceInputError
 
 app = typer.Typer(add_completion=False, no_args_is_help=True)
@@ -17,27 +17,42 @@ inspect_app = typer.Typer(add_completion=False, no_args_is_help=True)
 app.add_typer(inspect_app, name="inspect")
 
 
-@app.command()
-def version() -> None:
-    """Print the canonical artifact compiler version."""
-    typer.echo("kb-artifacts 0.1.0")
+def _field_pairs(values: list[str]) -> tuple[tuple[str, str], ...]:
+    pairs = []
+    for value in values:
+        key, separator, item = value.partition("=")
+        if not separator or not key.strip() or not item.strip():
+            raise typer.BadParameter("--field must use NAME=VALUE")
+        pairs.append((key.strip(), item.strip()))
+    return tuple(pairs)
 
 
-@app.command("build")
-def build(
-    recipe: Annotated[str, typer.Argument(help="Supported recipe ID: sop (operations)")],
-    chunk_glob: Annotated[list[str], typer.Option("--chunk-glob")],
+@app.command("select")
+def select_command(
+    chunk_glob: Annotated[list[str], typer.Option("--chunk-glob")] = [],
     summary_glob: Annotated[list[str], typer.Option("--summary-glob")] = [],
-    output: Annotated[Path, typer.Option("--output")] = Path("artifacts/runs/sop"),
-    allow_empty: Annotated[bool, typer.Option("--allow-empty")] = False,
-    audit_all_decisions: Annotated[bool, typer.Option("--audit-all-decisions", help="Write ordinary nonmatches to decisions.jsonl for an explicit audit.")] = False,
-    review_packet: Annotated[Path | None, typer.Option("--review-packet", help="Write a bounded classification calibration CSV.")] = None,
+    start: Annotated[str | None, typer.Option("--from")]=None,
+    end: Annotated[str | None, typer.Option("--to")]=None,
+    tag: Annotated[list[str], typer.Option("--tag")]=[],
+    field: Annotated[list[str], typer.Option("--field")]=[],
+    text: Annotated[str | None, typer.Option("--text")]=None,
+    family: Annotated[list[str], typer.Option("--family")]=[],
+    maturity: Annotated[list[str], typer.Option("--maturity")]=[],
+    limit: Annotated[int | None, typer.Option("--limit", min=1)]=None,
+    no_deduplicate: Annotated[bool, typer.Option("--no-deduplicate")]=False,
+    group_by: Annotated[str, typer.Option("--group-by")]= "domain",
+    output: Annotated[Path, typer.Option("--output")]=Path("artifacts/runs/selection"),
+    allow_empty: Annotated[bool, typer.Option("--allow-empty")]=False,
 ) -> None:
-    if recipe != "sop":
-        raise typer.BadParameter("Only the 'sop' (operations) recipe is currently available")
+    """Select governed evidence once and export JSONL, CSV, and Markdown."""
     try:
-        manifest = build_run(RECIPE, chunk_globs=chunk_glob, summary_globs=summary_glob, output=output, allow_empty=allow_empty, audit_all_decisions=audit_all_decisions, review_packet=review_packet)
-    except SourceInputError as error:
+        start_date = date.fromisoformat(start) if start else None
+        end_date = date.fromisoformat(end) if end else None
+        if start_date and end_date and start_date > end_date:
+            raise ValueError("--from must not be after --to")
+        request = SelectionRequest(tuple(chunk_glob), tuple(summary_glob), start_date, end_date, tuple(tag), _field_pairs(field), text, tuple(family), tuple(maturity), limit, not no_deduplicate, group_by)
+        manifest = select(request, output=output, allow_empty=allow_empty)
+    except (SourceInputError, ValueError) as error:
         typer.echo(f"Error: {error}", err=True)
         raise typer.Exit(code=2)
     typer.echo(f"[kb-artifact] selected={manifest['counts']['selected']} -> {output}")

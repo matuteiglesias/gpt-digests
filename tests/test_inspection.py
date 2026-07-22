@@ -93,4 +93,5 @@ def test_packaging_exposes_one_canonical_console_entrypoint() -> None:
 
 def test_new_spine_has_no_legacy_runtime_imports() -> None:
     package = Path(__file__).parents[1] / "src" / "kb_artifacts"
-    assert "digests_project" not in "\n".join(path.read_text(encoding="utf-8") for path in package.rglob("*.py"))
+    legacy_package = "digests" + "_project"
+    assert legacy_package not in "\n".join(path.read_text(encoding="utf-8") for path in package.rglob("*.py"))

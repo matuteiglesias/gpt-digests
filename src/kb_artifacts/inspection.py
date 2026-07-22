@@ -3,10 +3,10 @@
 from __future__ import annotations
 
 from collections import Counter, defaultdict
+import hashlib
 from pathlib import Path
 from typing import Iterable
 
-from kb_artifacts.engine import _fingerprint
 from kb_artifacts.normalization import normalized_tags
 from kb_artifacts.sources.jsonl_bus import SourceInputError, expand_globs, scan_jsonl
 
@@ -15,6 +15,14 @@ FIELDS = (
     "note_type", "format_type", "msg_type", "stage", "snippet_type", "actionable",
     "reusability_score", "include_in_vault", "category", "subtopic", "domain", "medium", "topics", "tags",
 )
+
+
+def _fingerprint(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as source:
+        for block in iter(lambda: source.read(1024 * 1024), b""):
+            digest.update(block)
+    return digest.hexdigest()
 
 
 def _value(value: object) -> str:

@@ -1,18 +1,37 @@
-# GPT Digests
+# kb-artifacts
 
-A small pipeline to turn raw chat logs & session JSONL into publishable Markdown/MDX digests:
+`kb-artifact` is a read-only selector for governed JSONL evidence buses. It scans
+metadata without changing sources, then exports a deterministic selected record set.
 
-- **Ingest** logs/sessions → normalize into *Events* and *Sessions*
-- **Unitize** into *Units* (cohort/day, session) and *Bags* (pairbag/tagbag)
-- **Build L2** digests (memo/journal/etc.), optionally **hydrate** with resolved sources
-- **Index & Publish** higher levels (L3/L4/L5) and copy artifacts for distribution
+## Install
 
-## What you’ll use most
+```bash
+python -m pip install -e . --no-build-isolation
+```
 
-- `kbctl bags-logs` / `kbctl bags-sessions` / `kbctl bags-merge`
-- `kbctl bags-pairs-from-units` + `kbctl bags-tags-from-units`
-- `kbctl l2-build --hydrate`
-- `kbctl hydrate-dryrun` to sanity-check coverage
-- `kbctl index-l2` + `kbctl publish`
+## Inspect a source
 
-Jump to the [Quickstart](guide/quickstart.md) to run end-to-end in minutes.
+```bash
+kb-artifact inspect source --chunk-glob "$CHUNK_GLOB" --output artifacts/source-report.json
+```
+
+The source report contains bounded schema, field, and normalized tag statistics. It
+omits source bodies unless explicitly requested.
+
+## Select evidence
+
+```bash
+kb-artifact select --chunk-glob "$CHUNK_GLOB" --tag runbook --tag procedure --tag checklist --family operations --output artifacts/runs/operations
+kb-artifact select --chunk-glob "$CHUNK_GLOB" --field category=cooking --output artifacts/runs/cooking
+kb-artifact select --summary-glob "$SUMMARY_GLOB" --field actionable=true --text 'checklist|steps|pasos' --group-by domain --output artifacts/runs/actionable
+```
+
+Filters combine predictably: repeated tags use OR semantics, while distinct filter
+kinds must all match. `--allow-empty` is required to write an intentional empty run.
+
+## Output and provenance
+
+Each successful run contains `selected.jsonl`, `selected.csv`, `artifact.md`, and
+`manifest.json`. The JSONL preserves record identity, selected annotations, source
+provenance, and selection reasons. CSV uses bounded text excerpts. The manifest records
+the request, input partition hashes, counts, and generated output names.
