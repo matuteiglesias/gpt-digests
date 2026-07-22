@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from datetime import datetime
-from typing import Any, Callable, Literal, Mapping
+from typing import Any, Literal, Mapping
 
 
 @dataclass(frozen=True)
@@ -52,20 +52,3 @@ class SelectionDecision:
     artifact_maturity: str | None = None
     classification_reasons: tuple[str, ...] = ()
 
-
-Evaluate = Callable[[EvidenceRecord], SelectionDecision]
-Group = Callable[[EvidenceRecord], str]
-
-
-@dataclass(frozen=True)
-class ArtifactRecipe:
-    """Checked-in policy only; mechanics stay in the shared engine."""
-
-    id: str
-    title: str
-    evaluate: Evaluate
-    group: Group
-    # Rejected records at or above this score are useful review candidates.
-    # Lower-scoring rejected records are accounted for only in the manifest.
-    candidate_threshold: float = 3
-    near_threshold_score: float = 4

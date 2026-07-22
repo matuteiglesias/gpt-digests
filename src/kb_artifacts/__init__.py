@@ -1,5 +1,5 @@
-"""Read-only knowledge-bus consumers that produce inspectable artifacts."""
+"""Read-only governed JSONL evidence inspection and selection."""
 
-from .contracts import ArtifactRecipe, EvidenceRecord, SelectionDecision, SourceReference
+from .contracts import EvidenceRecord, SelectionDecision, SourceReference
 
-__all__ = ["ArtifactRecipe", "EvidenceRecord", "SelectionDecision", "SourceReference"]
+__all__ = ("EvidenceRecord", "SelectionDecision", "SourceReference")

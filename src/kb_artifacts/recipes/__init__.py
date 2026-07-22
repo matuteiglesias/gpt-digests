@@ -1,1 +1,0 @@
-"""Checked-in artifact policies."""

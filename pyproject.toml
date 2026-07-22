@@ -3,9 +3,9 @@ requires = ["setuptools>=61"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "bags-pipeline"
+name = "kb-artifacts"
 version = "0.1.0"
-description = "Modular pipelines to bag logs/sessions into digestible MD/MDX outputs."
+description = "Read-only governed JSONL evidence selection and artifact export."
 readme = "README.md"
 requires-python = ">=3.10"
 license = {text = "MIT"}
@@ -23,13 +23,6 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-legacy = [
-  "pydantic>=2.6",          # if you use it elsewhere; otherwise drop
-  "pyyaml>=6.0",
-  "pandas>=2.0",
-  "networkx>=3.2",
-]
-
 docs = [
   "mkdocs>=1.6",
   "mkdocs-material>=9.5",
@@ -41,7 +34,6 @@ docs = [
 ]
 
 [project.scripts]
-kbctl = "digests_project.cli.kbctl:app"   # <-- NOTE the full path
 kb-artifact = "kb_artifacts.cli:main"
 
 [tool.setuptools.packages.find]
