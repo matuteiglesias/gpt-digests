@@ -46,6 +46,11 @@ class SelectionDecision:
     reasons: tuple[str, ...]
     matched_values: Mapping[str, object]
     canonical_record_id: str | None = None
+    # Classification is deliberately independent from a recipe's selection
+    # disposition.  A useful plan should be routed, not treated as a failed SOP.
+    artifact_family: str | None = None
+    artifact_maturity: str | None = None
+    classification_reasons: tuple[str, ...] = ()
 
 
 Evaluate = Callable[[EvidenceRecord], SelectionDecision]

@@ -24,6 +24,10 @@ def render(recipe: ArtifactRecipe, selected: Iterable[tuple[EvidenceRecord, Sele
                 lines.extend((record.text, ""))
             lines.append(f"- Score: {decision.score:g}")
             lines.append(f"- Reasons: {', '.join(decision.reasons)}")
+            if decision.artifact_family:
+                lines.append(f"- Family: {decision.artifact_family}")
+            if decision.artifact_maturity:
+                lines.append(f"- Maturity: {decision.artifact_maturity}")
             lines.append(f"- Source: `{record.provenance.source_ref or record.record_id}`")
             lines.append(f"- Partition: `{record.provenance.partition}:{record.provenance.line_number}`")
             lines.append("")

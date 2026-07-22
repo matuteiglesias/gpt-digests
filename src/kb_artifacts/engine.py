@@ -75,7 +75,7 @@ def _write_review_packet(
     fields = ("note_type", "format_type", "msg_type", "stage", "snippet_type", "actionable", "reusability_score", "category", "domain", "medium")
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("w", encoding="utf-8", newline="") as handle:
-        writer = csv.DictWriter(handle, fieldnames=("packet_section", "record_id", "source_kind", "source_ref", "title", "timestamp", "annotations", "score", "score_components", "summary", "text_excerpt", "current_disposition", "review_label", "review_comment", "expected_group"))
+        writer = csv.DictWriter(handle, fieldnames=("packet_section", "record_id", "source_kind", "source_ref", "title", "timestamp", "annotations", "score", "score_components", "classification_reasons", "artifact_family", "artifact_maturity", "summary", "text_excerpt", "current_disposition", "review_family", "review_maturity", "review_action", "review_comment", "expected_group"))
         writer.writeheader()
         for record, decision, section in selected + near + exclusions:
             annotations = {
@@ -91,8 +91,10 @@ def _write_review_packet(
                 "timestamp": record.timestamp.isoformat() if record.timestamp else "",
                 "annotations": json.dumps(_jsonable(annotations), ensure_ascii=False, sort_keys=True),
                 "score": f"{decision.score:g}", "score_components": "; ".join(decision.reasons),
+                "classification_reasons": "; ".join(decision.classification_reasons),
+                "artifact_family": decision.artifact_family or "", "artifact_maturity": decision.artifact_maturity or "",
                 "summary": _review_text(record.summary, 240), "text_excerpt": _review_text(record.text, 320, excerpt_only=True),
-                "current_disposition": decision.disposition, "review_label": "", "review_comment": "", "expected_group": "",
+                "current_disposition": decision.disposition, "review_family": "", "review_maturity": "", "review_action": "", "review_comment": "", "expected_group": "",
             })
 
 
@@ -153,6 +155,13 @@ def build(
     for _, decision in rejected:
         for reason in decision.reasons:
             nonmatch_reasons[reason] = nonmatch_reasons.get(reason, 0) + 1
+    family_counts: dict[str, int] = {}
+    maturity_counts: dict[str, int] = {}
+    for _, decision in evaluated:
+        if decision.artifact_family:
+            family_counts[decision.artifact_family] = family_counts.get(decision.artifact_family, 0) + 1
+        if decision.artifact_maturity:
+            maturity_counts[decision.artifact_maturity] = maturity_counts.get(decision.artifact_maturity, 0) + 1
     # The normal ledger is deliberately a review ledger, not a copy of every
     # negative evaluation.  --audit-all-decisions is the explicit escape hatch.
     decisions = duplicate_decisions + [decision for _, decision in selected] + [decision for _, decision in candidate_rejected]
@@ -195,6 +204,8 @@ def build(
             "near_threshold": len(near_threshold),
             "ordinary_nonmatch_count": len(ordinary_nonmatches),
             "aggregate_nonmatch_reason_counts": dict(sorted(nonmatch_reasons.items())),
+            "artifact_family": dict(sorted(family_counts.items())),
+            "artifact_maturity": dict(sorted(maturity_counts.items())),
         },
         "reconciliation": {
             "scanned": "invalid_or_unusable + deduplicated + evaluated_unique",
