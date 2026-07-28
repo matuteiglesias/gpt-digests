@@ -1,0 +1,1 @@
+{"summary":"1. Inspect the queue.\n2. Clear the failed item.\nVerify completion.","text_sha256":"summary-payload","tags":["RUN-BOOK"],"meta":{"conversation_id":"conversation-b","message_id":"summary-candidate","timestamp":"2026-06-02T10:00:00Z","note_type":"runbook","domain":"operations","provenance":{"source_ref":"fixture:summary:candidate"}}}

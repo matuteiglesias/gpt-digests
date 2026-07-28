@@ -13,3 +13,10 @@ kb-artifact select --chunk-glob 'data/chunks/*.jsonl' --tag runbook --field acti
 
 See [the operator guide](docs/index.md) for selection examples, read-only guarantees,
 and provenance details.
+
+Selection outputs are rendered in private sibling staging and promoted at the
+directory boundary only after candidate validation and hashing. The existing
+`manifest.json` remains producer-local operational evidence, while
+`selected.jsonl` is the canonical selected-evidence product. Its producer-owned
+identity algorithm and the shared-contract dependency gate are documented in
+[the interoperability boundary](docs/interoperability.md).

@@ -4,8 +4,12 @@ from __future__ import annotations
 
 import csv
 import hashlib
+import io
 import json
+import os
 import re
+import shutil
+import tempfile
 from dataclasses import asdict, dataclass
 from datetime import date, datetime, timezone
 from pathlib import Path
@@ -88,12 +92,10 @@ def _payload(record: EvidenceRecord, decision: SelectionDecision) -> dict[str, o
             "artifact_family": decision.artifact_family, "artifact_maturity": decision.artifact_maturity}
 
 
-def select(request: SelectionRequest, *, output: Path, allow_empty: bool = False) -> dict:
-    """Select once from both buses and render JSONL, CSV, Markdown, and evidence."""
-    if output.exists() and any(output.iterdir()):
-        raise SourceInputError(f"Output directory is not empty: {output}")
-    paths = [("chunk", path) for path in expand_globs(request.chunk_globs)] + [("summary", path) for path in expand_globs(request.summary_globs)]
-    if not paths: raise SourceInputError("No input files matched the requested globs")
+def _compute_selection(
+    request: SelectionRequest,
+    paths: list[tuple[str, Path]],
+) -> tuple[list[EvidenceRecord], list[dict[str, object]], int, list[tuple[EvidenceRecord, SelectionDecision]]]:
     try: pattern = re.compile(request.text_pattern, re.IGNORECASE) if request.text_pattern else None
     except re.error as error: raise SourceInputError(f"Invalid text pattern: {error}") from error
     records: list[EvidenceRecord] = []; errors: list[dict[str, object]] = []
@@ -112,25 +114,130 @@ def select(request: SelectionRequest, *, output: Path, allow_empty: bool = False
         if matched:
             selected.append((record, SelectionDecision(record.record_id, "selected", 1, tuple(reasons), {}, artifact_family=result.family if result else None, artifact_maturity=result.maturity if result else None, classification_reasons=result.reasons if result else ())))
     if request.limit is not None: selected = selected[:request.limit]
-    if not selected and not allow_empty: raise SourceInputError("No records matched; rerun with --allow-empty only when an empty export is intentional")
-    output.mkdir(parents=True, exist_ok=True)
-    payloads = [_payload(record, decision) for record, decision in selected]
-    with (output / "selected.jsonl").open("w", encoding="utf-8") as handle:
-        for item in payloads: handle.write(json.dumps(item, ensure_ascii=False, sort_keys=True) + "\n")
-    with (output / "selected.csv").open("w", encoding="utf-8", newline="") as handle:
-        writer = csv.DictWriter(handle, fieldnames=("record_id", "source_kind", "timestamp", "title", "summary", "tags", "artifact_family", "artifact_maturity", "selection_reasons", "text_excerpt", "source_ref"))
-        writer.writeheader()
-        for (record, decision), item in zip(selected, payloads): writer.writerow({**{key: item.get(key, "") for key in writer.fieldnames}, "tags": ", ".join(record.tags), "selection_reasons": "; ".join(decision.reasons), "text_excerpt": (record.text or "")[:320], "source_ref": record.provenance.source_ref or record.record_id})
+    return records, errors, duplicate_count, selected
+
+
+def _render_jsonl(payloads: list[dict[str, object]]) -> bytes:
+    return b"".join(
+        (json.dumps(item, ensure_ascii=False, sort_keys=True) + "\n").encode("utf-8")
+        for item in payloads
+    )
+
+
+def _render_csv(
+    selected: list[tuple[EvidenceRecord, SelectionDecision]],
+    payloads: list[dict[str, object]],
+) -> bytes:
+    target = io.StringIO(newline="")
+    fieldnames = ("record_id", "source_kind", "timestamp", "title", "summary", "tags", "artifact_family", "artifact_maturity", "selection_reasons", "text_excerpt", "source_ref")
+    writer = csv.DictWriter(target, fieldnames=fieldnames)
+    writer.writeheader()
+    for (record, decision), item in zip(selected, payloads):
+        writer.writerow({**{key: item.get(key, "") for key in fieldnames}, "tags": ", ".join(record.tags), "selection_reasons": "; ".join(decision.reasons), "text_excerpt": (record.text or "")[:320], "source_ref": record.provenance.source_ref or record.record_id})
+    return target.getvalue().encode("utf-8")
+
+
+def _render_markdown(
+    selected: list[tuple[EvidenceRecord, SelectionDecision]],
+    group_by: str,
+) -> bytes:
     groups: dict[str, list[tuple[EvidenceRecord, SelectionDecision]]] = {}
     for record, decision in selected:
-        value = record.conversation_id if request.group_by == "conversation" else record.timestamp.date().isoformat() if request.group_by == "date" and record.timestamp else record.annotations.get(request.group_by)
+        value = record.conversation_id if group_by == "conversation" else record.timestamp.date().isoformat() if group_by == "date" and record.timestamp else record.annotations.get(group_by)
         group = str(value or "Unclassified"); groups.setdefault(group, []).append((record, decision))
     lines = ["# Selected evidence", "", "Generated from read-only governed bus records.", ""]
     for group in sorted(groups, key=str.casefold):
         lines += [f"## {group}", ""]
         for record, decision in groups[group]:
             lines += [f"### {record.title or record.summary or (record.text or 'Untitled evidence')[:120]}", "", record.summary or record.text or "", "", f"- Selection: {', '.join(decision.reasons)}", f"- Source: `{record.provenance.source_ref or record.record_id}`", ""]
-    (output / "artifact.md").write_text("\n".join(lines).rstrip() + "\n", encoding="utf-8")
-    manifest = {"selection_request": {"chunk_globs": list(request.chunk_globs), "summary_globs": list(request.summary_globs), "from": request.start.isoformat() if request.start else None, "to": request.end.isoformat() if request.end else None, "tags": list(request.tags), "fields": dict(request.fields), "text_pattern": request.text_pattern, "families": list(request.families), "maturities": list(request.maturities), "limit": request.limit, "deduplicate": request.deduplicate, "group_by": request.group_by}, "generated_at": datetime.now(timezone.utc).isoformat(), "matched_partitions": [{"source_kind": kind, "path": str(path), "sha256": _fingerprint(path)} for kind, path in paths], "counts": {"scanned": len(records) + len(errors), "invalid": len(errors), "deduplicated": duplicate_count, "selected": len(selected)}, "outputs": ["selected.jsonl", "selected.csv", "artifact.md", "manifest.json"]}
-    (output / "manifest.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    return ("\n".join(lines).rstrip() + "\n").encode("utf-8")
+
+
+def _build_legacy_manifest(
+    request: SelectionRequest,
+    paths: list[tuple[str, Path]],
+    records: list[EvidenceRecord],
+    errors: list[dict[str, object]],
+    duplicate_count: int,
+    selected_count: int,
+) -> dict[str, object]:
+    return {"selection_request": {"chunk_globs": list(request.chunk_globs), "summary_globs": list(request.summary_globs), "from": request.start.isoformat() if request.start else None, "to": request.end.isoformat() if request.end else None, "tags": list(request.tags), "fields": dict(request.fields), "text_pattern": request.text_pattern, "families": list(request.families), "maturities": list(request.maturities), "limit": request.limit, "deduplicate": request.deduplicate, "group_by": request.group_by}, "generated_at": datetime.now(timezone.utc).isoformat(), "matched_partitions": [{"source_kind": kind, "path": str(path), "sha256": _fingerprint(path)} for kind, path in paths], "counts": {"scanned": len(records) + len(errors), "invalid": len(errors), "deduplicated": duplicate_count, "selected": selected_count}, "outputs": ["selected.jsonl", "selected.csv", "artifact.md", "manifest.json"]}
+
+
+def _write_candidate_file(path: Path, content: bytes) -> None:
+    path.write_bytes(content)
+
+
+def _write_outputs(output: Path, rendered: dict[str, bytes]) -> None:
+    for filename, content in rendered.items():
+        _write_candidate_file(output / filename, content)
+
+
+def _validate_candidate(candidate: Path, rendered: dict[str, bytes]) -> None:
+    actual = {path.name for path in candidate.iterdir()}
+    if actual != set(rendered):
+        raise SourceInputError("Staged output validation failed: unexpected file set")
+    for filename, expected in rendered.items():
+        path = candidate / filename
+        if path.is_symlink() or not path.is_file() or path.read_bytes() != expected:
+            raise SourceInputError(f"Staged output validation failed: {filename}")
+
+
+def _hash_candidate_files(candidate: Path, filenames: Iterable[str]) -> dict[str, str]:
+    return {filename: _fingerprint(candidate / filename) for filename in filenames}
+
+
+def _promote_candidate(candidate: Path, output: Path) -> None:
+    os.replace(candidate, output)
+
+
+def _has_symlink_component(path: Path) -> bool:
+    absolute = path.absolute()
+    return any(component.is_symlink() for component in (absolute, *absolute.parents))
+
+
+def _stage_and_promote(output: Path, rendered: dict[str, bytes]) -> dict[str, str]:
+    if _has_symlink_component(output):
+        raise SourceInputError(f"Output path must not contain a symlink: {output}")
+    if output.exists() and not output.is_dir():
+        raise SourceInputError(f"Output path is not a directory: {output}")
+    if output.exists() and any(output.iterdir()):
+        raise SourceInputError(f"Output directory is not empty: {output}")
+
+    output.parent.mkdir(parents=True, exist_ok=True)
+    candidate = Path(tempfile.mkdtemp(prefix=f".{output.name}.staging-", dir=output.parent))
+    try:
+        _write_outputs(candidate, rendered)
+        _validate_candidate(candidate, rendered)
+        hashes = _hash_candidate_files(candidate, rendered)
+        _promote_candidate(candidate, output)
+        return hashes
+    except SourceInputError:
+        raise
+    except OSError as error:
+        raise SourceInputError(f"Could not publish selection output: {error}") from error
+    finally:
+        if candidate.exists():
+            shutil.rmtree(candidate, ignore_errors=True)
+
+
+def select(request: SelectionRequest, *, output: Path, allow_empty: bool = False) -> dict:
+    """Select once from both buses and render JSONL, CSV, Markdown, and evidence."""
+    if _has_symlink_component(output):
+        raise SourceInputError(f"Output path must not contain a symlink: {output}")
+    if output.exists() and (not output.is_dir() or any(output.iterdir())):
+        raise SourceInputError(f"Output directory is not empty: {output}")
+    paths = [("chunk", path) for path in expand_globs(request.chunk_globs)] + [("summary", path) for path in expand_globs(request.summary_globs)]
+    if not paths: raise SourceInputError("No input files matched the requested globs")
+    records, errors, duplicate_count, selected = _compute_selection(request, paths)
+    if not selected and not allow_empty: raise SourceInputError("No records matched; rerun with --allow-empty only when an empty export is intentional")
+    payloads = [_payload(record, decision) for record, decision in selected]
+    manifest = _build_legacy_manifest(request, paths, records, errors, duplicate_count, len(selected))
+    rendered = {
+        "selected.jsonl": _render_jsonl(payloads),
+        "selected.csv": _render_csv(selected, payloads),
+        "artifact.md": _render_markdown(selected, request.group_by),
+        "manifest.json": (json.dumps(manifest, ensure_ascii=False, indent=2, sort_keys=True) + "\n").encode("utf-8"),
+    }
+    _stage_and_promote(output, rendered)
     return manifest
