@@ -1,0 +1,17 @@
+{
+  "description": "Module IDs are lowercase registry-assigned identifiers.",
+  "schema_id": "kb.module",
+  "expected_keyword": "pattern",
+  "instance": {
+    "schema_id": "kb.module",
+    "schema_version": "1.0",
+    "module_id": "KB-Artifacts",
+    "name": "KB Artifacts",
+    "repository": {"id": "matuteiglesias/gpt-digests", "url": "https://github.com/matuteiglesias/gpt-digests"},
+    "knowledge_profile": {"id": "knowledge-interop", "level": 1},
+    "accepts": {"artifact_families": [], "schema_versions": []},
+    "emits": {"artifact_families": [], "schema_versions": []},
+    "validation": {"command": "make contract-smoke"},
+    "contract_release": {"release_id": "kb-interop.v1-rc1", "manifest_ref": "contracts/releases/kb_interop_release.v1-rc1.json"}
+  }
+}

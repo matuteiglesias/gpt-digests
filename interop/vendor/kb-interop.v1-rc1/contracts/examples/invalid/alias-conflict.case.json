@@ -1,0 +1,9 @@
+{
+  "description": "Canonical and legacy aliases that disagree are invalid.",
+  "check": "alias_consistency",
+  "expected_code": "ALIAS_CONFLICT",
+  "canonical_field": "artifact_id",
+  "legacy_field": "id",
+  "canonical_value": "Artifact:ABC",
+  "legacy_value": "artifact:abc"
+}

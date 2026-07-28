@@ -1,0 +1,41 @@
+{
+  "description": "kb.module requires //repository.",
+  "schema_id": "kb.module",
+  "expected_keyword": "required",
+  "expected_instance_path": "",
+  "expected_missing_property": "repository",
+  "instance": {
+    "schema_id": "kb.module",
+    "schema_version": "1.0",
+    "module_id": "kb-artifacts",
+    "name": "KB Artifacts",
+    "knowledge_profile": {
+      "id": "knowledge-interop",
+      "level": 1
+    },
+    "accepts": {
+      "artifact_families": [],
+      "schema_versions": []
+    },
+    "emits": {
+      "artifact_families": [
+        "knowledge-artifact-manifest"
+      ],
+      "schema_versions": [
+        {
+          "schema_id": "kb.knowledge_artifact_manifest",
+          "versions": [
+            "1.0"
+          ]
+        }
+      ]
+    },
+    "validation": {
+      "command": "make contract-smoke"
+    },
+    "contract_release": {
+      "release_id": "kb-interop.v1-rc1",
+      "manifest_ref": "contracts/releases/kb_interop_release.v1-rc1.json"
+    }
+  }
+}

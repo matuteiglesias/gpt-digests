@@ -1,0 +1,63 @@
+{
+  "schema_id": "kb.stable_references",
+  "schema_version": "1.0",
+  "module_id_grammar": "^[a-z0-9][a-z0-9._-]{0,127}$",
+  "valid_registry_ids": [
+    "kb-artifacts",
+    "knowledge-inspect",
+    "context-routing",
+    "kb"
+  ],
+  "invalid_registry_ids": [
+    "KB-Artifacts",
+    "-kb",
+    "kb/artifacts",
+    "kb artifacts",
+    ""
+  ],
+  "preservation_vectors": [
+    {
+      "kind": "source_id",
+      "input": "Source:CasePreserved",
+      "expected": "Source:CasePreserved"
+    },
+    {
+      "kind": "record_id",
+      "input": "Record:ABC-123",
+      "expected": "Record:ABC-123"
+    },
+    {
+      "kind": "artifact_id",
+      "input": "SummarySet:CaseSensitive-2026-07-28",
+      "expected": "SummarySet:CaseSensitive-2026-07-28"
+    },
+    {
+      "kind": "run_id",
+      "input": "sop-v0-2026-05-10_19-20260722T045103Z",
+      "expected": "sop-v0-2026-05-10_19-20260722T045103Z"
+    }
+  ],
+  "source_slug_vectors": [
+    {
+      "source_id": "Source:ResearchPaper/ABC",
+      "published_slug": "research-paper-abc",
+      "must_remain_distinct": true
+    }
+  ],
+  "alias_vectors": [
+    {
+      "canonical_field": "artifact_id",
+      "legacy_field": "id",
+      "canonical_value": "Artifact:ABC",
+      "legacy_value": "Artifact:ABC",
+      "expected": "valid"
+    },
+    {
+      "canonical_field": "artifact_id",
+      "legacy_field": "id",
+      "canonical_value": "Artifact:ABC",
+      "legacy_value": "artifact:abc",
+      "expected": "ALIAS_CONFLICT"
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "description": "Universal lifecycle fields are outside the knowledge artifact manifest.",
+  "schema_id": "kb.knowledge_artifact_manifest",
+  "expected_keyword": "additionalProperties",
+  "instance": {
+    "schema_id": "kb.knowledge_artifact_manifest",
+    "schema_version": "1.0",
+    "artifact_id": "Artifact:CasePreserved",
+    "artifact_family": "knowledge-summary",
+    "artifact_kind": "summary-set",
+    "producer_id": "kb-artifacts",
+    "producer_version": "1.0.0",
+    "created_at": "2026-07-28T00:00:00Z",
+    "logical_ref": "summaries/example",
+    "payload_ref": {"kind": "repository_relative", "value": "artifacts/output.json"},
+    "media_type": "application/json",
+    "byte_size": 2,
+    "checksum": {"algorithm": "sha256", "value": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"},
+    "provenance": {"sources": [{"source_id": "Source:ABC"}], "artifacts": []},
+    "integrity_status": "finalized",
+    "run_stages": []
+  }
+}

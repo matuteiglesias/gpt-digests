@@ -1,0 +1,284 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:kb-contracts:schema:knowledge-artifact-manifest:v1",
+  "title": "Knowledge artifact manifest v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_id",
+    "schema_version",
+    "artifact_id",
+    "artifact_family",
+    "artifact_kind",
+    "producer_id",
+    "producer_version",
+    "created_at",
+    "logical_ref",
+    "payload_ref",
+    "media_type",
+    "byte_size",
+    "checksum",
+    "provenance",
+    "integrity_status"
+  ],
+  "properties": {
+    "schema_id": {
+      "const": "kb.knowledge_artifact_manifest"
+    },
+    "schema_version": {
+      "const": "1.0"
+    },
+    "artifact_id": {
+      "$ref": "#/$defs/opaqueId"
+    },
+    "artifact_family": {
+      "$ref": "#/$defs/registryId"
+    },
+    "artifact_kind": {
+      "$ref": "#/$defs/registryId"
+    },
+    "producer_id": {
+      "$ref": "#/$defs/registryId"
+    },
+    "producer_version": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200
+    },
+    "created_at": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]+)?Z$"
+    },
+    "logical_ref": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 1024,
+      "pattern": "^[^\\u0000-\\u001f\\u007f]+$"
+    },
+    "payload_ref": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "value"
+          ],
+          "properties": {
+            "kind": {
+              "const": "repository_relative"
+            },
+            "value": {
+              "$ref": "#/$defs/repositoryRelativeRef"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "kind",
+            "value"
+          ],
+          "properties": {
+            "kind": {
+              "const": "logical"
+            },
+            "value": {
+              "type": "string",
+              "pattern": "^urn:[A-Za-z0-9][A-Za-z0-9:._/-]*$",
+              "maxLength": 1024
+            }
+          }
+        }
+      ]
+    },
+    "media_type": {
+      "type": "string",
+      "pattern": "^[a-z0-9!#$&^_.+-]+/[a-z0-9!#$&^_.+-]+$",
+      "maxLength": 255
+    },
+    "byte_size": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "checksum": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "algorithm",
+        "value"
+      ],
+      "properties": {
+        "algorithm": {
+          "const": "sha256"
+        },
+        "value": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "sources",
+        "artifacts"
+      ],
+      "properties": {
+        "sources": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/sourceRef"
+          }
+        },
+        "artifacts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/artifactRef"
+          }
+        }
+      },
+      "anyOf": [
+        {
+          "properties": {
+            "sources": {
+              "minItems": 1,
+              "type": "array"
+            }
+          }
+        },
+        {
+          "properties": {
+            "artifacts": {
+              "minItems": 1,
+              "type": "array"
+            }
+          }
+        }
+      ]
+    },
+    "integrity_status": {
+      "enum": [
+        "finalized",
+        "verified"
+      ]
+    },
+    "run_id": {
+      "$ref": "#/$defs/opaqueId"
+    },
+    "run_record_ref": {
+      "$ref": "#/$defs/portableRef"
+    },
+    "producer_manifest_ref": {
+      "$ref": "#/$defs/portableRef"
+    },
+    "extensions": {
+      "type": "object",
+      "propertyNames": {
+        "pattern": "^[a-z][a-z0-9]*(?:\\.[a-z][a-z0-9_-]*)+$"
+      },
+      "additionalProperties": true
+    }
+  },
+  "$defs": {
+    "registryId": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9._-]{0,127}$"
+    },
+    "opaqueId": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512,
+      "pattern": "^[^\\u0000-\\u001f\\u007f]+$"
+    },
+    "repositoryRelativeRef": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 1024,
+      "allOf": [
+        {
+          "not": {
+            "pattern": "^(?:/|[A-Za-z]:[\\\\/]|\\\\\\\\|https?://)"
+          }
+        },
+        {
+          "not": {
+            "pattern": "(?:^|/)\\.\\.(?:/|$)"
+          }
+        }
+      ]
+    },
+    "portableRef": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/repositoryRelativeRef"
+        },
+        {
+          "type": "string",
+          "pattern": "^urn:[A-Za-z0-9][A-Za-z0-9:._/-]*$",
+          "maxLength": 1024
+        }
+      ]
+    },
+    "sourceRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_id"
+      ],
+      "properties": {
+        "source_id": {
+          "$ref": "#/$defs/opaqueId"
+        },
+        "record_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "#/$defs/opaqueId"
+          }
+        },
+        "schema_id": {
+          "$ref": "#/$defs/registryId"
+        },
+        "schema_version": {
+          "type": "string",
+          "pattern": "^[0-9]+\\.[0-9]+$"
+        }
+      }
+    },
+    "artifactRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "artifact_id"
+      ],
+      "properties": {
+        "artifact_id": {
+          "$ref": "#/$defs/opaqueId"
+        },
+        "manifest_ref": {
+          "$ref": "#/$defs/portableRef"
+        },
+        "checksum": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "algorithm",
+            "value"
+          ],
+          "properties": {
+            "algorithm": {
+              "const": "sha256"
+            },
+            "value": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            }
+          }
+        }
+      }
+    }
+  }
+}

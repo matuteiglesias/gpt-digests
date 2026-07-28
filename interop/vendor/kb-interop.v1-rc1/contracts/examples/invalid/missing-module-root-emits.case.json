@@ -1,0 +1,32 @@
+{
+  "description": "kb.module requires //emits.",
+  "schema_id": "kb.module",
+  "expected_keyword": "required",
+  "expected_instance_path": "",
+  "expected_missing_property": "emits",
+  "instance": {
+    "schema_id": "kb.module",
+    "schema_version": "1.0",
+    "module_id": "kb-artifacts",
+    "name": "KB Artifacts",
+    "repository": {
+      "id": "matuteiglesias/gpt-digests",
+      "url": "https://github.com/matuteiglesias/gpt-digests"
+    },
+    "knowledge_profile": {
+      "id": "knowledge-interop",
+      "level": 1
+    },
+    "accepts": {
+      "artifact_families": [],
+      "schema_versions": []
+    },
+    "validation": {
+      "command": "make contract-smoke"
+    },
+    "contract_release": {
+      "release_id": "kb-interop.v1-rc1",
+      "manifest_ref": "contracts/releases/kb_interop_release.v1-rc1.json"
+    }
+  }
+}

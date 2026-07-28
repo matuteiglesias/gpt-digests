@@ -1,0 +1,49 @@
+{
+  "description": "kb.knowledge_profile_claim requires /validation/command.",
+  "schema_id": "kb.knowledge_profile_claim",
+  "expected_keyword": "required",
+  "expected_instance_path": "/validation",
+  "expected_missing_property": "command",
+  "instance": {
+    "schema_id": "kb.knowledge_profile_claim",
+    "schema_version": "1.0",
+    "module_id": "kb-artifacts",
+    "knowledge_profile": {
+      "id": "knowledge-interop",
+      "level": 1
+    },
+    "public_schemas": [
+      {
+        "schema_id": "kb.knowledge_artifact_manifest",
+        "schema_version": "1.0",
+        "schema_ref": "contracts/schemas/knowledge_artifact_manifest.v1.schema.json"
+      }
+    ],
+    "artifact_manifest": {
+      "schema_id": "kb.knowledge_artifact_manifest",
+      "schema_version": "1.0",
+      "required_per_promoted_product": true
+    },
+    "stable_references": {
+      "case_preserving": true,
+      "consumer_recomputation": "forbidden"
+    },
+    "public_seam": {
+      "description": "Published knowledge summaries",
+      "artifact_ref": "artifacts/summaries"
+    },
+    "fixtures": {
+      "valid_ref": "contracts/examples/valid",
+      "invalid_ref": "contracts/examples/invalid"
+    },
+    "validation": {
+      "offline": true,
+      "deterministic": true
+    },
+    "compatibility": {
+      "policy_ref": "contracts/migrations/v1-rc1.md",
+      "supported_final_versions": "current_and_previous"
+    },
+    "internal_dependency_policy": "no_undeclared_repository_internals"
+  }
+}

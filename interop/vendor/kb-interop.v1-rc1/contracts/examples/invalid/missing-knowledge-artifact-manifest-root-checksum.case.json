@@ -1,0 +1,37 @@
+{
+  "description": "kb.knowledge_artifact_manifest requires //checksum.",
+  "schema_id": "kb.knowledge_artifact_manifest",
+  "expected_keyword": "required",
+  "expected_instance_path": "",
+  "expected_missing_property": "checksum",
+  "instance": {
+    "schema_id": "kb.knowledge_artifact_manifest",
+    "schema_version": "1.0",
+    "artifact_id": "SummarySet:CaseSensitive-2026-07-28",
+    "artifact_family": "knowledge-summary",
+    "artifact_kind": "summary-set",
+    "producer_id": "kb-artifacts",
+    "producer_version": "1.0.0",
+    "created_at": "2026-07-28T00:00:00Z",
+    "logical_ref": "summaries/2026-07-28",
+    "payload_ref": {
+      "kind": "repository_relative",
+      "value": "artifacts/summaries/2026-07-28.jsonl"
+    },
+    "media_type": "application/x-ndjson",
+    "byte_size": 0,
+    "provenance": {
+      "sources": [
+        {
+          "source_id": "Source:CasePreserved",
+          "record_ids": [
+            "Record:ABC-123"
+          ]
+        }
+      ],
+      "artifacts": []
+    },
+    "integrity_status": "verified",
+    "run_id": "sop-v0-2026-05-10_19-20260722T045103Z"
+  }
+}

@@ -1,0 +1,88 @@
+{
+  "description": "Consumers validate current final and immediately previous final documents under their declared schemas.",
+  "schema_id": "kb.module",
+  "current_version": "1.0",
+  "previous_version": "0.9",
+  "supported_final_versions": [
+    "1.0",
+    "0.9"
+  ],
+  "current_instance": {
+    "schema_id": "kb.module",
+    "schema_version": "1.0",
+    "module_id": "kb-artifacts",
+    "name": "KB Artifacts",
+    "repository": {
+      "id": "matuteiglesias/gpt-digests",
+      "url": "https://github.com/matuteiglesias/gpt-digests"
+    },
+    "knowledge_profile": {
+      "id": "knowledge-interop",
+      "level": 1
+    },
+    "accepts": {
+      "artifact_families": [],
+      "schema_versions": []
+    },
+    "emits": {
+      "artifact_families": [
+        "knowledge-artifact-manifest"
+      ],
+      "schema_versions": [
+        {
+          "schema_id": "kb.knowledge_artifact_manifest",
+          "versions": [
+            "1.0"
+          ]
+        }
+      ]
+    },
+    "validation": {
+      "command": "make contract-smoke"
+    },
+    "contract_release": {
+      "release_id": "kb-interop.v1-rc1",
+      "manifest_ref": "contracts/releases/kb_interop_release.v1-rc1.json"
+    }
+  },
+  "historical_schema": {
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "urn:kb-contracts:fixture:module:v0.9",
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "schema_id",
+      "schema_version",
+      "module_id",
+      "name"
+    ],
+    "properties": {
+      "schema_id": {
+        "const": "kb.module"
+      },
+      "schema_version": {
+        "const": "0.9"
+      },
+      "module_id": {
+        "type": "string",
+        "pattern": "^[a-z0-9][a-z0-9._-]{0,127}$"
+      },
+      "name": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  },
+  "historical_instance": {
+    "schema_id": "kb.module",
+    "schema_version": "0.9",
+    "module_id": "kb-artifacts",
+    "name": "KB Artifacts"
+  },
+  "unchanged_historical_instance": {
+    "schema_id": "kb.module",
+    "schema_version": "0.9",
+    "module_id": "kb-artifacts",
+    "name": "KB Artifacts"
+  }
+}

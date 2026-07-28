@@ -1,0 +1,433 @@
+{
+  "schema_id": "kb.interop_release",
+  "schema_version": "1.0",
+  "release_id": "kb-interop.v1-rc1",
+  "status": "release_candidate",
+  "released_at": "2026-07-28T00:00:00Z",
+  "source_commit": "31431d076c6c612f29e204105751738523293a4a",
+  "schemas": [
+    {
+      "schema_id": "kb.module",
+      "schema_version": "1.0",
+      "schema_ref": "contracts/schemas/module.v1.schema.json"
+    },
+    {
+      "schema_id": "kb.knowledge_artifact_manifest",
+      "schema_version": "1.0",
+      "schema_ref": "contracts/schemas/knowledge_artifact_manifest.v1.schema.json"
+    },
+    {
+      "schema_id": "kb.knowledge_profile_claim",
+      "schema_version": "1.0",
+      "schema_ref": "contracts/schemas/knowledge_profile_claim.v1.schema.json"
+    }
+  ],
+  "profiles": [
+    {
+      "profile_id": "knowledge-interop",
+      "level": 1,
+      "claim_schema_ref": "contracts/schemas/knowledge_profile_claim.v1.schema.json"
+    }
+  ],
+  "test_vectors": [
+    "contracts/test_vectors/stable_references.v1.json"
+  ],
+  "migration_ref": "contracts/migrations/v1-rc1.md",
+  "validation": {
+    "command": "npm run contract:validate",
+    "offline": true,
+    "deterministic": true
+  },
+  "compatibility": {
+    "optional_additions": "compatible_when_semantics_unchanged",
+    "breaking_changes_require_new_schema_version": true,
+    "consumer_window": "current_and_previous_final",
+    "historical_artifacts": "validate_under_declared_schema"
+  },
+  "files": [
+    {
+      "path": "contracts/examples/compatibility/current-previous-historical.case.json",
+      "sha256": "7702790f39c7b8b786a5f044d561b937e33622fbce5f12a15f31546002ee260e"
+    },
+    {
+      "path": "contracts/examples/compatibility/optional-namespaced-extension.case.json",
+      "sha256": "6e180ebd04abcef6c4b5205cd0298ef11242f6229a85a886fb50fd0623cfac50"
+    },
+    {
+      "path": "contracts/examples/invalid/alias-conflict.case.json",
+      "sha256": "76fd382501d187d2aa1573814f1a72f214cc34dd73b3037c19ef4dbba078ed36"
+    },
+    {
+      "path": "contracts/examples/invalid/manifest-absolute-payload.case.json",
+      "sha256": "b1cdfa41f2436bb46f71047381e77ae6ab62a4f2c6f5e7b335434416f1681e42"
+    },
+    {
+      "path": "contracts/examples/invalid/manifest-altered-case.case.json",
+      "sha256": "04f174d59393b792abd06b67b0d2b3f50c8fe80fcf92caced350b0538a77c5c8"
+    },
+    {
+      "path": "contracts/examples/invalid/manifest-bad-checksum.case.json",
+      "sha256": "38352b50d1acfb6ba4104f871984eecf805526163fb6703c78d61dd663ff96ed"
+    },
+    {
+      "path": "contracts/examples/invalid/manifest-operational-field.case.json",
+      "sha256": "520aa9b361a94a48de988a0aaf5268d3acb218c424fde05655a31c78a302c1bc"
+    },
+    {
+      "path": "contracts/examples/invalid/missing-knowledge-artifact-manifest-checksum-algorithm.case.json",
+      "sha256": "92e2b1770055a6bd27484571e452edf87ca3d53067a1abf7a5b79446b85a3f97"
+    },
+    {
+      "path": "contracts/examples/invalid/missing-knowledge-artifact-manifest-checksum-value.case.json",
+      "sha256": "ed2373e47fc9e30101cc51b8dbef8dc279f6242593963f929bfcd98d8a76c2ce"
+    },
+    {
+      "path": "contracts/examples/invalid/missing-knowledge-artifact-manifest-payload-ref-kind.case.json",
+      "sha256": "8e7a2ce96b45c06773cd0b4ec2c16bd2c52a0e0b2715681c831302e8033c71b4"
+    },
+    {
+      "path": "contracts/examples/invalid/missing-knowledge-artifact-manifest-payload-ref-value.case.json",
+      "sha256": "4246479051046996f9ced35795afc4117e498706f469baf9e6f8e26b3fa61e11"
+    },
+    {
+      "path": "contracts/examples/invalid/missing-knowledge-artifact-manifest-provenance-artifacts.case.json",
+      "sha256": "7faf19633c91dffbf2a023e066825eccece8a3e1a6e146380c07fe67e728f570"
+    },
+    {
+      "path": "contracts/examples/invalid/missing-knowledge-artifact-manifest-provenance-sources-0-source-id.case.json",
+      "sha256": "d8bdc0453f260ffcdd0f68cba412032c68b397182f86b9e738b7cbe15f8954c6"
+    },
+    {
+      "path": "contracts/examples/invalid/missing-knowledge-artifact-manifest-provenance-sources.case.json",
+      "sha256": "74ee4121c1e30fd7258d85f95f96fc54aeefbba427978c42609151742db4faf0"
+    },
+    {
+      "path": "contracts/examples/invalid/missing-knowledge-artifact-manifest-root-artifact-family.case.json",
+      "sha256": "6a26e6fbba3850a10da3592ffa1fec50585fea33b4debadb7515cbf96d3426cd"
+    },
+    {
+      "path": "contracts/examples/invalid/missing-knowledge-artifact-manifest-root-artifact-id.case.json",
+      "sha256": "b7ce4461e02260ae157e198072fa9395f57c5d86b76d957d50783f2b20d31f33"
+    },
+    {
+      "path": "contracts/examples/invalid/missing-knowledge-artifact-manifest-root-artifact-kind.case.json",
+      "sha256": "97ff52eafc98d0e5059238bab67e6e4460597a9656f1394f453b7a4861a0e293"
+    },
+    {
+      "path": "contracts/examples/invalid/missing-knowledge-artifact-manifest-root-byte-size.case.json",
+      "sha256": "e11e5d0cad41fb6154e97dbf8e21f2e5207307ed35d9a05ec164e0f45a1d0f64"
+    },
+    {
+      "path": "contracts/examples/invalid/missing-knowledge-artifact-manifest-root-checksum.case.json",
+      "sha256": "213eece7e33880d0fc875d24eb9d8807e87ce5397effc863892c1ad8d7f4f48f"
+    },
+    {
+      "path": "contracts/examples/invalid/missing-knowledge-artifact-manifest-root-created-at.case.json",
+      "sha256": "561cd08b0d398b8a225cd382de2f48b741e46a2c23b3118f6c3dcdb317536074"
+    },
+    {
+      "path": "contracts/examples/invalid/missing-knowledge-artifact-manifest-root-integrity-status.case.json",
+      "sha256": "b39c98c3718a7b18b7912b0363fc044acb1bbc2e37f11234805db44266772196"
+    },
+    {
+      "path": "contracts/examples/invalid/missing-knowledge-artifact-manifest-root-logical-ref.case.json",
+      "sha256": "45393e9616a0354ddd7148c3b3aa1accd93b206ec5e67973d870947c8357d91d"
+    },
+    {
+      "path": "contracts/examples/invalid/missing-knowledge-artifact-manifest-root-media-type.case.json",
+      "sha256": "0e7089bf5e9c27e88697491bb385dedb9aa3e1e3978277744cea06d0fd459f42"
+    },
+    {
+      "path": "contracts/examples/invalid/missing-knowledge-artifact-manifest-root-payload-ref.case.json",
+      "sha256": "3b58520bd13be804797c0c365f959f58207be739bba068e77c3b6fa03f4c5ba1"
+    },
+    {
+      "path": "contracts/examples/invalid/missing-knowledge-artifact-manifest-root-producer-id.case.json",
+      "sha256": "3cafa6970f4e2595d0e2c5a7b1d20aa190974c6dd9a5cc80dea08142237dbc2c"
+    },
+    {
+      "path": "contracts/examples/invalid/missing-knowledge-artifact-manifest-root-producer-version.case.json",
+      "sha256": "274c79c9ad98b0dba811a47b0a665e350ffef08c298c9b51efe33ff0738381c3"
+    },
+    {
+      "path": "contracts/examples/invalid/missing-knowledge-artifact-manifest-root-provenance.case.json",
+      "sha256": "e916d3f09ec238a8b85e7c4fee8d4d56408e300b92b58d5e5347825c6a6ed4b4"
+    },
+    {
+      "path": "contracts/examples/invalid/missing-knowledge-artifact-manifest-root-schema-id.case.json",
+      "sha256": "4cf362b74446aec12f71197bfdba835afeea6aac151617540d81ace48b2c8af2"
+    },
+    {
+      "path": "contracts/examples/invalid/missing-knowledge-artifact-manifest-root-schema-version.case.json",
+      "sha256": "bd3b11b9d875fc7e0e186270d8240753bcd108016964b9e262d32f7225cb0618"
+    },
+    {
+      "path": "contracts/examples/invalid/missing-knowledge-profile-claim-artifact-manifest-required-per-promoted-product.case.json",
+      "sha256": "bc9c715ef79e98350b2b680bc1360ff2fdb0f35c77a17465d717373fe9621c7a"
+    },
+    {
+      "path": "contracts/examples/invalid/missing-knowledge-profile-claim-artifact-manifest-schema-id.case.json",
+      "sha256": "0ea63f4714b6cfb5e0731b272155aa5995aaee94a5bae322e6740478910c7a48"
+    },
+    {
+      "path": "contracts/examples/invalid/missing-knowledge-profile-claim-artifact-manifest-schema-version.case.json",
+      "sha256": "06b71e766580357699ddcdbd981dcc8fae952bfa99ebbc56d074abf14257cd0c"
+    },
+    {
+      "path": "contracts/examples/invalid/missing-knowledge-profile-claim-compatibility-policy-ref.case.json",
+      "sha256": "764d4f2bbab9797bee786dce8710fd175ccdac0be0dca643deb58f76d9a71a3d"
+    },
+    {
+      "path": "contracts/examples/invalid/missing-knowledge-profile-claim-compatibility-supported-final-versions.case.json",
+      "sha256": "6990b31b79ddcda4fde9a13fcedf1a05db4ae9990065d8a4a91cb6ba558df57f"
+    },
+    {
+      "path": "contracts/examples/invalid/missing-knowledge-profile-claim-fixtures-invalid-ref.case.json",
+      "sha256": "6a3a616b5c41839e91e70dd967715c91f21484c31f820acb03263dd9d85e51a0"
+    },
+    {
+      "path": "contracts/examples/invalid/missing-knowledge-profile-claim-fixtures-valid-ref.case.json",
+      "sha256": "ac7e2d7b99d19eef8aa6417900c6c70bcdcbcc20809876dbf187bbfd97202171"
+    },
+    {
+      "path": "contracts/examples/invalid/missing-knowledge-profile-claim-knowledge-profile-id.case.json",
+      "sha256": "7d3e93560d4bb4c28c57584ca2c1a669f7bb4e10e161b735fbad9e3c48bdac9b"
+    },
+    {
+      "path": "contracts/examples/invalid/missing-knowledge-profile-claim-knowledge-profile-level.case.json",
+      "sha256": "dae81b8ae4407801066082d48beeb23b3e9a29651bd8db065245b7e67bce9361"
+    },
+    {
+      "path": "contracts/examples/invalid/missing-knowledge-profile-claim-public-schemas-0-schema-id.case.json",
+      "sha256": "b435ce8b922e2d58d8f156fa6d8982ad0ea6943417166979097e96e4c76fb5b4"
+    },
+    {
+      "path": "contracts/examples/invalid/missing-knowledge-profile-claim-public-schemas-0-schema-ref.case.json",
+      "sha256": "87f51a273c97a632f5da3e3745a24aaba285ed5bff7531b08718c88a132148fd"
+    },
+    {
+      "path": "contracts/examples/invalid/missing-knowledge-profile-claim-public-schemas-0-schema-version.case.json",
+      "sha256": "c0ac4469214f8bbc80c31f09016248bba1d9d6f89630a1c1aa9aef8849134237"
+    },
+    {
+      "path": "contracts/examples/invalid/missing-knowledge-profile-claim-public-seam-artifact-ref.case.json",
+      "sha256": "fb22f5a67fcacd98b9ece084f331f3a1dbc44069bc1270dc276e320bb730925d"
+    },
+    {
+      "path": "contracts/examples/invalid/missing-knowledge-profile-claim-public-seam-description.case.json",
+      "sha256": "ee63b7a053d8b7b703f547236e83ab04239bfbf4fd7bd68006af4a801d8da5b2"
+    },
+    {
+      "path": "contracts/examples/invalid/missing-knowledge-profile-claim-root-artifact-manifest.case.json",
+      "sha256": "c907b96947d3fb5c5099af796596dc185dafe74a7acd8bffc7b96ffa2586c3ab"
+    },
+    {
+      "path": "contracts/examples/invalid/missing-knowledge-profile-claim-root-compatibility.case.json",
+      "sha256": "a3e0f844ec105772fef5c8ebcf709d8ade1ac737095238012ced511564cb2f9f"
+    },
+    {
+      "path": "contracts/examples/invalid/missing-knowledge-profile-claim-root-fixtures.case.json",
+      "sha256": "088ff15a5c9a9e4868e6c5ace4a12e39c1428bfbcbfdb8a2dd3bc189c8abe2c8"
+    },
+    {
+      "path": "contracts/examples/invalid/missing-knowledge-profile-claim-root-internal-dependency-policy.case.json",
+      "sha256": "d323d86fa6b2fe504a37dec5b1e666c0416a72a003649071f54269d0169300d1"
+    },
+    {
+      "path": "contracts/examples/invalid/missing-knowledge-profile-claim-root-knowledge-profile.case.json",
+      "sha256": "d98b176b9e11059c91dde1708f04785fc6fcb9447d5cc851cce4b9b72eb05d58"
+    },
+    {
+      "path": "contracts/examples/invalid/missing-knowledge-profile-claim-root-module-id.case.json",
+      "sha256": "eab6daacc4b0ff8cc05cd6ac97fcfa59ecb22f7f91ef4eebefcd3185e66e8a1f"
+    },
+    {
+      "path": "contracts/examples/invalid/missing-knowledge-profile-claim-root-public-schemas.case.json",
+      "sha256": "e923749d6a99d7e7784d54555ddb5ddca343dd88d2182fbeaa5a4c499f29e7cf"
+    },
+    {
+      "path": "contracts/examples/invalid/missing-knowledge-profile-claim-root-public-seam.case.json",
+      "sha256": "a93e6774f728f0f8b8ab8f31a85b9fffc81ac004a68d9eea08c0d1b5992828e1"
+    },
+    {
+      "path": "contracts/examples/invalid/missing-knowledge-profile-claim-root-schema-id.case.json",
+      "sha256": "99c57ab4ffd6488a95a3532ca62c8040e8f4823b5ba18a5dc4d16b8e6bf784bf"
+    },
+    {
+      "path": "contracts/examples/invalid/missing-knowledge-profile-claim-root-schema-version.case.json",
+      "sha256": "1b7418d701d369174a5f86fa1ab2c14aae33a0b7a3211b2d652993fc2f1fd2da"
+    },
+    {
+      "path": "contracts/examples/invalid/missing-knowledge-profile-claim-root-stable-references.case.json",
+      "sha256": "0a07e5122800c6fc7f174cfa8abbed7afa1a158c6bfbdc3ae6e2fe762cd0ebe1"
+    },
+    {
+      "path": "contracts/examples/invalid/missing-knowledge-profile-claim-root-validation.case.json",
+      "sha256": "16d30d4ade4d40416771409f33bb45824377e803c0dd41613deeb817837c5e05"
+    },
+    {
+      "path": "contracts/examples/invalid/missing-knowledge-profile-claim-stable-references-case-preserving.case.json",
+      "sha256": "5b5e8228ce8d36aecb0dda45c936771c3e53d82ce7336c3ea2185142020ac088"
+    },
+    {
+      "path": "contracts/examples/invalid/missing-knowledge-profile-claim-stable-references-consumer-recomputation.case.json",
+      "sha256": "9e5438d062852154d19936fcafcaa78fdb5462c85b7f733310816a5426f10f57"
+    },
+    {
+      "path": "contracts/examples/invalid/missing-knowledge-profile-claim-validation-command.case.json",
+      "sha256": "25f04f41a248d984fba88827f20f595a7473d348b3a9408cfafc91c7934f6b03"
+    },
+    {
+      "path": "contracts/examples/invalid/missing-knowledge-profile-claim-validation-deterministic.case.json",
+      "sha256": "31245a5f1921e336210452a38a6d56b03ac48849f959968667869d5e591ffa81"
+    },
+    {
+      "path": "contracts/examples/invalid/missing-knowledge-profile-claim-validation-offline.case.json",
+      "sha256": "fea36b300183b96d85933bb7215338bba7d68efde1df97ba25c6222908bc9aea"
+    },
+    {
+      "path": "contracts/examples/invalid/missing-module-accepts-artifact-families.case.json",
+      "sha256": "e092f38e2df081170e4fb8f4a40d5570c84f95f105d93b9adce307d325fcc5e0"
+    },
+    {
+      "path": "contracts/examples/invalid/missing-module-accepts-schema-versions.case.json",
+      "sha256": "9bb144a7c686c0191b39ab65618c342d7e4b076035d5a3ec67f77920d5e197a3"
+    },
+    {
+      "path": "contracts/examples/invalid/missing-module-contract-release-manifest-ref.case.json",
+      "sha256": "58f348ba6e8a71687e679d1de2e0b2099b18c3328a2d8db73697384c8de4532d"
+    },
+    {
+      "path": "contracts/examples/invalid/missing-module-contract-release-release-id.case.json",
+      "sha256": "a91778b96f54cd70cfbc2e69ad35ea9851fdaa6dacda661ef4c6349414f35d0a"
+    },
+    {
+      "path": "contracts/examples/invalid/missing-module-emits-artifact-families.case.json",
+      "sha256": "4f66cf65158721c296396c251df20761c02f97b438bb19f796529a545f6e0a26"
+    },
+    {
+      "path": "contracts/examples/invalid/missing-module-emits-schema-versions-0-schema-id.case.json",
+      "sha256": "ef4da6d70ecc48d0e9a0e8fce85f58d083810e336d87248761172508a1feac12"
+    },
+    {
+      "path": "contracts/examples/invalid/missing-module-emits-schema-versions-0-versions.case.json",
+      "sha256": "66fffd590a21427c08a3f7e687c8200830f2a19f68903c2f902ba58e0eca312d"
+    },
+    {
+      "path": "contracts/examples/invalid/missing-module-emits-schema-versions.case.json",
+      "sha256": "b3f2d17de1a16f325496cb4023daa882db7c7969562feaccfc106dc48e68fc84"
+    },
+    {
+      "path": "contracts/examples/invalid/missing-module-knowledge-profile-id.case.json",
+      "sha256": "9554a7ab6022abe7904aad97587fe4bfec676199eac9a4f3ef5db145b56488e3"
+    },
+    {
+      "path": "contracts/examples/invalid/missing-module-knowledge-profile-level.case.json",
+      "sha256": "b9375c5227216705f50d7a639257906b6cdb29e6d6feedd30bc2c8df2093f81f"
+    },
+    {
+      "path": "contracts/examples/invalid/missing-module-repository-id.case.json",
+      "sha256": "ad6520bd7bffa9873b1ffd61227891291ffe3af8685a7413bb28bb8ad4c81c44"
+    },
+    {
+      "path": "contracts/examples/invalid/missing-module-repository-url.case.json",
+      "sha256": "56a95642c49baf677d2e0e1dbfde015f2bd3646c2eebfb61b807688d62a08bd3"
+    },
+    {
+      "path": "contracts/examples/invalid/missing-module-root-accepts.case.json",
+      "sha256": "385d3ea1e50e8babb77733bd3ccfbf2203f24cf914d16e955db1b00093e9b706"
+    },
+    {
+      "path": "contracts/examples/invalid/missing-module-root-contract-release.case.json",
+      "sha256": "cb09f527be41fd9087086f4e638e93e099127b84279851dafa1961155724808d"
+    },
+    {
+      "path": "contracts/examples/invalid/missing-module-root-emits.case.json",
+      "sha256": "03c701afee94ae1ecc0a968a850f5fc6efc578dda0364b5f991ff857e31b7726"
+    },
+    {
+      "path": "contracts/examples/invalid/missing-module-root-knowledge-profile.case.json",
+      "sha256": "f4a74a00f0a215b1db9aa3ac6617322ec5506bf85efe609a4ecd750630682816"
+    },
+    {
+      "path": "contracts/examples/invalid/missing-module-root-module-id.case.json",
+      "sha256": "1eb3ed37c73534d60f5bffdedb302b0c44a33967de046b7873abaee928387243"
+    },
+    {
+      "path": "contracts/examples/invalid/missing-module-root-name.case.json",
+      "sha256": "ce3fb30337a289262a95b04b7677b4ad93e372f025e6aa4c09408bca25ab2a94"
+    },
+    {
+      "path": "contracts/examples/invalid/missing-module-root-repository.case.json",
+      "sha256": "2b73c0d02fb3089b24d25c2b67cbe91f48085ec273d7636fbdd1bc62041f687f"
+    },
+    {
+      "path": "contracts/examples/invalid/missing-module-root-schema-id.case.json",
+      "sha256": "dbfdacab6f3946fba9ad8df4eba7abd586d84e3933c3f75db087707d322ce67f"
+    },
+    {
+      "path": "contracts/examples/invalid/missing-module-root-schema-version.case.json",
+      "sha256": "e7dfe7abc87a145a3e48c7b6cb8a47b265d09c91c3c3a596d239951a3062caae"
+    },
+    {
+      "path": "contracts/examples/invalid/missing-module-root-validation.case.json",
+      "sha256": "1142f0282ed8dc9fbec7d7cfebf5747cd684a80477bb5a5c863679b7230d5e0c"
+    },
+    {
+      "path": "contracts/examples/invalid/missing-module-validation-command.case.json",
+      "sha256": "efae03abdab802cb416199a2cd997fdd911dd2aa5c4a1ec39b25a7ee04291a35"
+    },
+    {
+      "path": "contracts/examples/invalid/module-undeclared-release.case.json",
+      "sha256": "4420bb33d0c56e8af6d5945ffaed4a6e2e11d817c5e1d2f6675e4f2e0abfc7dc"
+    },
+    {
+      "path": "contracts/examples/invalid/module-uppercase-id.case.json",
+      "sha256": "05b0b91e58035ae9a4289b28e3a9e11c061fadee286db82d2dece1ad76ef30ad"
+    },
+    {
+      "path": "contracts/examples/invalid/profile-requires-run-record.case.json",
+      "sha256": "f30822cd82829dfa3d055496b27ca774b19dd36369002706f3b19d6eaac911b1"
+    },
+    {
+      "path": "contracts/examples/invalid/profile-undeclared-schema.case.json",
+      "sha256": "23ca01801a905cd94315f5231a4691b96dbdef4f416eeeebb6a5064b556f61a5"
+    },
+    {
+      "path": "contracts/examples/valid/knowledge_artifact_manifest.v1.json",
+      "sha256": "30f3d025e634a68984822f9584808432e21b3999410b4cb707b3e11a9200b17e"
+    },
+    {
+      "path": "contracts/examples/valid/knowledge_profile_claim.v1.json",
+      "sha256": "c98ab23a038d836fcf09f678b929afc2fdb3714de8d29a817098c39385593fb0"
+    },
+    {
+      "path": "contracts/examples/valid/module.v1.json",
+      "sha256": "4b09bdc9225e69c2ffbcf551d0e3b727b85c0fd261741672e3910a4a0aae4534"
+    },
+    {
+      "path": "contracts/migrations/v1-rc1.md",
+      "sha256": "bafc2dac8030d3790536e67fc349cd3cd6888b4bd1006929fca9cc5fbb92fbc7"
+    },
+    {
+      "path": "contracts/registry.json",
+      "sha256": "7abd9a639f6e7aea34d0926ce3355cf13a7b6d89f2f9b211fb0a33ef150e8216"
+    },
+    {
+      "path": "contracts/schemas/knowledge_artifact_manifest.v1.schema.json",
+      "sha256": "ee5e1e84dd02ee12519cc5f6526aba44f2a84c0aee90e5cd1f9a2447c288a26c"
+    },
+    {
+      "path": "contracts/schemas/knowledge_profile_claim.v1.schema.json",
+      "sha256": "615fe352ac46c8aa88b5142f33c7549b2bca38f0ec25fd0dfb4fe66802c390a1"
+    },
+    {
+      "path": "contracts/schemas/module.v1.schema.json",
+      "sha256": "a9430018198efbd8b9c05f628b60b57c3411b5cae43f7002036d467dff33e1aa"
+    },
+    {
+      "path": "contracts/test_vectors/stable_references.v1.json",
+      "sha256": "124640bdc911d65c5f796f2a13cde7556c4b5080302832c7bd17f596e983b253"
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "schema_id": "kb.contract_registry",
+  "schema_version": "1.0",
+  "schemas": [
+    {
+      "schema_id": "kb.module",
+      "schema_version": "1.0",
+      "schema_ref": "contracts/schemas/module.v1.schema.json"
+    },
+    {
+      "schema_id": "kb.knowledge_artifact_manifest",
+      "schema_version": "1.0",
+      "schema_ref": "contracts/schemas/knowledge_artifact_manifest.v1.schema.json"
+    },
+    {
+      "schema_id": "kb.knowledge_profile_claim",
+      "schema_version": "1.0",
+      "schema_ref": "contracts/schemas/knowledge_profile_claim.v1.schema.json"
+    }
+  ],
+  "profiles": [
+    {
+      "profile_id": "knowledge-interop",
+      "level": 1,
+      "claim_schema_ref": "contracts/schemas/knowledge_profile_claim.v1.schema.json"
+    }
+  ],
+  "releases": [
+    {
+      "release_id": "kb-interop.v1-rc1",
+      "status": "release_candidate",
+      "manifest_ref": "contracts/releases/kb_interop_release.v1-rc1.json"
+    }
+  ]
+}

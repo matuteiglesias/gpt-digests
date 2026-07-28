@@ -1,0 +1,44 @@
+{
+  "description": "Module release claims must resolve through the registry.",
+  "schema_id": "kb.module",
+  "check": "cross_references",
+  "expected_code": "UNDECLARED_RELEASE",
+  "instance": {
+    "schema_id": "kb.module",
+    "schema_version": "1.0",
+    "module_id": "kb-artifacts",
+    "name": "KB Artifacts",
+    "repository": {
+      "id": "matuteiglesias/gpt-digests",
+      "url": "https://github.com/matuteiglesias/gpt-digests"
+    },
+    "knowledge_profile": {
+      "id": "knowledge-interop",
+      "level": 1
+    },
+    "accepts": {
+      "artifact_families": [],
+      "schema_versions": []
+    },
+    "emits": {
+      "artifact_families": [
+        "knowledge-artifact-manifest"
+      ],
+      "schema_versions": [
+        {
+          "schema_id": "kb.knowledge_artifact_manifest",
+          "versions": [
+            "1.0"
+          ]
+        }
+      ]
+    },
+    "validation": {
+      "command": "make contract-smoke"
+    },
+    "contract_release": {
+      "release_id": "kb-interop.unknown",
+      "manifest_ref": "contracts/releases/unknown.json"
+    }
+  }
+}

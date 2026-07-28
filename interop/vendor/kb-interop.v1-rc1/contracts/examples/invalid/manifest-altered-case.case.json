@@ -1,0 +1,7 @@
+{
+  "description": "Generic consumers must preserve opaque artifact IDs exactly.",
+  "check": "reference_preservation",
+  "expected_code": "REFERENCE_CASE_CHANGED",
+  "published_value": "SummarySet:CaseSensitive-2026-07-28",
+  "observed_value": "summaryset:casesensitive-2026-07-28"
+}

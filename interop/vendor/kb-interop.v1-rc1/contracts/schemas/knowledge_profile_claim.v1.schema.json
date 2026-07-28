@@ -1,0 +1,249 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:kb-contracts:schema:knowledge-profile-claim:v1",
+  "title": "Knowledge interoperability profile claim v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_id",
+    "schema_version",
+    "module_id",
+    "knowledge_profile",
+    "public_schemas",
+    "artifact_manifest",
+    "stable_references",
+    "public_seam",
+    "fixtures",
+    "validation",
+    "compatibility",
+    "internal_dependency_policy"
+  ],
+  "properties": {
+    "schema_id": {
+      "const": "kb.knowledge_profile_claim"
+    },
+    "schema_version": {
+      "const": "1.0"
+    },
+    "module_id": {
+      "$ref": "#/$defs/registryId"
+    },
+    "knowledge_profile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "level"
+      ],
+      "properties": {
+        "id": {
+          "const": "knowledge-interop"
+        },
+        "level": {
+          "const": 1
+        }
+      }
+    },
+    "public_schemas": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schema_id",
+          "schema_version",
+          "schema_ref"
+        ],
+        "properties": {
+          "schema_id": {
+            "$ref": "#/$defs/registryId"
+          },
+          "schema_version": {
+            "type": "string",
+            "pattern": "^[0-9]+\\.[0-9]+$"
+          },
+          "schema_ref": {
+            "$ref": "#/$defs/repositoryRelativeRef"
+          }
+        }
+      }
+    },
+    "artifact_manifest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema_id",
+        "schema_version",
+        "required_per_promoted_product"
+      ],
+      "properties": {
+        "schema_id": {
+          "const": "kb.knowledge_artifact_manifest"
+        },
+        "schema_version": {
+          "const": "1.0"
+        },
+        "required_per_promoted_product": {
+          "const": true
+        }
+      }
+    },
+    "stable_references": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "case_preserving",
+        "consumer_recomputation"
+      ],
+      "properties": {
+        "case_preserving": {
+          "const": true
+        },
+        "consumer_recomputation": {
+          "const": "forbidden"
+        }
+      }
+    },
+    "public_seam": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "description",
+        "artifact_ref"
+      ],
+      "properties": {
+        "description": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 500
+        },
+        "artifact_ref": {
+          "$ref": "#/$defs/repositoryRelativeRef"
+        }
+      }
+    },
+    "fixtures": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "valid_ref",
+        "invalid_ref"
+      ],
+      "properties": {
+        "valid_ref": {
+          "$ref": "#/$defs/repositoryRelativeRef"
+        },
+        "invalid_ref": {
+          "$ref": "#/$defs/repositoryRelativeRef"
+        }
+      }
+    },
+    "validation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "command",
+        "offline",
+        "deterministic"
+      ],
+      "properties": {
+        "command": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256
+        },
+        "offline": {
+          "const": true
+        },
+        "deterministic": {
+          "const": true
+        }
+      }
+    },
+    "compatibility": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "policy_ref",
+        "supported_final_versions"
+      ],
+      "properties": {
+        "policy_ref": {
+          "$ref": "#/$defs/repositoryRelativeRef"
+        },
+        "supported_final_versions": {
+          "enum": [
+            "current_and_previous",
+            "longer_declared_window"
+          ]
+        }
+      }
+    },
+    "internal_dependency_policy": {
+      "const": "no_undeclared_repository_internals"
+    },
+    "operational_evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "run_record_ref": {
+          "$ref": "#/$defs/portableRef"
+        },
+        "producer_manifest_ref": {
+          "$ref": "#/$defs/portableRef"
+        },
+        "observability_index_ref": {
+          "$ref": "#/$defs/portableRef"
+        },
+        "failure_record_ref": {
+          "$ref": "#/$defs/portableRef"
+        }
+      },
+      "minProperties": 1
+    },
+    "extensions": {
+      "type": "object",
+      "propertyNames": {
+        "pattern": "^[a-z][a-z0-9]*(?:\\.[a-z][a-z0-9_-]*)+$"
+      },
+      "additionalProperties": true
+    }
+  },
+  "$defs": {
+    "registryId": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9._-]{0,127}$"
+    },
+    "repositoryRelativeRef": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 1024,
+      "allOf": [
+        {
+          "not": {
+            "pattern": "^(?:/|[A-Za-z]:[\\\\/]|\\\\\\\\|https?://)"
+          }
+        },
+        {
+          "not": {
+            "pattern": "(?:^|/)\\.\\.(?:/|$)"
+          }
+        }
+      ]
+    },
+    "portableRef": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/repositoryRelativeRef"
+        },
+        {
+          "type": "string",
+          "pattern": "^urn:[A-Za-z0-9][A-Za-z0-9:._/-]*$",
+          "maxLength": 1024
+        }
+      ]
+    }
+  }
+}
