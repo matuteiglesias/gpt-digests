@@ -35,3 +35,10 @@ Each successful run contains `selected.jsonl`, `selected.csv`, `artifact.md`, an
 `manifest.json`. The JSONL preserves record identity, selected annotations, source
 provenance, and selection reasons. CSV uses bounded text excerpts. The manifest records
 the request, input partition hashes, counts, and generated output names.
+
+The existing `manifest.json` is producer-local operational evidence; it is not a
+shared knowledge-artifact manifest. The canonical knowledge product is
+`selected.jsonl`. Its producer-owned, content-addressed identity is documented in
+[the interoperability boundary](interoperability.md). Shared module and artifact
+manifests remain gated on an exact, locally verified KB Contracts release bundle;
+the producer has no runtime dependency on a sibling repository.
