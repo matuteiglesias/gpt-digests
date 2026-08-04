@@ -1,0 +1,48 @@
+# This file declares the repository boundary and its place in the GitHub estate.
+schema_version: 1
+id: kb.artifacts.selector
+repository:
+  id: repo.gpt-digests
+  github: matuteiglesias/kb-artifacts
+domain: knowledge
+system: kb.artifacts
+role: evidence-selector
+lifecycle: active
+authority:
+  status: proposed
+  owns:
+  - deterministic selected-evidence artifacts
+  - selection manifests and producer-local promotion mechanics
+  does_not_own:
+  - source chunk semantics
+  - shared contract authority
+  - arbitrary corpus analysis
+  - MCP access policy
+interfaces:
+  consumes:
+  - contract:kb.selected-evidence@1
+  - artifact:kb.run-manifest@1
+  - artifact:kb.summary-bus@1
+  produces:
+  - artifact:kb.selected-evidence@1
+upstream:
+- repo.kb-contracts
+- repo.knowledge-inspect
+downstream:
+- repo.context
+- repo.matias-context-mcp
+canonical_commands:
+- kbctl compute
+- kbctl publish
+generated_paths:
+- artifacts/
+- runs/
+verification:
+  status: metadata-only
+  last_verified: '2026-08-04'
+  command: null
+  unknowns:
+  - package installation and release verification command require local confirmation
+maintenance:
+  cadence: quarterly
+  next_review: '2026-11-01'
