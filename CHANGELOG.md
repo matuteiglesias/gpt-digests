@@ -8,6 +8,14 @@ follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Added
 
+- Typed JSON-compatible query expressions with deterministic evaluation and optional
+  integration into `SelectionRequest`.
+- Read-only corpus describe, facet, count, and bounded sample APIs and JSON CLI
+  commands.
+- Local TOML corpus profiles, path-private discovery, and profile-backed exploration
+  and selection.
+- Offline progressive agent workflow example and agent-boundary documentation.
+
 - Public package-root API for evidence contracts, inspection, and selection.
 - Self-contained CLI and Python examples for JSONL evidence collections.
 - PEP 561 inline typing marker and publication-grade package metadata.
@@ -20,6 +28,8 @@ follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 ### Changed
 
 - `select()` accepts string and path-like output locations in addition to `Path`.
+- Package version prepared as `0.2.0` for the backward-compatible query and corpus
+  exploration release; publication still requires maintainer acceptance.
 
 ## Release history
 

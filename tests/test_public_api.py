@@ -9,11 +9,22 @@ from kb_artifacts import SelectionRequest, inspect_source, select
 
 def test_public_api_is_intentional() -> None:
     assert kb_artifacts.__all__ == (
+        "CorpusProfileError",
+        "CorpusProfiles",
         "EvidenceRecord",
+        "QueryExpression",
+        "QueryValidationError",
         "SelectionDecision",
         "SelectionRequest",
         "SourceReference",
+        "count_corpus",
+        "describe_corpus",
+        "evaluate_query",
+        "facet_corpus",
         "inspect_source",
+        "load_corpus_profiles",
+        "parse_query",
+        "sample_corpus",
         "select",
     )
     assert callable(inspect_source)

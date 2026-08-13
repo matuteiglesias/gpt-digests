@@ -131,4 +131,11 @@ def inspect_source(
         "diagnostics": {"by_reason": dict(sorted(diagnostics.items()))},
         "bounded_samples": samples[:20],
         "representations": {"timestamp": dict(sorted(timestamp_repr.items())), "identity": dict(sorted(identity_repr.items()))},
+        "bounds": {
+            "max_files_per_kind": max_files_per_kind,
+            "max_records": max_records,
+            "frequency_values_per_field": 20,
+            "sample_records": 20,
+            "excerpt_chars": 160 if include_excerpts else None,
+        },
     }

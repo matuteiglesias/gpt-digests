@@ -1,0 +1,7 @@
+[corpora.sanitized-playbooks]
+description = "Small offline playbook fixture"
+chunk_globs = ["examples/agent/evidence.jsonl"]
+excerpts_permitted_by_default = false
+
+[corpora.sanitized-playbooks.annotations]
+access = "public-example"

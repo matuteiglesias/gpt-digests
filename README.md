@@ -14,6 +14,10 @@ selecting, and reproducibly exporting records from JSONL evidence collections.
 - Accepts common fields including `title`, `text`, `content`, `summary`, `tags`,
   timestamps, and nested `meta` values.
 - Filters records by tags, fields, dates, text, family, and maturity.
+- Supports explicit, nested JSON query expressions and deterministic corpus
+  describe/facet/count/sample operations.
+- Resolves optional local corpus profiles without exposing their filesystem globs in
+  normal agent-facing output.
 - Writes the same selection as JSONL, CSV, readable Markdown, and a provenance
   manifest.
 
@@ -74,10 +78,11 @@ result = select(request, output="selected-python")
 print(result["counts"]["selected"])  # 1
 ```
 
-The supported public API for 0.1 is `EvidenceRecord`, `SourceReference`,
-`SelectionDecision`, `SelectionRequest`, `inspect_source()`, and `select()`. See the
+The supported public API for 0.2 preserves the original contracts and adds the typed
+query, corpus-exploration, and profile-loading boundary documented on the
 [Python API documentation](https://matuteiglesias.github.io/kb-artifacts/python-api/)
-for signatures and the `0.x` stability boundary.
+page. See the runnable offline [agent example](examples/agent/progressive_query.py)
+for the progressive discovery-to-selection workflow.
 
 ## CLI
 
@@ -90,7 +95,7 @@ kb-artifact inspect source \
 ```
 
 Use `kb-artifact --help`, `kb-artifact select --help`, or
-`kb-artifact inspect source --help` for all options. Repeated tags use OR semantics;
+`kb-artifact corpus --help` for all options. Repeated tags use OR semantics;
 different filter types must all match.
 
 ## Documentation / development
