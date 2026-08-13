@@ -14,6 +14,8 @@ nav:
   - JSONL format: jsonl-format.md
   - CLI: cli.md
   - Python API: python-api.md
+  - Agent / corpus exploration: corpus-exploration.md
+  - Agent usage: agent-usage.md
   - Outputs: outputs.md
   - Provenance: provenance.md
   - Interoperability: interoperability.md

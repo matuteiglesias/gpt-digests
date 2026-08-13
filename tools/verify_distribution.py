@@ -45,7 +45,7 @@ def verify_distribution(dist_dir: Path) -> Path:
                 str(python),
                 "-I",
                 "-c",
-                "from kb_artifacts import SelectionRequest, inspect_source, select",
+                "from kb_artifacts import QueryExpression, SelectionRequest, count_corpus, load_corpus_profiles, select",
             ],
             cwd=work,
         )
@@ -74,6 +74,18 @@ def verify_distribution(dist_dir: Path) -> Path:
         expected = {"selected.jsonl", "selected.csv", "artifact.md", "manifest.json"}
         if {path.name for path in output.iterdir()} != expected:
             raise RuntimeError("installed CLI produced an unexpected output file set")
+
+        profiles = work / "corpora.toml"
+        profiles.write_text(
+            f'[corpora.installed-example]\nchunk_globs = ["{evidence}"]\n',
+            encoding="utf-8",
+        )
+        count_result = subprocess.run(
+            [str(cli), "corpus", "count", "--corpus", "installed-example", "--profiles-file", str(profiles), "--query", '{"contains":{"field":"tags","value":"runbook"}}'],
+            cwd=work, check=True, capture_output=True, text=True,
+        )
+        if '"records_matching": 1' not in count_result.stdout:
+            raise RuntimeError("installed corpus profile/query workflow returned an unexpected count")
 
     return wheels[0]
 

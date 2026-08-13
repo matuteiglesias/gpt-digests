@@ -13,11 +13,13 @@ import tempfile
 from dataclasses import asdict, dataclass
 from datetime import date, datetime, timezone
 from pathlib import Path
-from typing import Iterable
+from typing import Iterable, Mapping
 
 from kb_artifacts.classification import classify
 from kb_artifacts.contracts import EvidenceRecord, SelectionDecision
 from kb_artifacts.normalization import normalize_value, tag_lexeme
+from kb_artifacts.query import QueryExpression, evaluate_query, parse_query
+from kb_artifacts.profiles import CorpusProfiles, resolve_corpus_sources
 from kb_artifacts.sources.jsonl_bus import SourceInputError, expand_globs, scan_jsonl
 
 
@@ -35,6 +37,8 @@ class SelectionRequest:
     limit: int | None = None
     deduplicate: bool = True
     group_by: str = "domain"
+    query: QueryExpression | Mapping[str, object] | None = None
+    corpus: str | None = None
 
 
 def _fingerprint(path: Path) -> str:
@@ -81,14 +85,19 @@ def _matches(record: EvidenceRecord, request: SelectionRequest, pattern: re.Patt
     if pattern and not pattern.search("\n".join(part for part in (record.title, record.summary, record.text) if part)):
         return False, reasons, result
     if pattern: reasons.append("text_match")
+    if request.query is not None and not evaluate_query(record, request.query):
+        return False, reasons, result
+    if request.query is not None: reasons.append("query_match")
     return True, reasons, result
 
 
-def _payload(record: EvidenceRecord, decision: SelectionDecision) -> dict[str, object]:
+def _payload(record: EvidenceRecord, decision: SelectionDecision, partition_alias: str | None = None) -> dict[str, object]:
+    provenance = asdict(record.provenance)
+    if partition_alias is not None: provenance["partition"] = partition_alias
     return {"record_id": record.record_id, "source_kind": record.source_kind, "title": record.title,
             "summary": record.summary, "annotations": dict(record.annotations), "tags": list(record.tags),
             "timestamp": record.timestamp.isoformat() if record.timestamp else None,
-            "provenance": asdict(record.provenance), "selection_reasons": list(decision.reasons),
+            "provenance": provenance, "selection_reasons": list(decision.reasons),
             "artifact_family": decision.artifact_family, "artifact_maturity": decision.artifact_maturity}
 
 
@@ -96,6 +105,7 @@ def _compute_selection(
     request: SelectionRequest,
     paths: list[tuple[str, Path]],
 ) -> tuple[list[EvidenceRecord], list[dict[str, object]], int, list[tuple[EvidenceRecord, SelectionDecision]]]:
+    if request.query is not None: parse_query(request.query)
     try: pattern = re.compile(request.text_pattern, re.IGNORECASE) if request.text_pattern else None
     except re.error as error: raise SourceInputError(f"Invalid text pattern: {error}") from error
     records: list[EvidenceRecord] = []; errors: list[dict[str, object]] = []
@@ -161,7 +171,13 @@ def _build_legacy_manifest(
     duplicate_count: int,
     selected_count: int,
 ) -> dict[str, object]:
-    return {"selection_request": {"chunk_globs": list(request.chunk_globs), "summary_globs": list(request.summary_globs), "from": request.start.isoformat() if request.start else None, "to": request.end.isoformat() if request.end else None, "tags": list(request.tags), "fields": dict(request.fields), "text_pattern": request.text_pattern, "families": list(request.families), "maturities": list(request.maturities), "limit": request.limit, "deduplicate": request.deduplicate, "group_by": request.group_by}, "generated_at": datetime.now(timezone.utc).isoformat(), "matched_partitions": [{"source_kind": kind, "path": str(path), "sha256": _fingerprint(path)} for kind, path in paths], "counts": {"scanned": len(records) + len(errors), "invalid": len(errors), "deduplicated": duplicate_count, "selected": selected_count}, "outputs": ["selected.jsonl", "selected.csv", "artifact.md", "manifest.json"]}
+    selection_request = {"chunk_globs": list(request.chunk_globs), "summary_globs": list(request.summary_globs), "from": request.start.isoformat() if request.start else None, "to": request.end.isoformat() if request.end else None, "tags": list(request.tags), "fields": dict(request.fields), "text_pattern": request.text_pattern, "families": list(request.families), "maturities": list(request.maturities), "limit": request.limit, "deduplicate": request.deduplicate, "group_by": request.group_by}
+    if request.corpus is not None:
+        selection_request["corpus"] = request.corpus
+    if request.query is not None:
+        selection_request["query"] = parse_query(request.query).to_dict()
+    partitions = [{"source_kind": kind, **({"source_id": f"{kind}:{index}"} if request.corpus else {"path": str(path)}), "sha256": _fingerprint(path)} for index, (kind, path) in enumerate(paths, start=1)]
+    return {"selection_request": selection_request, "generated_at": datetime.now(timezone.utc).isoformat(), "matched_partitions": partitions, "counts": {"scanned": len(records) + len(errors), "invalid": len(errors), "deduplicated": duplicate_count, "selected": selected_count}, "outputs": ["selected.jsonl", "selected.csv", "artifact.md", "manifest.json"]}
 
 
 def _write_candidate_file(path: Path, content: bytes) -> None:
@@ -226,6 +242,7 @@ def select(
     *,
     output: str | os.PathLike[str],
     allow_empty: bool = False,
+    profiles: CorpusProfiles | None = None,
 ) -> dict:
     """Select once from both buses and render JSONL, CSV, Markdown, and evidence."""
     output = Path(output)
@@ -233,11 +250,13 @@ def select(
         raise SourceInputError(f"Output path must not contain a symlink: {output}")
     if output.exists() and (not output.is_dir() or any(output.iterdir())):
         raise SourceInputError(f"Output directory is not empty: {output}")
-    paths = [("chunk", path) for path in expand_globs(request.chunk_globs)] + [("summary", path) for path in expand_globs(request.summary_globs)]
+    chunk_globs, summary_globs, _profile = resolve_corpus_sources(chunk_globs=request.chunk_globs, summary_globs=request.summary_globs, corpus=request.corpus, profiles=profiles)
+    paths = [("chunk", path) for path in expand_globs(chunk_globs)] + [("summary", path) for path in expand_globs(summary_globs)]
     if not paths: raise SourceInputError("No input files matched the requested globs")
     records, errors, duplicate_count, selected = _compute_selection(request, paths)
     if not selected and not allow_empty: raise SourceInputError("No records matched; rerun with --allow-empty only when an empty export is intentional")
-    payloads = [_payload(record, decision) for record, decision in selected]
+    aliases = {str(path): f"corpus:{request.corpus}/{kind}:{index}" for index, (kind, path) in enumerate(paths, start=1)} if request.corpus else {}
+    payloads = [_payload(record, decision, aliases.get(record.provenance.partition)) for record, decision in selected]
     manifest = _build_legacy_manifest(request, paths, records, errors, duplicate_count, len(selected))
     rendered = {
         "selected.jsonl": _render_jsonl(payloads),

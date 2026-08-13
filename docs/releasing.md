@@ -19,7 +19,7 @@ PyPI can exchange GitHub's short-lived OIDC identity for upload authorization.
 2. Obtain production release acceptance from Matías.
 3. Set the approved stable version in `pyproject.toml` and ensure release notes are ready.
 4. Require green CI and documentation checks for the exact source commit.
-5. Create and push an annotated tag matching the version exactly, such as `v0.1.0`.
+5. Create and push an annotated tag matching the version exactly, such as `v0.2.0`.
 6. Approve the protected `pypi` environment deployment when prompted.
 7. Confirm that the workflow verifies the exact version from PyPI and creates the
    matching GitHub release.
@@ -44,9 +44,9 @@ No publishing step exists in the ordinary CI workflow.
 
 ## TestPyPI rehearsal
 
-Before production, set a release-candidate version such as `0.1.0rc1` in
+Before production, set a release-candidate version such as `0.2.0rc1` in
 `pyproject.toml`, obtain approval for the rehearsal, and push the matching annotated
-tag `v0.1.0rc1`. Configure a TestPyPI Trusted Publisher for
+tag `v0.2.0rc1`. Configure a TestPyPI Trusted Publisher for
 `.github/workflows/testpypi.yml` with the protected GitHub environment `testpypi`; no
 TestPyPI token is stored.
 
