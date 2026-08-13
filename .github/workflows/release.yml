@@ -1,0 +1,210 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v[0-9]*.[0-9]*.[0-9]*"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Build and validate distributions
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out tagged source
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install package and release tools
+        run: python -m pip install --upgrade pip ".[dev]"
+
+      - name: Verify tag matches package version
+        env:
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: |
+          python - <<'PY'
+          import os
+          import re
+          from pathlib import Path
+          import tomllib
+
+          version = tomllib.loads(Path("pyproject.toml").read_text(encoding="utf-8"))["project"]["version"]
+          expected = f"v{version}"
+          actual = os.environ["RELEASE_TAG"]
+          if actual != expected:
+              raise SystemExit(f"release tag {actual!r} does not match package version {expected!r}")
+          if re.fullmatch(r"v\d+\.\d+\.\d+", actual) is None:
+              raise SystemExit(f"production release tag must be stable: {actual!r}")
+          print(f"release identity verified: {actual}")
+          PY
+
+      - name: Run tests
+        run: python -m pytest -q
+
+      - name: Build wheel and sdist
+        run: python -m build
+
+      - name: Validate distribution metadata
+        run: python -m twine check --strict dist/*
+
+      - name: Create clean wheel-test environment
+        run: python -m venv "${RUNNER_TEMP}/kb-artifacts-release"
+
+      - name: Install the exact release wheel
+        run: >-
+          "${RUNNER_TEMP}/kb-artifacts-release/bin/python" -m pip install dist/*.whl
+
+      - name: Smoke-test installed public API
+        working-directory: ${{ runner.temp }}
+        run: >-
+          "${RUNNER_TEMP}/kb-artifacts-release/bin/python" -I -c
+          "from kb_artifacts import EvidenceRecord, SelectionDecision,
+          SelectionRequest, SourceReference, inspect_source, select"
+
+      - name: Smoke-test installed CLI
+        working-directory: ${{ runner.temp }}
+        run: >-
+          "${RUNNER_TEMP}/kb-artifacts-release/bin/kb-artifact" --help
+
+      - name: Record distribution checksums
+        working-directory: dist
+        run: sha256sum * | tee SHA256SUMS
+
+      - name: Store validated distributions
+        uses: actions/upload-artifact@v4
+        with:
+          name: python-package-distributions
+          path: |
+            dist/*.whl
+            dist/*.tar.gz
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Store distribution checksums
+        uses: actions/upload-artifact@v4
+        with:
+          name: python-package-checksums
+          path: dist/SHA256SUMS
+          if-no-files-found: error
+          retention-days: 30
+
+  publish:
+    name: Publish to PyPI
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+    environment:
+      name: pypi
+      url: https://pypi.org/project/kb-artifacts/
+    steps:
+      - name: Download validated distributions
+        uses: actions/download-artifact@v4
+        with:
+          name: python-package-distributions
+          path: dist
+
+      - name: Publish with PyPI Trusted Publishing
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          packages-dir: dist/
+          attestations: true
+
+  verify:
+    name: Verify production package
+    needs: publish
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Create clean consumer environment
+        run: python -m venv "${RUNNER_TEMP}/kb-artifacts-production"
+
+      - name: Install the exact version from PyPI
+        env:
+          RELEASE_TAG: ${{ github.ref_name }}
+        run: |
+          version="${RELEASE_TAG#v}"
+          for attempt in {1..10}; do
+            if "${RUNNER_TEMP}/kb-artifacts-production/bin/python" -m pip install \
+              --index-url https://pypi.org/simple/ \
+              "kb-artifacts==${version}"; then
+              exit 0
+            fi
+            if [ "${attempt}" -eq 10 ]; then
+              exit 1
+            fi
+            sleep 15
+          done
+
+      - name: Verify public API as an external consumer
+        working-directory: ${{ runner.temp }}
+        run: >-
+          "${RUNNER_TEMP}/kb-artifacts-production/bin/python" -I -c
+          "from kb_artifacts import SelectionRequest, select;
+          print('import OK')"
+
+      - name: Verify installed CLI
+        working-directory: ${{ runner.temp }}
+        run: >-
+          "${RUNNER_TEMP}/kb-artifacts-production/bin/kb-artifact" --help
+
+      - name: Run the tutorial outside the repository
+        working-directory: ${{ runner.temp }}
+        run: |
+          cat > evidence.jsonl <<'EOF'
+          {"title":"Deploy app","text":"Build and deploy the service","tags":["runbook","ops"]}
+          {"title":"Buy groceries","text":"Milk and bread","tags":["personal"]}
+          EOF
+          "${RUNNER_TEMP}/kb-artifacts-production/bin/kb-artifact" select \
+            --chunk-glob evidence.jsonl \
+            --tag runbook \
+            --output selected
+          test "$(wc -l < selected/selected.jsonl)" -eq 1
+          test -f selected/selected.csv
+          test -f selected/artifact.md
+          test -f selected/manifest.json
+
+  github-release:
+    name: Create GitHub release
+    needs: verify
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Download validated distributions
+        uses: actions/download-artifact@v4
+        with:
+          name: python-package-distributions
+          path: release-assets
+
+      - name: Download distribution checksums
+        uses: actions/download-artifact@v4
+        with:
+          name: python-package-checksums
+          path: release-assets
+
+      - name: Create release for the verified tag
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: >-
+          gh release create "${GITHUB_REF_NAME}"
+          release-assets/*
+          --repo "${GITHUB_REPOSITORY}"
+          --verify-tag
+          --generate-notes
+          --title "${GITHUB_REF_NAME}"

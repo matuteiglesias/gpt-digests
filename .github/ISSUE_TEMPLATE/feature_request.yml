@@ -1,0 +1,35 @@
+name: Feature request
+description: Propose a focused improvement within the JSONL selection product boundary.
+title: "[Feature]: "
+labels: [enhancement]
+body:
+  - type: markdown
+    attributes:
+      value: >-
+        This project is intentionally small. It does not plan to become a database,
+        vector store, LLM service, plugin platform, web UI, or arbitrary-format tool.
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What user problem cannot be solved with the current API or CLI?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Focused proposal
+      description: Describe the smallest public behavior change that solves the problem.
+    validations:
+      required: true
+  - type: textarea
+    id: compatibility
+    attributes:
+      label: Compatibility and policy impact
+      description: Note effects on selection semantics, manifests, outputs, or public API.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered

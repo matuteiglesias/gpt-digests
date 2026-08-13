@@ -1,8 +1,22 @@
 site_name: kb-artifacts
+site_description: Inspect, select, and reproducibly export evidence from JSONL collections.
+site_url: https://matuteiglesias.github.io/kb-artifacts/
+repo_url: https://github.com/matuteiglesias/kb-artifacts
+repo_name: matuteiglesias/kb-artifacts
+edit_uri: edit/main/docs/
 
 theme:
   name: material
 
 nav:
   - Home: index.md
+  - Getting started: getting-started.md
+  - JSONL format: jsonl-format.md
+  - CLI: cli.md
+  - Python API: python-api.md
+  - Outputs: outputs.md
+  - Provenance: provenance.md
   - Interoperability: interoperability.md
+  - Examples: examples.md
+  - Contributing: contributing.md
+  - Releasing: releasing.md

@@ -1,0 +1,55 @@
+name: Bug report
+description: Report a reproducible defect in the library, CLI, or distribution.
+title: "[Bug]: "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: >-
+        Do not include private evidence, credentials, or sensitive paths. Report
+        vulnerabilities through the private security link instead.
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: Output of `python -m pip show kb-artifacts`, or the commit SHA.
+    validations:
+      required: true
+  - type: dropdown
+    id: interface
+    attributes:
+      label: Interface
+      options:
+        - Python API
+        - CLI
+        - Packaging or installation
+        - Documentation
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Minimal sanitized reproduction
+      description: Include commands and a minimal JSONL example without private content.
+      render: shell
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      description: Operating system and Python version.
+    validations:
+      required: true

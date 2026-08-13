@@ -1,44 +1,35 @@
 # kb-artifacts
 
-`kb-artifact` is a read-only selector for governed JSONL evidence buses. It scans
-metadata without changing sources, then exports a deterministic selected record set.
+**Inspect, filter, select, and reproducibly export records from JSONL evidence
+collections.**
 
-## Install
+`kb-artifacts` is a small, read-only Python library and CLI. It accepts ordinary
+newline-delimited JSON, applies explicit filters, and writes machine-readable,
+spreadsheet-friendly, human-readable, and provenance outputs together.
 
-```bash
-python -m pip install -e . --no-build-isolation
-```
-
-## Inspect a source
+## Start in one minute
 
 ```bash
-kb-artifact inspect source --chunk-glob "$CHUNK_GLOB" --output artifacts/source-report.json
+python -m pip install kb-artifacts
+
+cat > evidence.jsonl <<'EOF'
+{"title":"Deploy app","text":"Build and deploy the service","tags":["runbook","ops"]}
+{"title":"Buy groceries","text":"Milk and bread","tags":["personal"]}
+EOF
+
+kb-artifact select --chunk-glob evidence.jsonl --tag runbook --output selected
 ```
 
-The source report contains bounded schema, field, and normalized tag statistics. It
-omits source bodies unless explicitly requested.
+The command selects one record and creates `selected.jsonl`, `selected.csv`,
+`artifact.md`, and `manifest.json` in `selected/`.
 
-## Select evidence
+## Where to go next
 
-```bash
-kb-artifact select --chunk-glob "$CHUNK_GLOB" --tag runbook --tag procedure --tag checklist --family operations --output artifacts/runs/operations
-kb-artifact select --chunk-glob "$CHUNK_GLOB" --field category=cooking --output artifacts/runs/cooking
-kb-artifact select --summary-glob "$SUMMARY_GLOB" --field actionable=true --text 'checklist|steps|pasos' --group-by domain --output artifacts/runs/actionable
-```
+- Follow [Getting started](getting-started.md) for CLI and Python walkthroughs.
+- Learn which input fields are recognized in [JSONL format](jsonl-format.md).
+- Browse the [CLI](cli.md) and [Python API](python-api.md) references.
+- Understand [outputs](outputs.md) and [provenance](provenance.md).
+- Copy a recipe from [Examples](examples.md).
 
-Filters combine predictably: repeated tags use OR semantics, while distinct filter
-kinds must all match. `--allow-empty` is required to write an intentional empty run.
-
-## Output and provenance
-
-Each successful run contains `selected.jsonl`, `selected.csv`, `artifact.md`, and
-`manifest.json`. The JSONL preserves record identity, selected annotations, source
-provenance, and selection reasons. CSV uses bounded text excerpts. The manifest records
-the request, input partition hashes, counts, and generated output names.
-
-The existing `manifest.json` is producer-local operational evidence; it is not a
-shared knowledge-artifact manifest. The canonical knowledge product is
-`selected.jsonl`. Its producer-owned, content-addressed identity is documented in
-[the interoperability boundary](interoperability.md). Shared module and artifact
-manifests remain gated on an exact, locally verified KB Contracts release bundle;
-the producer has no runtime dependency on a sibling repository.
+The canonical documentation site is
+[`https://matuteiglesias.github.io/kb-artifacts/`](https://matuteiglesias.github.io/kb-artifacts/).
