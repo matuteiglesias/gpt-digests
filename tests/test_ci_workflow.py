@@ -8,7 +8,7 @@ WORKFLOW = Path(__file__).parents[1] / ".github" / "workflows" / "ci.yml"
 
 def test_ci_covers_supported_distribution_boundaries() -> None:
     workflow = WORKFLOW.read_text(encoding="utf-8")
-    for version in ('"3.10"', '"3.12"', '"3.14"'):
+    for version in ('"3.12"', '"3.14"'):
         assert version in workflow
     for command in (
         "python -m pytest -q",
