@@ -48,6 +48,7 @@ dev = [
   "pytest>=8",
   "build>=1",
   "twine>=6",
+  "tomli; python_version < '3.11'"
 ]
 
 [project.urls]
