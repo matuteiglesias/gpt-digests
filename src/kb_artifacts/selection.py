@@ -221,8 +221,14 @@ def _stage_and_promote(output: Path, rendered: dict[str, bytes]) -> dict[str, st
             shutil.rmtree(candidate, ignore_errors=True)
 
 
-def select(request: SelectionRequest, *, output: Path, allow_empty: bool = False) -> dict:
+def select(
+    request: SelectionRequest,
+    *,
+    output: str | os.PathLike[str],
+    allow_empty: bool = False,
+) -> dict:
     """Select once from both buses and render JSONL, CSV, Markdown, and evidence."""
+    output = Path(output)
     if _has_symlink_component(output):
         raise SourceInputError(f"Output path must not contain a symlink: {output}")
     if output.exists() and (not output.is_dir() or any(output.iterdir())):

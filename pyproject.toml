@@ -1,28 +1,40 @@
 [build-system]
-requires = ["setuptools>=61"]
+requires = ["setuptools>=77"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "kb-artifacts"
 version = "0.1.0"
-description = "Read-only governed JSONL evidence selection and artifact export."
+description = "Inspect, select, and reproducibly export evidence from JSONL collections."
 readme = "README.md"
 requires-python = ">=3.10"
-license = {text = "MIT"}
-authors = [{name = "Matias", email = "you@example.com"}]
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{name = "Matías Iglesias"}]
+keywords = [
+  "jsonl",
+  "knowledge-base",
+  "evidence",
+  "provenance",
+  "data-processing",
+  "cli",
+]
 classifiers = [
-  "Programming Language :: Python :: 3",
-  "License :: OSI Approved :: MIT License",
+  "Development Status :: 3 - Alpha",
   "Intended Audience :: Developers",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
   "Topic :: Text Processing",
 ]
 
 dependencies = [
   "typer>=0.12",
-  "click>=8.1",
 ]
 
 [project.optional-dependencies]
+test = [
+  "pytest>=8",
+]
 docs = [
   "mkdocs>=1.6",
   "mkdocs-material>=9.5",
@@ -32,12 +44,27 @@ docs = [
   "mkdocs-section-index>=0.3",
   "pymdown-extensions>=10.7",
 ]
+dev = [
+  "pytest>=8",
+  "build>=1",
+  "twine>=6",
+]
+
+[project.urls]
+Homepage = "https://matuteiglesias.github.io/kb-artifacts/"
+Documentation = "https://matuteiglesias.github.io/kb-artifacts/"
+Repository = "https://github.com/matuteiglesias/kb-artifacts"
+Issues = "https://github.com/matuteiglesias/kb-artifacts/issues"
+Changelog = "https://github.com/matuteiglesias/kb-artifacts/blob/main/CHANGELOG.md"
 
 [project.scripts]
 kb-artifact = "kb_artifacts.cli:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.setuptools.package-data]
+kb_artifacts = ["py.typed"]
 
 [tool.pytest.ini_options]
 pythonpath = ["src"]

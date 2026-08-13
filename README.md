@@ -1,22 +1,119 @@
 # kb-artifacts
 
-A read-only governed JSONL evidence selector. `kb-artifact select` reads chunk and
-summary buses through the same adapter, applies explicit filters once, and writes
-`selected.jsonl`, `selected.csv`, `artifact.md`, and `manifest.json` to an output run
-directory.
+[![CI](https://github.com/matuteiglesias/kb-artifacts/actions/workflows/ci.yml/badge.svg)](https://github.com/matuteiglesias/kb-artifacts/actions/workflows/ci.yml)
+[![PyPI](https://img.shields.io/pypi/v/kb-artifacts.svg)](https://pypi.org/project/kb-artifacts/)
+[![Python: >=3.10](https://img.shields.io/badge/python-%3E%3D3.10-blue.svg)](https://www.python.org/downloads/)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+
+`kb-artifacts` is a small Python library and CLI for inspecting, filtering,
+selecting, and reproducibly exporting records from JSONL evidence collections.
+
+## What it does
+
+- Reads newline-delimited JSON without modifying the source files.
+- Accepts common fields including `title`, `text`, `content`, `summary`, `tags`,
+  timestamps, and nested `meta` values.
+- Filters records by tags, fields, dates, text, family, and maturity.
+- Writes the same selection as JSONL, CSV, readable Markdown, and a provenance
+  manifest.
+
+## Install
 
 ```bash
-python -m pip install -e . --no-build-isolation
-kb-artifact inspect source --chunk-glob 'data/chunks/*.jsonl' --output artifacts/source-report.json
-kb-artifact select --chunk-glob 'data/chunks/*.jsonl' --tag runbook --field actionable=true --output artifacts/runs/runbook
+python -m pip install kb-artifacts
+kb-artifact --help
 ```
 
-See [the operator guide](docs/index.md) for selection examples, read-only guarantees,
-and provenance details.
+Python 3.10 or newer is required.
 
-Selection outputs are rendered in private sibling staging and promoted at the
-directory boundary only after candidate validation and hashing. The existing
-`manifest.json` remains producer-local operational evidence, while
-`selected.jsonl` is the canonical selected-evidence product. Its producer-owned
-identity algorithm and the shared-contract dependency gate are documented in
-[the interoperability boundary](docs/interoperability.md).
+## 60-second example
+
+Create a two-record JSONL collection:
+
+```bash
+cat > evidence.jsonl <<'EOF'
+{"title":"Deploy app","text":"Build and deploy the service","tags":["runbook","ops"]}
+{"title":"Buy groceries","text":"Milk and bread","tags":["personal"]}
+EOF
+```
+
+Select the runbook record:
+
+```bash
+kb-artifact select \
+  --chunk-glob evidence.jsonl \
+  --tag runbook \
+  --output selected
+```
+
+The command reports `selected=1` and creates:
+
+```text
+selected/
+├── selected.jsonl
+├── selected.csv
+├── artifact.md
+└── manifest.json
+```
+
+`selected.jsonl` is the machine-readable selection, `selected.csv` is convenient
+for spreadsheets, `artifact.md` is readable output, and `manifest.json` records the
+request, input checksum, counts, and generated files.
+
+## Python API
+
+```python
+from kb_artifacts import SelectionRequest, select
+
+request = SelectionRequest(
+    chunk_globs=("evidence.jsonl",),
+    tags=("runbook",),
+)
+
+result = select(request, output="selected-python")
+print(result["counts"]["selected"])  # 1
+```
+
+The supported public API for 0.1 is `EvidenceRecord`, `SourceReference`,
+`SelectionDecision`, `SelectionRequest`, `inspect_source()`, and `select()`. See the
+[Python API documentation](https://matuteiglesias.github.io/kb-artifacts/python-api/)
+for signatures and the `0.x` stability boundary.
+
+## CLI
+
+Inspect bounded source metadata without including record bodies:
+
+```bash
+kb-artifact inspect source \
+  --chunk-glob evidence.jsonl \
+  --output source-report.json
+```
+
+Use `kb-artifact --help`, `kb-artifact select --help`, or
+`kb-artifact inspect source --help` for all options. Repeated tags use OR semantics;
+different filter types must all match.
+
+## Documentation / development
+
+The [documentation](https://matuteiglesias.github.io/kb-artifacts/) covers selection,
+provenance, operational guarantees, and interoperability. Runnable examples live in
+[`examples/`](examples/).
+
+For a development checkout:
+
+```bash
+python -m pip install -e '.[dev,docs]'
+make test
+make smoke
+make distribution-test
+```
+
+`make distribution-test` builds both distribution formats, installs the wheel into
+an isolated temporary environment, verifies the public imports, runs the installed
+CLI help, and selects the minimal example outside the source checkout.
+
+Source code and issues are hosted on
+[GitHub](https://github.com/matuteiglesias/kb-artifacts).
+See [CONTRIBUTING.md](CONTRIBUTING.md) before proposing a change,
+[CHANGELOG.md](CHANGELOG.md) for user-visible changes, and
+[SECURITY.md](SECURITY.md) for private vulnerability reporting.
