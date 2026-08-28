@@ -17,17 +17,15 @@ authority:
   - source chunk semantics
   - shared contract authority
   - arbitrary corpus analysis
+  - producer-specific conversion into JSONL evidence collections
   - MCP access policy
 interfaces:
   consumes:
-  - contract:kb.selected-evidence@1
-  - artifact:kb.run-manifest@1
-  - artifact:kb.summary-bus@1
+  - input:jsonl-evidence-collections
   produces:
   - artifact:kb.selected-evidence@1
 upstream:
 - repo.kb-contracts
-- repo.knowledge-inspect
 downstream:
 - repo.context-routing
 - repo.matias-context-mcp
@@ -46,6 +44,7 @@ verification:
   command: make smoke
   unknowns:
   - canonical commands were reconciled against README.md and AGENTS.md but not executed during W2
+  - W3 found no direct Knowledge Inspect run-manifest or summary-bus input seam; current ingestion is producer-agnostic JSONL
   - consequential publication or promotion commands remain outside ordinary verification
 maintenance:
   cadence: quarterly
