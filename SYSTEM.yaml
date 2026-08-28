@@ -2,7 +2,7 @@
 schema_version: 1
 id: kb.artifacts.selector
 repository:
-  id: repo.gpt-digests
+  id: repo.kb-artifacts
   github: matuteiglesias/kb-artifacts
 domain: knowledge
 system: kb.artifacts
@@ -29,20 +29,24 @@ upstream:
 - repo.kb-contracts
 - repo.knowledge-inspect
 downstream:
-- repo.context
+- repo.context-routing
 - repo.matias-context-mcp
 canonical_commands:
-- kbctl compute
-- kbctl publish
+- kb-artifact --help
+- make test
+- make smoke
+- make contract-release-verify
+- make distribution-test
 generated_paths:
 - artifacts/
 - runs/
 verification:
   status: metadata-only
-  last_verified: '2026-08-04'
-  command: null
+  last_verified: '2026-08-28'
+  command: make smoke
   unknowns:
-  - package installation and release verification command require local confirmation
+  - canonical commands were reconciled against README.md and AGENTS.md but not executed during W2
+  - consequential publication or promotion commands remain outside ordinary verification
 maintenance:
   cadence: quarterly
   next_review: '2026-11-01'
